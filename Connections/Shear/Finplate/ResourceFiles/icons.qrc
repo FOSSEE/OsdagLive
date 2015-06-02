@@ -1,0 +1,17 @@
+<RCC>
+  <qresource prefix="newPrefix">
+    <file>images/download1.png</file>
+    <file>images/beam2.jpg</file>
+    <file>images/favicon.png</file>
+    <file>images/rotate-ccw.png</file>
+    <file>images/rotate-cw.png</file>
+    <file>images/beam2.jpg</file>
+    <file>images/save.png</file>
+    <file>images/output.png</file>
+    <file>images/input.png</file>
+    <file>images/zoom_in_01.png</file>
+    <file>images/zoom_out_01.png</file>
+    <file>images/logo.jpg</file>
+    <file>images/beam.jpg</file>
+  </qresource>
+</RCC>
