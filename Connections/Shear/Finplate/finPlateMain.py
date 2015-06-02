@@ -37,7 +37,6 @@ from OCC.Display.pyqt4Display import qtViewer3d
 from colWebBeamWebConnectivity import ColWebBeamWeb
 from colFlangeBeamWebConnectivity import ColFlangeBeamWeb
 from OCC import IGESControl
-
 from filletweld import FilletWeld
 
 
@@ -453,7 +452,7 @@ class MainController(QtGui.QMainWindow):
         edge_dist = resultObj['Bolt']['edge']
         self.ui.txtEdgeDist.setText(str(edge_dist))
         
-        # resultObj['Weld']
+        
         # weld_thickness = resultObj['Weld']['thickness']
         # self.ui.txtWeldThick.setText(str(weld_thickness))
         
