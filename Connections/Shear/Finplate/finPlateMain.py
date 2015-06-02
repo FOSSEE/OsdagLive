@@ -1,5 +1,6 @@
 '''
 Created on 07-May-2015
+comment
 
 @author: deepa
 '''
@@ -573,7 +574,7 @@ class MainController(QtGui.QMainWindow):
         
     def display3Dmodel(self,cadlist,component):
         
-        self.display,_ = self.init_display(backend_str="pyqt4")
+        #self.display,_ = self.init_display(backend_str="pyqt4")
         self.display.set_bg_gradient_color(23,1,32,23,1,32)
         if component == "Column":
             self.display.EraseAll()
