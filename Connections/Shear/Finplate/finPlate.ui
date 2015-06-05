@@ -380,13 +380,16 @@
        </property>
        <property name="icon">
         <iconset>
-         <normaloff>../../../../../Downloads/ZY.png</normaloff>../../../../../Downloads/ZY.png</iconset>
+         <normaloff>../../../../../Pictures/Z-X.png</normaloff>../../../../../Pictures/Z-X.png</iconset>
        </property>
        <property name="iconSize">
         <size>
          <width>22</width>
          <height>22</height>
         </size>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
        </property>
       </widget>
       <widget class="QToolButton" name="btn_top">
@@ -416,13 +419,16 @@
        </property>
        <property name="icon">
         <iconset>
-         <normaloff>../../../../../Downloads/Y-X.png</normaloff>../../../../../Downloads/Y-X.png</iconset>
+         <normaloff>../../../../../Pictures/X-Y.png</normaloff>../../../../../Pictures/X-Y.png</iconset>
        </property>
        <property name="iconSize">
         <size>
          <width>22</width>
          <height>23</height>
         </size>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
        </property>
       </widget>
       <widget class="QToolButton" name="btn_side">
@@ -452,13 +458,16 @@
        </property>
        <property name="icon">
         <iconset>
-         <normaloff>../../../../../Downloads/Z-Y.png</normaloff>../../../../../Downloads/Z-Y.png</iconset>
+         <normaloff>../../../../../Pictures/Z-Y.png</normaloff>../../../../../Pictures/Z-Y.png</iconset>
        </property>
        <property name="iconSize">
         <size>
          <width>22</width>
          <height>22</height>
         </size>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
        </property>
       </widget>
      </widget>
@@ -640,8 +649,9 @@
    </property>
    <property name="font">
     <font>
-     <weight>50</weight>
-     <bold>false</bold>
+     <weight>75</weight>
+     <italic>false</italic>
+     <bold>true</bold>
     </font>
    </property>
    <property name="floating">
@@ -651,7 +661,7 @@
     <set>QDockWidget::AllDockWidgetFeatures</set>
    </property>
    <property name="windowTitle">
-    <string>INPUT</string>
+    <string>Input dock</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>1</number>
@@ -1247,34 +1257,12 @@
      <property name="styleSheet">
       <string notr="true">QComboBox { combobox-popup: 0; }</string>
      </property>
+     <property name="currentIndex">
+      <number>-1</number>
+     </property>
      <property name="maxVisibleItems">
       <number>5</number>
      </property>
-     <item>
-      <property name="text">
-       <string>Thickness of Plate</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>6</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>8</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>10</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>12</string>
-      </property>
-     </item>
     </widget>
     <widget class="QLabel" name="label_42">
      <property name="geometry">
@@ -3175,6 +3163,11 @@
        <string>10</string>
       </property>
      </item>
+     <item>
+      <property name="text">
+       <string>12</string>
+      </property>
+     </item>
     </widget>
     <widget class="QLabel" name="lbl_connectivity">
      <property name="geometry">
@@ -3238,7 +3231,7 @@
     </font>
    </property>
    <property name="windowTitle">
-    <string>OUTPUT</string>
+    <string>Output dock</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>2</number>

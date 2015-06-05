@@ -50,6 +50,7 @@ class ISection(object):
         self.secOrigin = numpy.array([0, 0, 0])
         self.uDir = numpy.array([1.0, 0, 0])
         self.wDir = numpy.array([0.0, 0, 1.0])
+        
         self.computeParams()
     
     def place(self, secOrigin, uDir, wDir):

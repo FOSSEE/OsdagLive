@@ -6,6 +6,10 @@ comment
 '''
 from PyQt4.QtCore import QString
 from PyQt4.QtGui import QMessageBox
+from OCC.TopoDS import topods, TopoDS_Shape
+from OCC.BRepPrimAPI import BRepPrimAPI_MakeBox, BRepPrimAPI_MakeCylinder,\
+    BRepPrimAPI_MakeSphere
+from OCC.gp import gp_Pnt
 '''
 Created on 21-Aug-2014
 
@@ -108,11 +112,42 @@ class MainController(QtGui.QMainWindow):
         
         # Initialising the qtviewer
         self.display,_ = self.init_display(backend_str="pyqt4")
+        #self.display2d,_,_ = self.init_display(backend_str="pyqt4")
         
         self.ui.btnSvgSave.clicked.connect(self.save3DtoIGES)
         #self.ui.btnSvgSave.clicked.connect(lambda:self.saveTopng(self.display))
         
+        self.colWebBeamWeb =  self.create3DColWebBeamWeb()
+        # my_box = BRepPrimAPI_MakeBox(gp_Pnt(20,0,0),10., 20., 30.).Shape()
+        # my_cylendar = BRepPrimAPI_MakeCylinder(10,30).Shape()
+        # self.memberlist =  [my_box, my_cylendar, my_cylendar]
+        
+        #my_sphere = BRepPrimAPI_MakeSphere(5).Shape()
+        self.fuse_model = self.create2Dcad()
+        #self.fuse_model = my_sphere 
+        self.validatePlateThickCombo()
 
+
+
+    
+    def validatePlateThickCombo(self):
+
+        beam_sec = self.ui.combo_Beam.currentText()
+        dictbeamdata  = get_beamdata(beam_sec)
+        beam_tw = float(dictbeamdata[QString("tw")])
+        plateThickness = ['select Thickness',6,8,10,12,14,16,18,20]
+        newlist = ['Select Thickness']
+        #comboPlateThickItenewlist = []
+        for item in plateThickness[1:]:
+            if item >= beam_tw:
+                newlist.append(str(item))
+        print newlist
+        
+        for i in newlist[:]:
+            self.ui.comboPlateThick_2.addItem(i)
+           
+        
+        
     def saveTopng(self,display):
         display.ExportToImage('/home/Pictures/cad.png')
     
@@ -186,7 +221,7 @@ class MainController(QtGui.QMainWindow):
         uiObj = {}
         uiObj["Bolt"] = {}
         uiObj["Bolt"]["diameter(mm)"] = self.ui.comboDaimeter.currentText().toInt()[0]
-        uiObj["Bolt"]["grade"] = float(self.ui.comboGrade.currentText())                                                                                                                                                                                                                                                             
+        uiObj["Bolt"]["grade"] = float(self.ui.comboGrade.currentText())                                                                                                                                                                                                                                                              
         uiObj["Bolt"]["type"] = str(self.ui.comboType.currentText())
         
             
@@ -523,7 +558,7 @@ class MainController(QtGui.QMainWindow):
     # QtViewer
     def init_display(self,backend_str=None, size=(1024, 768)):
         
-        global display, start_display, app, _, USED_BACKEND
+        global display,start_display, app, _, USED_BACKEND
     
         if not backend_str:
             USED_BACKEND = self.get_backend()
@@ -543,12 +578,12 @@ class MainController(QtGui.QMainWindow):
                 from OCC.Display.pysideDisplay import qtViewer3d
     
         self.ui.modelTab = qtViewer3d(self)
+        #self.ui.model2dTab = qtViewer3d(self)
+        
         self.setWindowTitle("Osdag-%s 3d viewer ('%s' backend)" % (VERSION, USED_BACKEND))
         self.ui.mytabWidget.resize(size[0], size[1])
         self.ui.mytabWidget.addTab(self.ui.modelTab,"")
-        
-        #self.ui.mytabWidget.setCentralWidget(self.ui.modelTab)
-        #self.ui.mytabWidget.centerOnScreen()
+        #self.ui.mytabWidget.addTab(self.ui.model2dTab,"")
         
         self.ui.modelTab.InitDriver()
         display = self.ui.modelTab._display
@@ -567,36 +602,40 @@ class MainController(QtGui.QMainWindow):
                               (resolution.height() / 2) - (self.frameSize().height() / 2))
         def start_display():
             
-            self.ui.modelTab.raise_()  # make the application float to the top
+            self.ui.modelTab.raise_()
+            #self.ui.model2dTab.raise_()   # make the application float to the top
           
         return display, start_display
         
     def display3Dmodel(self,cadlist,component):
-        
+        self.display.EraseAll()
+        self.display.SetModeShaded()
         #self.display,_ = self.init_display(backend_str="pyqt4")
         self.display.set_bg_gradient_color(23,1,32,23,1,32)
+        
         if component == "Column":
-            self.display.EraseAll()
+            
             osdagDisplayShape(self.display, cadlist[0], update=True)
         elif component == "Beam":
-            display.EraseAll()
+            self.display.EraseAll()
             osdagDisplayShape(self.display, cadlist[1],material = Graphic3d_NOT_2D_ALUMINUM, update=True)
         elif component == "Finplate" :
             display.EraseAll()
             osdagDisplayShape(self.display,cadlist[2],color = 'red', update = True)
             osdagDisplayShape(self.display, cadlist[3], color = 'red', update = True)
             osdagDisplayShape(self.display, cadlist[4], color = 'blue', update = True)
-            self.display.DisplayShape(cadlist[5],color = Quantity_NOC_SADDLEBROWN, update=True)
-            self.display.DisplayShape(cadlist[6],color = Quantity_NOC_SADDLEBROWN, update = True)
+            self.display.DisplayShape(cadlist[5:8],color = Quantity_NOC_SADDLEBROWN, update=True)
+            self.display.DisplayShape(cadlist[8:11],color = Quantity_NOC_SADDLEBROWN, update = True)
         elif  component == "Model":
-            
+            self.display.EraseAll()
             osdagDisplayShape(self.display, cadlist[0], update=True)
             osdagDisplayShape(self.display, cadlist[1],material = Graphic3d_NOT_2D_ALUMINUM, update=True)
             osdagDisplayShape(self.display,cadlist[2],color = 'red', update = True)
             osdagDisplayShape(self.display,cadlist[3],color = 'red', update = True)
             osdagDisplayShape(self.display, cadlist[4], color = 'blue', update = True)
-            self.display.DisplayShape(cadlist[5],color = Quantity_NOC_SADDLEBROWN, update=True)
-            self.display.DisplayShape(cadlist[6],color = Quantity_NOC_SADDLEBROWN, update = True)
+            self.display.DisplayShape(cadlist[5:8],color = Quantity_NOC_SADDLEBROWN, update=True)
+            self.display.DisplayShape(cadlist[8:11],color = Quantity_NOC_SADDLEBROWN, update = True)
+            
         else:
             pass
              
@@ -616,9 +655,11 @@ class MainController(QtGui.QMainWindow):
         plate = Plate(L= 300,W =100, T = 10)
         boltRadius = 10
         nutRadius = 10
-
-        colwebconn =  ColWebBeamWeb(column,beam,Fweld1,plate,boltRadius,nutRadius)
-        return colwebconn.create_3dmodel()
+        
+        boltPlaceObj = finConn(self.getuser_inputs())
+        colwebconn =  ColWebBeamWeb(column,beam,Fweld1,plate,boltRadius,nutRadius,boltPlaceObj)
+        colwebconn.create_3dmodel()
+        return  colwebconn
         
     def createColFlangeBeamWeb(self):
         '''
@@ -643,54 +684,55 @@ class MainController(QtGui.QMainWindow):
             self.ui.mytabWidget.setCurrentIndex(0)
             
         if self.ui.comboConnLoc.currentText()== "Column web-Beam web":
-            memberlist =  self.create3DColWebBeamWeb()
+            connectivity =  self.colWebBeamWeb
         else:
             self.ui.mytabWidget.setCurrentIndex(0)
-            memberlist =  self.createColFlangeBeamWeb()
+            connectivity =  self.createColFlangeBeamWeb()
             
-        #memberlist = self.create_3dmodel()
-        #self.ui.btn3D.setStyleSheet("background-color: red")
-        self.display3Dmodel(memberlist, "Model")
+        self.display3Dmodel(connectivity.get_models(), "Model")
         
     
     def call_3DBeam(self):
         '''
         Creating and displaying 3D Beam
         '''
-        memberlist = self.create3DColWebBeamWeb()
-        
         if self.ui.chkBxBeam.isChecked():
             self.ui.chkBxCol.setChecked(QtCore.Qt.Unchecked)
             self.ui.chkBxFinplate.setChecked(QtCore.Qt.Unchecked)
             self.ui.mytabWidget.setCurrentIndex(0)
-            self.display3Dmodel(memberlist, "Beam")
-            #self.ui.chkBxBeam.setChecked(QtCore.Qt.Unchecked)
+        
+        self.display3Dmodel(self.memberlist, "Beam")
             
     def call_3DColumn(self):
-        memberlist = self.create3DColWebBeamWeb()
+        '''
+        '''
         if self.ui.chkBxCol.isChecked():
             self.ui.chkBxBeam.setChecked(QtCore.Qt.Unchecked)
             self.ui.chkBxFinplate.setChecked(QtCore.Qt.Unchecked)
             self.ui.mytabWidget.setCurrentIndex(0)
-            self.display3Dmodel(memberlist, "Column")
-            #self.ui.chkBxBeam.setChecked(QtCore.Qt.Unchecked
+        self.display3Dmodel(self.memberlist, "Column")
+            
             
     def call_3DFinplate(self):
-        memberlist = self.create3DColWebBeamWeb()
+        '''Displaying FinPlate in 3D
+        '''
         if self.ui.chkBxFinplate.isChecked():
             self.ui.chkBxBeam.setChecked(QtCore.Qt.Unchecked)
             self.ui.chkBxCol.setChecked(QtCore.Qt.Unchecked)
             self.ui.mytabWidget.setCurrentIndex(0)
-            self.display3Dmodel(memberlist, "Finplate")
-            #self.ui.chkBxBeam.setChecked(QtCore.Qt.Unchecked
+            
+        self.display3Dmodel(self.memberlist, "Finplate")
+           
     
-    def design_btnclicked(self):
         
+        
+    def design_btnclicked(self):
+        '''
+        '''
+        designLogger =  logging.getLogger("Designlogger.finPlateCalc")
         
         self.ui.outputDock.setFixedSize(310,710)
-        
-        # self.memberlist3D =  self.createColFlangeBeamWeb()
-        # self.mmemberlist2D
+        #self.set_designlogger()
         # Getting User Inputs.
         uiObj = self.getuser_inputs()
         print uiObj
@@ -721,115 +763,13 @@ class MainController(QtGui.QMainWindow):
 
 
     def create2Dcad(self):
-                
-    
-        # ISection COLUMN
-        origin1 = numpy.array([0, 0, 0])
-        uDir1 = numpy.array([1.0, 0, 0])
-        wDir1 = numpy.array([0.0, 0, 1.0])
-        t = 8.9
-        weldThick = 8
-        iSection1 = ISection(B = 83, T = 14.1, D = 250, t = 11, R1 = 12, R2 = 3.2, alpha = 98, length = 1000)
-        iSection1.place(origin1, uDir1, wDir1)
-        
-        # ISection BEAM
-        uDir2 = numpy.array([0, 1.0, 0])
-        wDir2 = numpy.array([1.0, 0, 0.0])
-        d = t/2.0 + weldThick
-        origin2 = numpy.array([0, 0, 500]) + (d+7.55) * wDir2 
-        iSection2 = ISection(B = 140, T = 16,D = 400,t = 8.9, R1 = 14, R2 = 7, alpha = 98,length = 400)
-        iSection2.place(origin2, uDir2, wDir2)
-        
-        # WELD
-        weld = Weld(L= 300,W =iSection2.t, T = 8)
-        #plateThickness = 10
-        uDir3 = numpy.array([0, 1.0, 0])
-        wDir3 = numpy.array([1.0, 0, 0.0])
-        origin3 = (iSection1.secOrigin + 
-                   iSection1.t/2.0 * iSection1.uDir + 
-                   iSection1.length/2.0 * iSection1.wDir +
-                   iSection2.t/2.0 * (-iSection2.uDir)+
-                   weld.W/2.0 * (-iSection2.uDir))
-        #origin3 = numpy.array([0, 0, 500]) + t/2.0 *wDir3 + plateThickness/2.0 * (-iSection2.uDir)
-        weld.place(origin3, uDir3, wDir3)
-        
-        # PLATE
-        plate = Plate(L= weld.L,W =100, T = 10)
-        uDir4 = numpy.array([0, 1.0, 0])
-        wDir4 = numpy.array([1.0, 0, 0.0])
-        origin4 = weld.secOrigin + weld.T * weld.wDir
-        plate.place(origin4, uDir4, wDir4)
-        
-        # BOLT BODY
-        bolt_T = 6.0
-        origin51 = (plate.secOrigin + (-
-                    plate.T/2.0 - bolt_T) * plate.uDir +
-                    plate.W/2.0 * plate.wDir)
-        
-        uDir5 = plate.wDir
-        wDir5 = plate.uDir
-        ## Bolt1
-        bolt1 = Bolt(R = 10.0,T = bolt_T, H = 30.0, r = 4.0 )
-        bolt1.place(origin51, uDir5, wDir5)
-        
-        ## Bolt2
-        bolt2 = Bolt(R = 10.0,T = bolt_T, H = 30.0, r = 4.0 )
-        origin52 = origin51 + 50 *plate.vDir
-        bolt2.place(origin52, uDir5, wDir5)
-        
-        ## Bolt3
-        bolt3 = Bolt(R = 10.0,T = bolt_T, H = 30.0, r = 4.0 )
-        origin53 = origin51 - 50*plate.vDir
-        bolt3.place(origin53, uDir5, wDir5)
-        bolt_list =[bolt1,bolt2,bolt3]
-        
-        # NUTBODY
-        ## Nut1
-        nut1 = Nut(R = 10.0,T = 10.0,  H = 6.1, innerR1 = 6.0, outerR2 = 8.3)
-        uDir = uDir5
-        wDir = wDir5
-        nut_Origin1 = origin51 + (bolt1.T/2 * plate.uDir)+(plate.T *plate.uDir)+ (iSection2.T/2 * plate.uDir)
-        nut1.place(nut_Origin1, uDir, wDir)
-        
-        ## Nut2
-        nut2 = Nut(R = 10.0,T = 10.0,  H = 6.1, innerR1 = 6.0, outerR2 = 8.3)
-        nut_Origin2 = origin52 + (bolt1.T/2 * plate.uDir)+(plate.T *plate.uDir)+ (iSection2.T/2 * plate.uDir)
-        nut2.place(nut_Origin2, uDir, wDir)
-        
-        ## Nut3
-        nut3 =Nut(R = 10.0,T = 10.0,  H = 6.1, innerR1 = 6.0, outerR2 = 8.3)
-        nut_Origin3 = origin53 + (bolt1.T/2 * plate.uDir)+(plate.T *plate.uDir)+ (iSection2.T/2 * plate.uDir)
-        nut3.place(nut_Origin3, uDir5, wDir5)
-        nut_list = [nut1,nut2,nut3]
-        
-        # Call for createModel
-        iSectionModel1 = iSection1.createModel()
-        iSectionModel2 = iSection2.createModel()
-        weldModel = weld.createModel()
-        plateModel = plate.createModel()
-        boltModels = []
-        for bolt in bolt_list:
-            
-            boltModels.append(bolt.createModel())
-        
-        #color = Quantity_NOC_SADDLEBROWN,
-        nutModels = []
-        for nut in nut_list:
-            nutModels.append(nut.createModel())
-                    
-        isection = BRepAlgoAPI_Fuse(iSectionModel1,iSectionModel2).Shape()
-        weld_isection = BRepAlgoAPI_Fuse(isection,weldModel).Shape()
-        plate_weld = BRepAlgoAPI_Fuse(weld_isection,plateModel).Shape()
-        
-        plate_weld_bolt = plate_weld
-        for bolt in boltModels:
-            plate_weld_bolt = BRepAlgoAPI_Fuse(plate_weld_bolt, bolt).Shape()
-            
-        
-        final_model = plate_weld_bolt
-        for nt in nutModels:
-            final_model = BRepAlgoAPI_Fuse(final_model,nt).Shape()
-        return final_model
+        cadlist =  self.colWebBeamWeb.get_models()
+
+        final_model = cadlist[0]
+        for model in cadlist[1:]:
+            final_model = BRepAlgoAPI_Fuse(model,final_model).Shape()
+        return final_model           
+         
     
     # Export to IGES
     def save3DtoIGES(self):
@@ -841,11 +781,37 @@ class MainController(QtGui.QMainWindow):
         iges_writer.AddShape(shape)
         iges_writer.Write('/home/deepa/Pictures/osdag.iges')
     
+    def display2DModelOriginal(self, final_model, viewName):
+        
+        self.display,_ = self.init_display()
+        self.display.ResetView()
+        self.display.EraseAll()      
+        #self.display.SetModeWireFrame()
+        
+        self.display.DisplayShape(final_model, update = True)
+        self.display.SetModeHLR()
+        
+        
+        
+        if (viewName == "Front"):
+            self.display.View_Front()
+        elif (viewName == "Top"):
+            self.display.View_Top()
+        elif (viewName == "Right"):
+            self.display.View_Right()
+        else:
+            pass
+
     def display2DModel(self, final_model, viewName):
         
-        #display, start_display, _, _ = self.simpleGUI()        
+        #display, start_display, _, _ = self.simpleGUI()
+        #self.display2d,_,_ = self.init_display(backend_str="pyqt4")
+        #self.display.EraseAll()      
 
         self.display.set_bg_gradient_color(255, 255, 255, 255, 255, 255)
+        
+        self.display.SetModeHLR()
+        #self.display.SetModeShaded()
         # Get Context
         ais_context = self.display.GetContext().GetObject()
 
@@ -864,46 +830,59 @@ class MainController(QtGui.QMainWindow):
         line_aspect = drawer.SeenLineAspect().GetObject()
         line_aspect.SetWidth(2.8)
         line_aspect.SetColor(Quantity_NOC_BLUE1)
-        self.display.EraseAll()
-        self.display.DisplayShape(final_model, update = True)
         
-        self.display.SetModeHLR()
-        self.display.FitAll()
+        self.display.DisplayShape(final_model, update = False)
         
         if (viewName == "Front"):
+            #self.display.SetModeHLR()
             self.display.View_Front()
         elif (viewName == "Top"):
+            #self.display.SetModeHLR()
             self.display.View_Top()
         elif (viewName == "Right"):
+            #self.display.SetModeHLR()
             self.display.View_Right()
         else:
             pass
             
-        start_display()
+        #start_display()
 
     def call_Frontview(self):
         
         '''Displays front view of 2Dmodel
         '''
-        self.ui.mytabWidget.setCurrentIndex(0)
-        final_model = self.create2Dcad()
-        self.display2DModel(final_model, "Front")
+        self.ui.chkBxBeam.setChecked(QtCore.Qt.Unchecked)
+        self.ui.chkBxCol.setChecked(QtCore.Qt.Unchecked)
+        self.ui.chkBxFinplate.setChecked(QtCore.Qt.Unchecked)
+            
+        self.display.EraseAll()
+        self.ui.mytabWidget.setCurrentIndex(1)
+        
+        self.display2DModel(self.fuse_model, "Front")
     
     def call_Topview(self):
         
         '''Displays Top view of 2Dmodel
         '''
-        self.ui.mytabWidget.setCurrentIndex(0)
-        final_model = self.create2Dcad()
-        self.display2DModel(final_model, "Top")
+        self.ui.chkBxBeam.setChecked(QtCore.Qt.Unchecked)
+        self.ui.chkBxCol.setChecked(QtCore.Qt.Unchecked)
+        self.ui.chkBxFinplate.setChecked(QtCore.Qt.Unchecked)
+            
+        self.display.EraseAll()
+        self.ui.mytabWidget.setCurrentIndex(1)
+        
+        self.display2DModel(self.fuse_model, "Top")
         
     def call_Sideview(self):
         
         '''Displays Side view of the 2Dmodel'
         '''
-        self.ui.mytabWidget.setCurrentIndex(0)
-        final_model = self.create2Dcad()
-        self.display2DModel(final_model, "Right")
+        self.ui.chkBxBeam.setChecked(QtCore.Qt.Unchecked)
+        self.ui.chkBxCol.setChecked(QtCore.Qt.Unchecked)
+        self.ui.chkBxFinplate.setChecked(QtCore.Qt.Unchecked)
+        
+        self.ui.mytabWidget.setCurrentIndex(1)
+        self.display2DModel(self.fuse_model, "Right")
                         
 def set_osdaglogger():
     
@@ -942,7 +921,6 @@ if __name__ == '__main__':
     fh.setFormatter(formatter)
     rawLogger.addHandler(fh)
     rawLogger.info('''<link rel="stylesheet" type="text/css" href="log.css"/>''')
-    
     
     
     app = QtGui.QApplication(sys.argv)
