@@ -61,7 +61,6 @@ class MainController(QtGui.QMainWindow):
         
         self.ui.comboConnLoc.currentIndexChanged[str].connect(self.setimage_connection)
         
-        
         self.ui.btn_Reset.clicked.connect(self.resetbtn_clicked)
         
         self.ui.btn_Design.clicked.connect(self.design_btnclicked)
@@ -99,6 +98,7 @@ class MainController(QtGui.QMainWindow):
        
         self.ui.combo_Beam.addItems(get_beamcombolist())
         self.ui.comboColSec.addItems(get_columncombolist())
+        
         self.ui.menuView.addAction(self.ui.inputDock.toggleViewAction())
         self.ui.menuView.addAction(self.ui.outputDock.toggleViewAction())
         self.ui.btn_CreateDesign.clicked.connect(self.save_design)
@@ -106,9 +106,11 @@ class MainController(QtGui.QMainWindow):
         self.ui.btn_SaveMessages.clicked.connect(self.save_log)
         #self.ui.btn_Savelog.clicked.connect(self.save_log)
         
+        
 
         # Saving and Restoring the finPlate window state.
         self.retrieve_prevstate()
+        
         
         # Initialising the qtviewer
         self.display,_ = self.init_display(backend_str="pyqt4")
@@ -126,6 +128,7 @@ class MainController(QtGui.QMainWindow):
         self.fuse_model = self.create2Dcad()
         #self.fuse_model = my_sphere 
         self.validatePlateThickCombo()
+        #self.closeEvent()
 
 
 
@@ -144,7 +147,8 @@ class MainController(QtGui.QMainWindow):
         print newlist
         
         for i in newlist[:]:
-            self.ui.comboPlateThick_2.addItem(i)
+            self.ui.comboPlateThick_2.addItem(str(i))
+        #self.ui.comboPlateThick_2.setCurrentIndex(0)
            
         
         
@@ -179,10 +183,11 @@ class MainController(QtGui.QMainWindow):
             #self.ui.comboDaimeter.currentText(str(uiObj['Bolt']['diameter(mm)']))
             #self.ui.comboType.currentText(str(uiObj['Bolt']['diameter(mm)']))
             #self.ui.comboGrade.currentText(str(uiObj['Bolt']['grade']))
-            
-            self.ui.comboPlateThick_2.setCurrentIndex(self.ui.comboPlateThick_2.findText(str(uiObj['Plate']['thickness(mm)'])))
+            selection = str(uiObj['Plate']['thickness(mm)'])
+            selectionIndex = self.ui.comboPlateThick_2.findText(selection)
+            self.ui.comboPlateThick_2.setCurrentIndex(selectionIndex)
             #self.ui.comboPlateThick_2.currentText(str(uiObj['Plate']['thickness(mm)']))
-            self.ui.txtPlateLen.setText(str(uiObj['Plate']['length(mm)']))
+            self.ui.txtPlateLen.setText(str(uiObj['Plate']['height(mm)']))
             self.ui.txtPlateWidth.setText(str(uiObj['Plate']['width(mm)']))
             
             self.ui.comboWldSize.setCurrentIndex(self.ui.comboWldSize.findText(str(uiObj['Weld']['size(mm)'])))
@@ -251,6 +256,7 @@ class MainController(QtGui.QMainWindow):
         '''(Dictionary)--> None
          
         '''
+        return
         inputFile = QtCore.QFile('saveINPUT.txt')
         if not inputFile.open(QtCore.QFile.WriteOnly | QtCore.QFile.Text):
             QtGui.QMessageBox.warning(self, "Application",
@@ -747,20 +753,7 @@ class MainController(QtGui.QMainWindow):
         self.displaylog_totextedit()
         
         
-    def close_event(self, event):
-        '''
-        Closing finPlate window.
-        '''
-        uiInput = self.getuser_inputs()
-        self.save_inputs(uiInput)
-        reply = QtGui.QMessageBox.question(self, 'Message',
-            "Are you sure to quit?", QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
-
-        if reply == QtGui.QMessageBox.Yes:
-            event.accept()
-        else:
-            event.ignore() 
-
+    
 
     def create2Dcad(self):
         cadlist =  self.colWebBeamWeb.get_models()
@@ -883,6 +876,21 @@ class MainController(QtGui.QMainWindow):
         
         self.ui.mytabWidget.setCurrentIndex(1)
         self.display2DModel(self.fuse_model, "Right")
+        
+    def closeEvent(self, event):
+        '''
+        Closing finPlate window.
+        '''
+        uiInput = self.getuser_inputs()
+        self.save_inputs(uiInput)
+        reply = QtGui.QMessageBox.question(self, 'Message',
+            "Are you sure to quit?", QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
+
+        if reply == QtGui.QMessageBox.Yes:
+            event.accept()
+        else:
+            event.ignore() 
+
                         
 def set_osdaglogger():
     
