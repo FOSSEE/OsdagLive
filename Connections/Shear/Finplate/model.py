@@ -106,7 +106,7 @@ def get_columndata(sect):
     '''
     section = sect
     #section = Ui_MainWindow.comboColSec.currentText()
-    queryStr = "Select * from Beams where Designation = '%s'" % section
+    queryStr = "Select * from Columns where Designation = '%s'" % section
     
     designQuery = QSqlQuery(queryStr)
     print(designQuery)

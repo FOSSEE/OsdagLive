@@ -4,7 +4,7 @@ p1
 (dp2
 S'columSection'
 p3
-S'ISHB 250'
+S'ISSC 200'
 p4
 sS'fy(MPa)'
 p5
@@ -26,12 +26,12 @@ p11
 S'thickness(mm)'
 p13
 I12
-sS'length(mm)'
+sS'height(mm)'
 p14
 I300
 sS'width(mm)'
 p15
-I100
+I20
 ssS'Load'
 p16
 (dp17
@@ -49,13 +49,12 @@ p22
 (dp23
 S'grade'
 p24
-S'8.8'
-p25
+F8.8
 sS'type'
-p26
+p25
 S'HSFG'
-p27
+p26
 sS'diameter(mm)'
-p28
+p27
 I20
 ss.

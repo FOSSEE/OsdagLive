@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'finPlate.ui'
 #
-# Created: Fri Jun  5 22:26:06 2015
+# Created: Sat Jun  6 12:28:08 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -469,6 +469,15 @@ class Ui_MainWindow(object):
         self.comboPlateThick_2.setStyleSheet(_fromUtf8("QComboBox { combobox-popup: 0; }"))
         self.comboPlateThick_2.setMaxVisibleItems(5)
         self.comboPlateThick_2.setObjectName(_fromUtf8("comboPlateThick_2"))
+        self.comboPlateThick_2.addItem(_fromUtf8(""))
+        self.comboPlateThick_2.addItem(_fromUtf8(""))
+        self.comboPlateThick_2.addItem(_fromUtf8(""))
+        self.comboPlateThick_2.addItem(_fromUtf8(""))
+        self.comboPlateThick_2.addItem(_fromUtf8(""))
+        self.comboPlateThick_2.addItem(_fromUtf8(""))
+        self.comboPlateThick_2.addItem(_fromUtf8(""))
+        self.comboPlateThick_2.addItem(_fromUtf8(""))
+        self.comboPlateThick_2.addItem(_fromUtf8(""))
         self.label_42 = QtGui.QLabel(self.dockWidgetContents)
         self.label_42.setGeometry(QtCore.QRect(1, 540, 66, 25))
         font = QtGui.QFont()
@@ -1464,7 +1473,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         self.mytabWidget.setCurrentIndex(-1)
-        self.comboPlateThick_2.setCurrentIndex(-1)
+        self.comboPlateThick_2.setCurrentIndex(0)
         self.comboWldSize.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -1527,6 +1536,15 @@ class Ui_MainWindow(object):
         self.label_40.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; font-style:italic;\">Plate</span></p></body></html>", None))
         self.label_41.setText(_translate("MainWindow", "<html><head/><body><p>Thickness (mm) *</p></body></html>", None))
         self.lbl_len_2.setText(_translate("MainWindow", "Height (mm)", None))
+        self.comboPlateThick_2.setItemText(0, _translate("MainWindow", "Select plate thickness", None))
+        self.comboPlateThick_2.setItemText(1, _translate("MainWindow", "6", None))
+        self.comboPlateThick_2.setItemText(2, _translate("MainWindow", "8", None))
+        self.comboPlateThick_2.setItemText(3, _translate("MainWindow", "10", None))
+        self.comboPlateThick_2.setItemText(4, _translate("MainWindow", "12", None))
+        self.comboPlateThick_2.setItemText(5, _translate("MainWindow", "14", None))
+        self.comboPlateThick_2.setItemText(6, _translate("MainWindow", "16", None))
+        self.comboPlateThick_2.setItemText(7, _translate("MainWindow", "18", None))
+        self.comboPlateThick_2.setItemText(8, _translate("MainWindow", "20", None))
         self.label_42.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; font-style:italic;\">Weld</span></p></body></html>", None))
         self.label_43.setText(_translate("MainWindow", "<html><head/><body><p>Thickness (mm) *</p></body></html>", None))
         self.label_44.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; font-style:italic;\">Bolt</span></p></body></html>", None))

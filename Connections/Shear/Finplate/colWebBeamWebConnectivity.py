@@ -10,6 +10,8 @@ from bolt import Bolt
 from nut import Nut 
 
 import copy
+from OCC.BRepPrimAPI import BRepPrimAPI_MakeSphere
+from OCC.gp import gp_Pnt
 class ColWebBeamWeb(object):
     
     def __init__(self,column,beam,Fweld,plate,boltRadius,nutRadius,boltPlaceObj):
@@ -82,6 +84,7 @@ class ColWebBeamWeb(object):
                    self.beam.t/2.0 * (-self.beam.uDir)+
                    self.plate.T/2.0 * (-self.beam.uDir))
         #origin4 = self.column.secOrigin + self.weld.T * self.weld.wDir
+        
         self.plate.place(plateOrigin, uDir4, wDir4)
         
 #        # Weld
@@ -141,6 +144,7 @@ class ColWebBeamWeb(object):
         nut_Origin3 = origin53 + (bolt1.T/2 * self.plate.uDir)+(self.plate.T *self.plate.uDir)+ (self.beam.T/2 * self.plate.uDir)
         nut3.place(nut_Origin3, uDir5, wDir5)
         self.nuts = [nut1,nut2,nut3]
+        
         
         # Call for createModel
         self.columnModel = self.column.createModel()

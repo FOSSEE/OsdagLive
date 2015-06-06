@@ -42,6 +42,7 @@ from colWebBeamWebConnectivity import ColWebBeamWeb
 from colFlangeBeamWebConnectivity import ColFlangeBeamWeb
 from OCC import IGESControl
 from filletweld import FilletWeld
+from ModelUtils import *
 
 
 class MainController(QtGui.QMainWindow):
@@ -58,6 +59,8 @@ class MainController(QtGui.QMainWindow):
         self.ui.comboType.addItems(self.gradeType.keys())
         self.ui.comboType.currentIndexChanged[str].connect(self.combotype_currentindexchanged)
         self.ui.comboType.setCurrentIndex(0)
+        
+        
         
         self.ui.comboConnLoc.currentIndexChanged[str].connect(self.setimage_connection)
         
@@ -98,6 +101,9 @@ class MainController(QtGui.QMainWindow):
        
         self.ui.combo_Beam.addItems(get_beamcombolist())
         self.ui.comboColSec.addItems(get_columncombolist())
+        self.ui.combo_Beam.currentIndexChanged[str].connect(self.populatePlateThickCombo)
+        #beam_sec = self.ui.combo_Beam.currentText()
+        #self.populatePlateThickCombo(beam_sec)
         
         self.ui.menuView.addAction(self.ui.inputDock.toggleViewAction())
         self.ui.menuView.addAction(self.ui.outputDock.toggleViewAction())
@@ -127,31 +133,31 @@ class MainController(QtGui.QMainWindow):
         #my_sphere = BRepPrimAPI_MakeSphere(5).Shape()
         self.fuse_model = self.create2Dcad()
         #self.fuse_model = my_sphere 
-        self.validatePlateThickCombo()
+        
         #self.closeEvent()
 
 
 
     
-    def validatePlateThickCombo(self):
-
-        beam_sec = self.ui.combo_Beam.currentText()
-        dictbeamdata  = get_beamdata(beam_sec)
+    def populatePlateThickCombo(self):
+        dictbeamdata = self.fetchBeamPara()
+#         beam_sec = self.ui.combo_Beam.currentText()
+#         dictbeamdata  = get_beamdata(beam_sec)
         beam_tw = float(dictbeamdata[QString("tw")])
-        plateThickness = ['select Thickness',6,8,10,12,14,16,18,20]
-        newlist = ['Select Thickness']
+        #comboPlateItems = [str(self.ui.comboPlateThick_2.itemText(i)) for i in range(self.ui.comboPlateThick_2.count())]
+        plateThickness = [6,8,10,12,14,16,18,20]
+        newlist = []
         #comboPlateThickItenewlist = []
-        for item in plateThickness[1:]:
+        for ele in plateThickness[:]:
+            item = int(ele)
             if item >= beam_tw:
                 newlist.append(str(item))
         print newlist
-        
+        self.ui.comboPlateThick_2.clear()
         for i in newlist[:]:
             self.ui.comboPlateThick_2.addItem(str(i))
-        #self.ui.comboPlateThick_2.setCurrentIndex(0)
+        self.ui.comboPlateThick_2.setCurrentIndex(0)
            
-        
-        
     def saveTopng(self,display):
         display.ExportToImage('/home/Pictures/cad.png')
     
@@ -256,7 +262,7 @@ class MainController(QtGui.QMainWindow):
         '''(Dictionary)--> None
          
         '''
-        return
+        
         inputFile = QtCore.QFile('saveINPUT.txt')
         if not inputFile.open(QtCore.QFile.WriteOnly | QtCore.QFile.Text):
             QtGui.QMessageBox.warning(self, "Application",
@@ -636,25 +642,58 @@ class MainController(QtGui.QMainWindow):
             self.display.EraseAll()
             osdagDisplayShape(self.display, cadlist[0], update=True)
             osdagDisplayShape(self.display, cadlist[1],material = Graphic3d_NOT_2D_ALUMINUM, update=True)
-            osdagDisplayShape(self.display,cadlist[2],color = 'red', update = True)
-            osdagDisplayShape(self.display,cadlist[3],color = 'red', update = True)
+            #osdagDisplayShape(self.display,cadlist[2],color = 'red', update = True)
+            #osdagDisplayShape(self.display,cadlist[3],color = 'red', update = True)
             osdagDisplayShape(self.display, cadlist[4], color = 'blue', update = True)
             self.display.DisplayShape(cadlist[5:8],color = Quantity_NOC_SADDLEBROWN, update=True)
             self.display.DisplayShape(cadlist[8:11],color = Quantity_NOC_SADDLEBROWN, update = True)
-            
+            #osdagDisplayShape(self.display, cadlist[11], update = True)
         else:
             pass
              
         start_display()
         
-    
+    def fetchBeamPara(self):
+        beam_sec = self.ui.combo_Beam.currentText()
+        dictbeamdata  = get_beamdata(beam_sec)
+        return dictbeamdata
+    def fetchColumnPara(self):
+        column_sec = self.ui.comboColSec.currentText()
+        dictcoldata = get_columndata(column_sec)
+        return dictcoldata
     def create3DColWebBeamWeb(self):
         '''
         creating 3d cad model with column web beam web
         '''
+        dictbeamdata  = self.fetchBeamPara()
         
-        column = ISection(B = 83, T = 14.1, D = 250, t = 11, R1 = 12, R2 = 3.2, alpha = 98, length = 1000)
-        beam = ISection(B = 140, T = 16,D = 400,t = 8.9, R1 = 14, R2 = 7, alpha = 98,length = 500)
+        beam_D = int(dictbeamdata[QString("D")])
+        beam_B = int(dictbeamdata[QString("B")])
+        beam_tw = float(dictbeamdata[QString("tw")])
+        beam_T = float(dictbeamdata[QString("T")])
+        beam_alpha = float(dictbeamdata[QString("FlangeSlope")])
+        beam_R1 = float(dictbeamdata[QString("R1")])
+        beam_R2 = float(dictbeamdata[QString("R2")])
+        
+        #beam = ISection(B = 140, T = 16,D = 400,t = 8.9, R1 = 14, R2 = 7, alpha = 98,length = 500)
+        beam = ISection(B = beam_B, T = beam_T,D = beam_D,t = beam_tw,
+                         R1 = beam_R1, R2 = beam_R2, alpha = beam_alpha,length = 500)
+        
+        ##### COLUMN PARAMETERS ######
+        dictcoldata = self.fetchColumnPara()
+        
+        column_D = int(dictcoldata[QString("D")])
+        column_B = int(dictcoldata[QString("B")])
+        column_tw = float(dictcoldata[QString("tw")])
+        column_T = float(dictcoldata[QString("T")])
+        column_alpha = float(dictcoldata[QString("FlangeSlope")])
+        column_R1 = float(dictcoldata[QString("R1")])
+        column_R2 = float(dictcoldata[QString("R2")])
+        
+        #column = ISection(B = 83, T = 14.1, D = 250, t = 11, R1 = 12, R2 = 3.2, alpha = 98, length = 1000)
+        column = ISection(B = column_B, T = column_T, D = column_D,
+                           t = column_tw, R1 = column_R1, R2 = column_R2, alpha = column_alpha, length = 1000)
+        
         Fweld1 = FilletWeld(L= 300,b = 6, h = 6)
         #Fweld1 = Weld(L= 300,W = beam.t, T = 8)
         
@@ -696,6 +735,11 @@ class MainController(QtGui.QMainWindow):
             connectivity =  self.createColFlangeBeamWeb()
             
         self.display3Dmodel(connectivity.get_models(), "Model")
+        plateOrigin = connectivity.plate.secOrigin
+        gpPntplateOrigin=  getGpPt(plateOrigin)
+        my_sphere = BRepPrimAPI_MakeSphere(gpPntplateOrigin,2).Shape()
+        self.display.DisplayShape(my_sphere,update=True)
+        
         
     
     def call_3DBeam(self):
