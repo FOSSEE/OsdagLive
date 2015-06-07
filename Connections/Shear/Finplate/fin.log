@@ -1,13 +1,1 @@
 <link rel="stylesheet" type="text/css" href="log.css"/>
-
-    <div  class="LOG ERROR">
-        <span class="DATE">Sat, 06 Jun 2015 21:30:26</span>
-        <span class="LEVEL">ERROR</span>
-        <span class="MSG">: Plate width provided is less than the minimum required</span>
-    </div>
-
-    <div  class="LOG WARNING">
-        <span class="DATE">Sat, 06 Jun 2015 21:30:26</span>
-        <span class="LEVEL">WARNING</span>
-        <span class="MSG">: Minimum plate width required is 100.00 mm </span>
-    </div>

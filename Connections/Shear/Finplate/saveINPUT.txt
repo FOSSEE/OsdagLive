@@ -31,7 +31,7 @@ p14
 I300
 sS'width(mm)'
 p15
-I20
+I100
 ssS'Load'
 p16
 (dp17

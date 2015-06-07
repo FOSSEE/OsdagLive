@@ -10,6 +10,7 @@ from OCC.TopoDS import topods, TopoDS_Shape
 from OCC.BRepPrimAPI import BRepPrimAPI_MakeBox, BRepPrimAPI_MakeCylinder,\
     BRepPrimAPI_MakeSphere
 from OCC.gp import gp_Pnt
+from Connections.Shear.Finplate.nutBoltPlacement import NutBoltArray
 '''
 Created on 21-Aug-2014
 
@@ -640,8 +641,8 @@ class MainController(QtGui.QMainWindow):
             self.display.DisplayShape(cadlist[8:11],color = Quantity_NOC_SADDLEBROWN, update = True)
         elif  component == "Model":
             self.display.EraseAll()
-            osdagDisplayShape(self.display, cadlist[0], update=True)
-            osdagDisplayShape(self.display, cadlist[1],material = Graphic3d_NOT_2D_ALUMINUM, update=True)
+            #osdagDisplayShape(self.display, cadlist[0], update=True)
+            #osdagDisplayShape(self.display, cadlist[1],material = Graphic3d_NOT_2D_ALUMINUM, update=True)
             #osdagDisplayShape(self.display,cadlist[2],color = 'red', update = True)
             #osdagDisplayShape(self.display,cadlist[3],color = 'red', update = True)
             osdagDisplayShape(self.display, cadlist[4], color = 'blue', update = True)
@@ -665,45 +666,69 @@ class MainController(QtGui.QMainWindow):
         '''
         creating 3d cad model with column web beam web
         '''
-        dictbeamdata  = self.fetchBeamPara()
+        uiObj = self.getuser_inputs()
+        resultObj = finConn(uiObj)
+        if len(resultObj) == 0:
+            self.display.DisplayMessage(gp_Pnt(0,0,0),'Sorry can not create 3D model',color = 'white')
+        else:
+            dictbeamdata  = self.fetchBeamPara()
+            
+            beam_D = int(dictbeamdata[QString("D")])
+            beam_B = int(dictbeamdata[QString("B")])
+            beam_tw = float(dictbeamdata[QString("tw")])
+            beam_T = float(dictbeamdata[QString("T")])
+            beam_alpha = float(dictbeamdata[QString("FlangeSlope")])
+            beam_R1 = float(dictbeamdata[QString("R1")])
+            beam_R2 = float(dictbeamdata[QString("R2")])
+            
+            #beam = ISection(B = 140, T = 16,D = 400,t = 8.9, R1 = 14, R2 = 7, alpha = 98,length = 500)
+            beam = ISection(B = beam_B, T = beam_T,D = beam_D,t = beam_tw,
+                             R1 = beam_R1, R2 = beam_R2, alpha = beam_alpha,length = 500)
+            
+            ##### COLUMN PARAMETERS ######
+            dictcoldata = self.fetchColumnPara()
+            
+            column_D = int(dictcoldata[QString("D")])
+            column_B = int(dictcoldata[QString("B")])
+            column_tw = float(dictcoldata[QString("tw")])
+            column_T = float(dictcoldata[QString("T")])
+            column_alpha = float(dictcoldata[QString("FlangeSlope")])
+            column_R1 = float(dictcoldata[QString("R1")])
+            column_R2 = float(dictcoldata[QString("R2")])
+            
+            #column = ISection(B = 83, T = 14.1, D = 250, t = 11, R1 = 12, R2 = 3.2, alpha = 98, length = 1000)
+            column = ISection(B = column_B, T = column_T, D = column_D,
+                               t = column_tw, R1 = column_R1, R2 = column_R2, alpha = column_alpha, length = 1000)
+            # Outputs from finPlateCalc1
+            
+            fillet_length = resultObj['Plate']['height']
+            fillet_thickness =  resultObj['Weld']['thickness']
+            plate_width = resultObj['Plate']['width']
+            plate_thick = uiObj['Plate']['thickness(mm)']
+            
+            #Fweld1 = FilletWeld(L= 300,b = 6, h = 6)
+            Fweld1 = FilletWeld(L= fillet_length,b = fillet_thickness, h = fillet_thickness)
+            #Fweld1 = Weld(L= 300,W = beam.t, T = 8)
+            
+            #plate = Plate(L= 300,W =100, T = 10)
+            plate = Plate(L= fillet_length,W =plate_width, T = plate_thick)
+            bolt_T = 6.0
+            bolt = Bolt(R = self.boltRadius,T = bolt_T, H = 30.0, r = 4.0 )
+            boltPlaceObj = finConn(self.getuser_inputs())
+            
+            nut =Nut(R = self.nutRadius, T = 10.0,  H = 11, innerR1 = 4.0, outerR2 = 8.3)
+            # bolt assembly
+           
+
+            self.nutBoltArray = NutBoltArray(self.boltPlaceObj,self.nut,self.bolt)
+            
+            self.nutBoltArray.createModel()
+            nutBoltAssembly = self.nutBoltArray.getnutboltModel()
+            
+            
+            colwebconn =  ColWebBeamWeb(column,beam,Fweld1,plate,nutBoltAssembly)
+            colwebconn.create_3dmodel()
         
-        beam_D = int(dictbeamdata[QString("D")])
-        beam_B = int(dictbeamdata[QString("B")])
-        beam_tw = float(dictbeamdata[QString("tw")])
-        beam_T = float(dictbeamdata[QString("T")])
-        beam_alpha = float(dictbeamdata[QString("FlangeSlope")])
-        beam_R1 = float(dictbeamdata[QString("R1")])
-        beam_R2 = float(dictbeamdata[QString("R2")])
-        
-        #beam = ISection(B = 140, T = 16,D = 400,t = 8.9, R1 = 14, R2 = 7, alpha = 98,length = 500)
-        beam = ISection(B = beam_B, T = beam_T,D = beam_D,t = beam_tw,
-                         R1 = beam_R1, R2 = beam_R2, alpha = beam_alpha,length = 500)
-        
-        ##### COLUMN PARAMETERS ######
-        dictcoldata = self.fetchColumnPara()
-        
-        column_D = int(dictcoldata[QString("D")])
-        column_B = int(dictcoldata[QString("B")])
-        column_tw = float(dictcoldata[QString("tw")])
-        column_T = float(dictcoldata[QString("T")])
-        column_alpha = float(dictcoldata[QString("FlangeSlope")])
-        column_R1 = float(dictcoldata[QString("R1")])
-        column_R2 = float(dictcoldata[QString("R2")])
-        
-        #column = ISection(B = 83, T = 14.1, D = 250, t = 11, R1 = 12, R2 = 3.2, alpha = 98, length = 1000)
-        column = ISection(B = column_B, T = column_T, D = column_D,
-                           t = column_tw, R1 = column_R1, R2 = column_R2, alpha = column_alpha, length = 1000)
-        
-        Fweld1 = FilletWeld(L= 300,b = 6, h = 6)
-        #Fweld1 = Weld(L= 300,W = beam.t, T = 8)
-        
-        plate = Plate(L= 300,W =100, T = 10)
-        boltRadius = 10
-        nutRadius = 10
-        
-        boltPlaceObj = finConn(self.getuser_inputs())
-        colwebconn =  ColWebBeamWeb(column,beam,Fweld1,plate,boltRadius,nutRadius,boltPlaceObj)
-        colwebconn.create_3dmodel()
         return  colwebconn
         
     def createColFlangeBeamWeb(self):
