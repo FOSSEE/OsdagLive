@@ -10,7 +10,8 @@ from OCC.TopoDS import topods, TopoDS_Shape
 from OCC.BRepPrimAPI import BRepPrimAPI_MakeBox, BRepPrimAPI_MakeCylinder,\
     BRepPrimAPI_MakeSphere
 from OCC.gp import gp_Pnt
-from Connections.Shear.Finplate.nutBoltPlacement import NutBoltArray
+from nutBoltPlacement import NutBoltArray
+#from Connections.Shear.Finplate.nutBoltPlacement import NutBoltArray
 '''
 Created on 21-Aug-2014
 
@@ -642,7 +643,7 @@ class MainController(QtGui.QMainWindow):
         elif  component == "Model":
             self.display.EraseAll()
             #osdagDisplayShape(self.display, cadlist[0], update=True)
-            #osdagDisplayShape(self.display, cadlist[1],material = Graphic3d_NOT_2D_ALUMINUM, update=True)
+            osdagDisplayShape(self.display, cadlist[1],material = Graphic3d_NOT_2D_ALUMINUM, update=True)
             #osdagDisplayShape(self.display,cadlist[2],color = 'red', update = True)
             #osdagDisplayShape(self.display,cadlist[3],color = 'red', update = True)
             osdagDisplayShape(self.display, cadlist[4], color = 'blue', update = True)
@@ -662,17 +663,19 @@ class MainController(QtGui.QMainWindow):
         column_sec = self.ui.comboColSec.currentText()
         dictcoldata = get_columndata(column_sec)
         return dictcoldata
+    
     def create3DColWebBeamWeb(self):
         '''
         creating 3d cad model with column web beam web
         '''
         uiObj = self.getuser_inputs()
         resultObj = finConn(uiObj)
+        
         if len(resultObj) == 0:
-            self.display.DisplayMessage(gp_Pnt(0,0,0),'Sorry can not create 3D model',color = 'white')
+            self.display.DisplayMessage(gp_Pnt(0,0,0),'Sorry can not create 3D model',color = 'None')
         else:
             dictbeamdata  = self.fetchBeamPara()
-            
+            ##### BEAM PARAMETERS #####
             beam_D = int(dictbeamdata[QString("D")])
             beam_B = int(dictbeamdata[QString("B")])
             beam_tw = float(dictbeamdata[QString("tw")])
@@ -680,10 +683,12 @@ class MainController(QtGui.QMainWindow):
             beam_alpha = float(dictbeamdata[QString("FlangeSlope")])
             beam_R1 = float(dictbeamdata[QString("R1")])
             beam_R2 = float(dictbeamdata[QString("R2")])
+            beam_length = 500.0 # This parameter as per view of 3D cad model
             
             #beam = ISection(B = 140, T = 16,D = 400,t = 8.9, R1 = 14, R2 = 7, alpha = 98,length = 500)
             beam = ISection(B = beam_B, T = beam_T,D = beam_D,t = beam_tw,
-                             R1 = beam_R1, R2 = beam_R2, alpha = beam_alpha,length = 500)
+                            R1 = beam_R1, R2 = beam_R2, alpha = beam_alpha,
+                            length = beam_length)
             
             ##### COLUMN PARAMETERS ######
             dictcoldata = self.fetchColumnPara()
@@ -700,33 +705,44 @@ class MainController(QtGui.QMainWindow):
             column = ISection(B = column_B, T = column_T, D = column_D,
                                t = column_tw, R1 = column_R1, R2 = column_R2, alpha = column_alpha, length = 1000)
             # Outputs from finPlateCalc1
+            #### WELD,PLATE,BOLT AND NUT PARAMETERS #####
             
             fillet_length = resultObj['Plate']['height']
             fillet_thickness =  resultObj['Weld']['thickness']
             plate_width = resultObj['Plate']['width']
             plate_thick = uiObj['Plate']['thickness(mm)']
+            bolt_dia = uiObj["Bolt"]["diameter(mm)"]
+            bolt_r = bolt_dia/2
+            bolt_R = bolt_r + 7
+            nut_R = bolt_R
+            bolt_T = 10.0 # minimum bolt thickness As per Indian Standard
+            bolt_Ht = 38.0 # minimum bolt length as per Indian Standard
+            nut_T = 12.0 # minimum nut thickness As per Indian Standard
+            nut_Ht = 12.2 #
+            
             
             #Fweld1 = FilletWeld(L= 300,b = 6, h = 6)
             Fweld1 = FilletWeld(L= fillet_length,b = fillet_thickness, h = fillet_thickness)
-            #Fweld1 = Weld(L= 300,W = beam.t, T = 8)
             
             #plate = Plate(L= 300,W =100, T = 10)
             plate = Plate(L= fillet_length,W =plate_width, T = plate_thick)
-            bolt_T = 6.0
-            bolt = Bolt(R = self.boltRadius,T = bolt_T, H = 30.0, r = 4.0 )
-            boltPlaceObj = finConn(self.getuser_inputs())
             
-            nut =Nut(R = self.nutRadius, T = 10.0,  H = 11, innerR1 = 4.0, outerR2 = 8.3)
-            # bolt assembly
-           
 
-            self.nutBoltArray = NutBoltArray(self.boltPlaceObj,self.nut,self.bolt)
+            #bolt = Bolt(R = bolt_R,T = bolt_T, H = 38.0, r = 4.0 )
+            bolt = Bolt(R = bolt_R,T = bolt_T, H = bolt_Ht, r = bolt_r )
+             
+            #nut =Nut(R = bolt_R, T = 10.0,  H = 11, innerR1 = 4.0, outerR2 = 8.3)
+            nut = Nut(R = bolt_R, T = nut_T,  H = nut_Ht, innerR1 = bolt_r)
             
-            self.nutBoltArray.createModel()
-            nutBoltAssembly = self.nutBoltArray.getnutboltModel()
+            gap = beam_tw + plate_thick + bolt_T 
+            
+            nutBoltArray = NutBoltArray(resultObj,nut,bolt,gap)
+            #self.nutBoltArray.createModel()
+            #nutBoltAssembly = self.nutBoltArray.getnutboltModel()
             
             
-            colwebconn =  ColWebBeamWeb(column,beam,Fweld1,plate,nutBoltAssembly)
+            colwebconn =  ColWebBeamWeb(column,beam,Fweld1,plate,nutBoltArray)
+            #colwebconn =  ColWebBeamWeb(column,beam,Fweld1,plate,boltRadius,nutRadius)
             colwebconn.create_3dmodel()
         
         return  colwebconn
@@ -764,6 +780,7 @@ class MainController(QtGui.QMainWindow):
         gpPntplateOrigin=  getGpPt(plateOrigin)
         my_sphere = BRepPrimAPI_MakeSphere(gpPntplateOrigin,2).Shape()
         self.display.DisplayShape(my_sphere,update=True)
+        
         
         
     
