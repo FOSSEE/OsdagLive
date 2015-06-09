@@ -401,12 +401,18 @@ def finConn(uiObj):
     
     if web_plate_l == min_plate_height or web_plate_l == max_plate_height or web_plate_l < web_plate_l_req or web_plate_w < web_plate_w_req:
         for k in outputObj.keys():
-            for key in outputObj[k]:
+            for key in outputObj[k].keys():
                 outputObj[k][key] = ""
     elif moment_capacity < moment_demand:
         for k in outputObj.keys():
-            for key in outputObj[k]:
+            for key in outputObj[k].keys():
                 outputObj[k][key] = ""
+# if web_plate_l == min_plate_height or web_plate_l == max_plate_height or web_plate_l < web_plate_l_req or web_plate_w < web_plate_w_req:
+#     outputObj = {}
+#     
+# elif moment_capacity < moment_demand:
+#     outputObj = {}
+        
   
     return outputObj
     
