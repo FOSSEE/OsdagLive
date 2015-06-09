@@ -672,7 +672,7 @@ class MainController(QtGui.QMainWindow):
         resultObj = finConn(uiObj)
         
         if len(resultObj) == 0:
-            self.display.DisplayMessage(gp_Pnt(0,0,0),'Sorry can not create 3D model',color = 'None')
+            self.display.DisplayMessage(gp_Pnt(0,0,0),"Sorry can not create 3D model")
         else:
             dictbeamdata  = self.fetchBeamPara()
             ##### BEAM PARAMETERS #####
@@ -781,8 +781,6 @@ class MainController(QtGui.QMainWindow):
         my_sphere = BRepPrimAPI_MakeSphere(gpPntplateOrigin,2).Shape()
         self.display.DisplayShape(my_sphere,update=True)
         
-        
-        
     
     def call_3DBeam(self):
         '''
@@ -814,9 +812,7 @@ class MainController(QtGui.QMainWindow):
             self.ui.mytabWidget.setCurrentIndex(0)
             
         self.display3Dmodel(self.memberlist, "Finplate")
-           
     
-        
         
     def design_btnclicked(self):
         '''
@@ -869,8 +865,6 @@ class MainController(QtGui.QMainWindow):
         
         self.display.DisplayShape(final_model, update = True)
         self.display.SetModeHLR()
-        
-        
         
         if (viewName == "Front"):
             self.display.View_Front()
