@@ -93,11 +93,14 @@ class ColWebBeamWeb(object):
         self.weldRight.place(filletWeld2Origin,uDir1,wDir1)
         
     def createNutBoltArray(self):
-        nutboltArrayOrigin = self.plate.secOrigin + self.plate.T/2.0 * self.plate.uDir - self.plate.L/2.0 * self.plate.vDir
+        nutboltArrayOrigin = self.plate.secOrigin 
+        nutboltArrayOrigin -= self.plate.T/2.0 * self.plate.uDir  
+        nutboltArrayOrigin += self.plate.L/2.0 * self.plate.vDir
+        
         gaugeDir = self.plate.wDir
-        pitchDir = self.plate.vDir
+        pitchDir = -self.plate.vDir
         boltDir = self.plate.uDir
-        self.nutBoltArray.place(nutboltArrayOrigin, gaugeDir, pitchDir,boltDir)
+        self.nutBoltArray.place(nutboltArrayOrigin, gaugeDir, pitchDir, boltDir)
         
     def get_models(self):
         '''Returning 3D models

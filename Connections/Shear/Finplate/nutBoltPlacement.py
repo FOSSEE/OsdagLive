@@ -6,13 +6,15 @@ Created on 07-Jun-2015
 import numpy
 from bolt import Bolt
 from nut import Nut
+from OCC.BRepPrimAPI import BRepPrimAPI_MakeSphere
+from ModelUtils import getGpPt
 
 class NutBoltArray():
     def __init__(self,boltPlaceObj,nut,bolt,gap):
-        self.origin = numpy.array([0.0, 0.0, 0])
-        self.gaugeDir = numpy.array([1.0, 0.0, 0])
-        self.pitchDir = numpy.array([0.0, 1.0, 0])
-        self.boltDir =  numpy.array([0.0, 0.0, -1.0])
+        self.origin = None
+        self.gaugeDir = None
+        self.pitchDir = None
+        self.boltDir =  None
         
         self.initBoltPlaceParams(boltPlaceObj)
         
@@ -25,7 +27,7 @@ class NutBoltArray():
         self.initialiseNutBolts()
         
         self.positions = []
-        self.calculatePositions()
+        #self.calculatePositions()
         
         self.models = []
                 
@@ -39,17 +41,25 @@ class NutBoltArray():
     def initBoltPlaceParams(self,boltPlaceObj):
         self.pitch = boltPlaceObj['Bolt']['pitch']
         self.gauge = boltPlaceObj['Bolt']['gauge']
+        #self.gauge = 30
         self.edge = boltPlaceObj['Bolt']['edge']
         self.end = boltPlaceObj['Bolt']['enddist']
         self.row = boltPlaceObj['Bolt']['numofrow']
         self.col = boltPlaceObj['Bolt']['numofcol']
-        
+        #self.row = 3
+        #self.col = 2
+         
     
     def calculatePositions(self):
         self.positions = []
-        for rw in  range(1,(self.row +1)):
+        for rw in  range(self.row):
             for col in range(self.col):
-                pos = self.origin +(self.edge + (col * self.gauge))* self.gaugeDir + rw * self.pitch * self.pitchDir
+                pos = self.origin 
+                pos = pos + self.edge * self.gaugeDir
+                pos = pos + col * self.gauge * self.gaugeDir 
+                pos = pos + self.end * self.pitchDir 
+                pos = pos + rw * self.pitch * self.pitchDir
+                
                 self.positions.append(pos)
     
     def place(self, origin, gaugeDir, pitchDir, boltDir):
@@ -60,16 +70,23 @@ class NutBoltArray():
         
         self.calculatePositions()
         
-        for index,pos in enumerate (self.positions):
-            self.bolts[index].place(pos,gaugeDir,boltDir)
-            self.nuts[index].place((pos + self.gap* boltDir),gaugeDir,pitchDir)
+        for index, pos in enumerate (self.positions):
+            self.bolts[index].place(pos, gaugeDir, boltDir)
+            self.nuts[index].place((pos + self.gap * boltDir), gaugeDir, -boltDir)
     
         
     def createModel(self):
         for bolt in self.bolts:
-            self.models.append(bolt.createModel())
+            self.models.append(bolt.createModel())        
+        
         for nut in self.nuts:
             self.models.append(nut.createModel())
+            
+        dbg = self.dbgSphere(self.origin)
+        self.models.append(dbg)
+        
+    def dbgSphere(self, pt):
+        return BRepPrimAPI_MakeSphere(getGpPt(pt), 2).Shape()
         
     def getnutboltModels(self): 
         return self.models   

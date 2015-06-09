@@ -22,25 +22,32 @@ class Bolt(object):
         self.H = H
         self.T = T
         self.r = r
-        self.secOrigin = numpy.array([0, 0, 0])
-        self.uDir = numpy.array([1.0, 0, 0])
-        self.wDir = numpy.array([0.0, 0, 1.0])
-        self.computeParams()
+        self.origin = None
+        self.uDir = None
+        self.shaftDir = None
+        self.vDir = None
+        self.a1 = None
+        self.a2 = None
+        self.a3 = None
+        self.a4 = None
+        self.a5 = None
+        self.a6 = None
+        self.points = []        
+        #self.computeParams()
     
-    def place(self, secOrigin, uDir, wDir):
-        self.secOrigin = secOrigin
+    def place(self, origin, uDir, shaftDir):
+        self.origin = origin
         self.uDir = uDir
-        self.wDir = wDir        
+        self.shaftDir = shaftDir        
         self.computeParams()
         
     def getPoint(self,theta):
         theta = math.radians(theta)
-        point = self.secOrigin + (self.R * math.cos(theta)) * self.uDir + (self.R * math.sin(theta)) * self.vDir 
+        point = self.origin + (self.R * math.cos(theta)) * self.uDir + (self.R * math.sin(theta)) * self.vDir 
         return point
     
-    def computeParams(self):
-        
-        self.vDir = numpy.cross(self.wDir, self.uDir)
+    def computeParams(self):        
+        self.vDir = numpy.cross(self.shaftDir, self.uDir)
         self.a1 = self.getPoint(0)
         self.a2 = self.getPoint(60)
         self.a3 = self.getPoint(120)
@@ -56,7 +63,7 @@ class Bolt(object):
         edges = makeEdgesFromPoints(self.points)
         wire = makeWireFromEdges(edges)
         aFace = makeFaceFromWire(wire)
-        extrudeDir = self.T * self.wDir # extrudeDir is a numpy array
+        extrudeDir = -self.T * self.shaftDir # extrudeDir is a numpy array
         boltHead =  makePrismFromFace(aFace, extrudeDir)
         mkFillet = BRepFilletAPI_MakeFillet(boltHead)
         anEdgeExplorer = TopExp_Explorer(boltHead, TopAbs_EDGE)
@@ -66,9 +73,9 @@ class Bolt(object):
             anEdgeExplorer.Next()
                 
         boltHead = mkFillet.Shape()
-        cylOrigin = self.secOrigin + self.T * self.wDir
+        cylOrigin = self.origin
       
-        boltCylinder = BRepPrimAPI_MakeCylinder(gp_Ax2(getGpPt(cylOrigin), getGpDir(self.wDir)), self.r, self.H).Shape()
+        boltCylinder = BRepPrimAPI_MakeCylinder(gp_Ax2(getGpPt(cylOrigin), getGpDir(self.shaftDir)), self.r, self.H).Shape()
         whole_Bolt = BRepAlgoAPI_Fuse(boltHead,boltCylinder).Shape()
         mkFillet = BRepFilletAPI_MakeFillet(whole_Bolt)
         

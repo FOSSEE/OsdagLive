@@ -132,7 +132,7 @@ class MainController(QtGui.QMainWindow):
         # self.memberlist =  [my_box, my_cylendar, my_cylendar]
         
         #my_sphere = BRepPrimAPI_MakeSphere(5).Shape()
-        self.fuse_model = self.create2Dcad()
+        #self.fuse_model = self.create2Dcad()
         #self.fuse_model = my_sphere 
         
 
@@ -757,7 +757,7 @@ class MainController(QtGui.QMainWindow):
         colflangeconn =  ColFlangeBeamWeb(column,beam,weld,plate,boltRadius,nutRadius)
         return colflangeconn.create_3dmodel()
      
-    def call_3DModel(self):
+    def call_3DModelduplicate(self):
         self.display.EraseAll()
         uiObj = self.getuser_inputs()
         resultObj = finConn(uiObj)
@@ -780,11 +780,31 @@ class MainController(QtGui.QMainWindow):
                         plateOrigin = connectivity.plate.secOrigin
                         gpPntplateOrigin=  getGpPt(plateOrigin)
                         my_sphere = BRepPrimAPI_MakeSphere(gpPntplateOrigin,2).Shape()
-                        self.display.DisplayShape(my_sphere,update=True)
+                        #self.display.DisplayShape(my_sphere,update=True)
                 else:
                     self.display.DisplayMessage(gp_Pnt(1000,0,400),"Sorry, can not create 3D model",height = 25.0)
     
+    def call_3DModel(self): 
+        if self.ui.btn3D.isEnabled():
+            self.ui.chkBxBeam.setChecked(QtCore.Qt.Unchecked)
+            self.ui.chkBxCol.setChecked(QtCore.Qt.Unchecked)
+            self.ui.chkBxFinplate.setChecked(QtCore.Qt.Unchecked)
+            self.ui.mytabWidget.setCurrentIndex(0)
+            
+        if self.ui.comboConnLoc.currentText()== "Column web-Beam web":
+            connectivity =  self.colWebBeamWeb
+        else:
+            self.ui.mytabWidget.setCurrentIndex(0)
+            connectivity =  self.createColFlangeBeamWeb()
+
+        self.display3Dmodel(connectivity.get_models(), "Model")
+        plateOrigin = connectivity.plate.secOrigin
+        gpPntplateOrigin=  getGpPt(plateOrigin)
+        my_sphere = BRepPrimAPI_MakeSphere(gpPntplateOrigin,2).Shape()
+        self.display.DisplayShape(my_sphere,update=True)
+
                     
+             
     def call_3DBeam(self):
         '''
         Creating and displaying 3D Beam
