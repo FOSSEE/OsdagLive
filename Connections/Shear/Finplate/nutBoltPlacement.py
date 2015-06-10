@@ -49,7 +49,6 @@ class NutBoltArray():
         #self.row = 3
         #self.col = 2
          
-    
     def calculatePositions(self):
         self.positions = []
         for rw in  range(self.row):
@@ -86,7 +85,7 @@ class NutBoltArray():
         self.models.append(dbg)
         
     def dbgSphere(self, pt):
-        return BRepPrimAPI_MakeSphere(getGpPt(pt), 2).Shape()
+        return BRepPrimAPI_MakeSphere(getGpPt(pt), 0.1).Shape()
         
     def getnutboltModels(self): 
         return self.models   

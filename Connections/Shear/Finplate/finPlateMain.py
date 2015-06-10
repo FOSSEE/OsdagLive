@@ -64,15 +64,17 @@ class MainController(QtGui.QMainWindow):
         
         self.ui.comboConnLoc.currentIndexChanged[str].connect(self.setimage_connection)
         
-        
+        self.disableViewButtons()
         
         self.ui.btnInput.clicked.connect(lambda: self.dockbtn_clicked(self.ui.inputDock))
         self.ui.btnOutput.clicked.connect(lambda: self.dockbtn_clicked(self.ui.outputDock))
+        
         self.ui.btn_front.clicked.connect(self.call_Frontview)
         self.ui.btn_top.clicked.connect(self.call_Topview)
         self.ui.btn_side.clicked.connect(self.call_Sideview)
         
-        self.ui.btn3D.clicked.connect(self.call_3DModel)
+        #self.ui.btn3D.clicked.connect(self.call_3DModel)
+        self.ui.btn3D.clicked.connect(lambda:self.call_3DModel(True))
         self.ui.chkBxBeam.clicked.connect(self.call_3DBeam)
         self.ui.chkBxCol.clicked.connect(self.call_3DColumn)
         self.ui.chkBxFinplate.clicked.connect(self.call_3DFinplate)
@@ -100,18 +102,14 @@ class MainController(QtGui.QMainWindow):
         self.ui.combo_Beam.addItems(get_beamcombolist())
         self.ui.comboColSec.addItems(get_columncombolist())
         self.ui.combo_Beam.currentIndexChanged[str].connect(self.populatePlateThickCombo)
-        #beam_sec = self.ui.combo_Beam.currentText()
-        #self.populatePlateThickCombo(beam_sec)
         
         self.ui.menuView.addAction(self.ui.inputDock.toggleViewAction())
         self.ui.menuView.addAction(self.ui.outputDock.toggleViewAction())
-        self.ui.btn_CreateDesign.clicked.connect(self.save_design)
+        self.ui.btn_CreateDesign.clicked.connect(self.save_design)#Saves the create design report
         #self.ui.btn_Saveoutput.clicked.connect(self.save_design)
         self.ui.btn_SaveMessages.clicked.connect(self.save_log)
         #self.ui.btn_Savelog.clicked.connect(self.save_log)
         
-        
-
         # Saving and Restoring the finPlate window state.
         self.retrieve_prevstate()
         
@@ -121,12 +119,12 @@ class MainController(QtGui.QMainWindow):
         
         # Initialising the qtviewer
         self.display,_ = self.init_display(backend_str="pyqt4")
-        #self.display2d,_,_ = self.init_display(backend_str="pyqt4")
         
         self.ui.btnSvgSave.clicked.connect(self.save3DtoIGES)
         #self.ui.btnSvgSave.clicked.connect(lambda:self.saveTopng(self.display))
         
-        self.colWebBeamWeb =  self.create3DColWebBeamWeb()
+        self.connectivity = None
+        #self.colWebBeamWeb =  self.create3DColWebBeamWeb()
         # my_box = BRepPrimAPI_MakeBox(gp_Pnt(20,0,0),10., 20., 30.).Shape()
         # my_cylendar = BRepPrimAPI_MakeCylinder(10,30).Shape()
         # self.memberlist =  [my_box, my_cylendar, my_cylendar]
@@ -135,9 +133,33 @@ class MainController(QtGui.QMainWindow):
         #self.fuse_model = self.create2Dcad()
         #self.fuse_model = my_sphere 
         
-
-
+        
+    def disableViewButtons(self):
+        '''
+        Disables the all buttons in toolbar
+        '''
+        self.ui.btn_front.setEnabled(False)
+        self.ui.btn_top.setEnabled(False)
+        self.ui.btn_side.setEnabled(False)
+        
+        self.ui.btn3D.setEnabled(False)
+        self.ui.chkBxBeam.setEnabled(False)
+        self.ui.chkBxCol.setEnabled(False)
+        self.ui.chkBxFinplate.setEnabled(False)
     
+    def enableViewButtons(self):
+        '''
+        Enables the all buttons in toolbar
+        '''
+        self.ui.btn_front.setEnabled(True)
+        self.ui.btn_top.setEnabled(True)
+        self.ui.btn_side.setEnabled(True)
+        
+        self.ui.btn3D.setEnabled(True)
+        self.ui.chkBxBeam.setEnabled(True)
+        self.ui.chkBxCol.setEnabled(True)
+        self.ui.chkBxFinplate.setEnabled(True)
+        
     def populatePlateThickCombo(self):
         dictbeamdata = self.fetchBeamPara()
 #         beam_sec = self.ui.combo_Beam.currentText()
@@ -261,7 +283,6 @@ class MainController(QtGui.QMainWindow):
         '''(Dictionary)--> None
          
         '''
-        
         inputFile = QtCore.QFile('saveINPUT.txt')
         if not inputFile.open(QtCore.QFile.WriteOnly | QtCore.QFile.Text):
             QtGui.QMessageBox.warning(self, "Application",
@@ -618,8 +639,31 @@ class MainController(QtGui.QMainWindow):
             #self.ui.model2dTab.raise_()   # make the application float to the top
           
         return display, start_display
+    
+    def display3Dmodel(self, component):
+        self.display.EraseAll()
+        self.display.SetModeShaded()
+        self.display.set_bg_gradient_color(23,1,32,23,1,32)
         
-    def display3Dmodel(self,cadlist,component):
+        if component == "Column":
+            osdagDisplayShape(self.display, self.connectivity.columnModel, update=True)
+        elif component == "Beam":
+            osdagDisplayShape(self.display, self.connectivity.beamModel, material = Graphic3d_NOT_2D_ALUMINUM, update=True)
+        elif component == "Finplate" :
+            osdagDisplayShape(self.display, self.connectivity.weldModelLeft, color = 'red', update = True)
+            osdagDisplayShape(self.display, self.connectivity.weldModelRight, color = 'red', update = True)
+            osdagDisplayShape(self.display,self.connectivity.plateModel,color = 'blue', update = True)
+            self.display.DisplayShape(self.connectivity.nutBoltArray.getnutboltModels(), color = Quantity_NOC_SADDLEBROWN, update=True)
+        elif component == "Model":
+            osdagDisplayShape(self.display, self.connectivity.columnModel, update=True)
+            osdagDisplayShape(self.display, self.connectivity.beamModel, material = Graphic3d_NOT_2D_ALUMINUM, update=True)
+            osdagDisplayShape(self.display, self.connectivity.weldModelLeft, color = 'red', update = True)
+            osdagDisplayShape(self.display, self.connectivity.weldModelRight, color = 'red', update = True)
+            osdagDisplayShape(self.display,self.connectivity.plateModel,color = 'blue', update = True)
+            self.display.DisplayShape(self.connectivity.nutBoltArray.getnutboltModels(), color = Quantity_NOC_SADDLEBROWN, update=True)
+            
+        
+    def display3Dmodelold(self,cadlist,component):
         self.display.EraseAll()
         self.display.SetModeShaded()
         #self.display,_ = self.init_display(backend_str="pyqt4")
@@ -730,15 +774,11 @@ class MainController(QtGui.QMainWindow):
         #nut =Nut(R = bolt_R, T = 10.0,  H = 11, innerR1 = 4.0, outerR2 = 8.3)
         nut = Nut(R = bolt_R, T = nut_T,  H = nut_Ht, innerR1 = bolt_r)
         
-        gap = beam_tw + plate_thick + bolt_T 
+        gap = beam_tw + plate_thick+ nut_T
         
         nutBoltArray = NutBoltArray(resultObj,nut,bolt,gap)
-        #self.nutBoltArray.createModel()
-        #nutBoltAssembly = self.nutBoltArray.getnutboltModel()
-        
         
         colwebconn =  ColWebBeamWeb(column,beam,Fweld1,plate,nutBoltArray)
-        #colwebconn =  ColWebBeamWeb(column,beam,Fweld1,plate,boltRadius,nutRadius)
         colwebconn.create_3dmodel()
     
         return  colwebconn
@@ -784,27 +824,32 @@ class MainController(QtGui.QMainWindow):
                 else:
                     self.display.DisplayMessage(gp_Pnt(1000,0,400),"Sorry, can not create 3D model",height = 25.0)
     
-    def call_3DModel(self): 
+    def call_3DModel(self,flag): 
+        
         if self.ui.btn3D.isEnabled():
             self.ui.chkBxBeam.setChecked(QtCore.Qt.Unchecked)
             self.ui.chkBxCol.setChecked(QtCore.Qt.Unchecked)
             self.ui.chkBxFinplate.setChecked(QtCore.Qt.Unchecked)
             self.ui.mytabWidget.setCurrentIndex(0)
             
-        if self.ui.comboConnLoc.currentText()== "Column web-Beam web":
-            connectivity =  self.colWebBeamWeb
+        if flag == True:
+            if self.ui.comboConnLoc.currentText()== "Column web-Beam web":
+                #self.create3DColWebBeamWeb()
+                self.connectivity =  self.create3DColWebBeamWeb()
+            else:
+                self.ui.mytabWidget.setCurrentIndex(0)
+                self.connectivity =  self.createColFlangeBeamWeb()
+
+            self.display3Dmodel("Model")
+            #plateOrigin = self.connectivity.plate.secOrigin
+            #gpPntplateOrigin=  getGpPt(plateOrigin)
+            #my_sphere = BRepPrimAPI_MakeSphere(gpPntplateOrigin,2).Shape()
+            #self.display.DisplayShape(my_sphere,update=True)
+            
         else:
-            self.ui.mytabWidget.setCurrentIndex(0)
-            connectivity =  self.createColFlangeBeamWeb()
-
-        self.display3Dmodel(connectivity.get_models(), "Model")
-        plateOrigin = connectivity.plate.secOrigin
-        gpPntplateOrigin=  getGpPt(plateOrigin)
-        my_sphere = BRepPrimAPI_MakeSphere(gpPntplateOrigin,2).Shape()
-        self.display.DisplayShape(my_sphere,update=True)
-
-                    
-             
+            self.display.EraseAll()
+            self.display.DisplayMessage(gp_Pnt(1000,0,400),"Sorry, can not create 3D model",height = 23.0)       
+   
     def call_3DBeam(self):
         '''
         Creating and displaying 3D Beam
@@ -814,7 +859,7 @@ class MainController(QtGui.QMainWindow):
             self.ui.chkBxFinplate.setChecked(QtCore.Qt.Unchecked)
             self.ui.mytabWidget.setCurrentIndex(0)
         
-        self.display3Dmodel(self.memberlist, "Beam")
+        self.display3Dmodel("Beam")
             
     def call_3DColumn(self):
         '''
@@ -823,7 +868,7 @@ class MainController(QtGui.QMainWindow):
             self.ui.chkBxBeam.setChecked(QtCore.Qt.Unchecked)
             self.ui.chkBxFinplate.setChecked(QtCore.Qt.Unchecked)
             self.ui.mytabWidget.setCurrentIndex(0)
-        self.display3Dmodel(self.memberlist, "Column")
+        self.display3Dmodel( "Column")
             
             
     def call_3DFinplate(self):
@@ -834,7 +879,7 @@ class MainController(QtGui.QMainWindow):
             self.ui.chkBxCol.setChecked(QtCore.Qt.Unchecked)
             self.ui.mytabWidget.setCurrentIndex(0)
             
-        self.display3Dmodel(self.memberlist, "Finplate")
+        self.display3Dmodel( "Finplate")
     
         
     def design_btnclicked(self):
@@ -843,10 +888,11 @@ class MainController(QtGui.QMainWindow):
         designLogger =  logging.getLogger("Designlogger.finPlateCalc")
         
         self.ui.outputDock.setFixedSize(310,710)
+        self.enableViewButtons()
+        
         #self.set_designlogger()
         # Getting User Inputs.
         uiObj = self.getuser_inputs()
-        print uiObj
         
         # FinPlate Design Calculations. 
         resultObj = finConn(uiObj)
@@ -856,12 +902,15 @@ class MainController(QtGui.QMainWindow):
         
         # Displaying Messages related to FinPlate Design.
         self.displaylog_totextedit()
-        
-        
-    
 
-    def create2Dcad(self):
-        cadlist =  self.colWebBeamWeb.get_models()
+        # Displaying 3D Cad model
+        status = resultObj['Bolt']['status']
+        self.call_3DModel(status)
+        
+        
+    def create2Dcad(self,cadlist):
+       
+        #cadlist =  self.connectivity.get_models()
 
         final_model = cadlist[0]
         for model in cadlist[1:]:
@@ -902,7 +951,8 @@ class MainController(QtGui.QMainWindow):
         
         #display, start_display, _, _ = self.simpleGUI()
         #self.display2d,_,_ = self.init_display(backend_str="pyqt4")
-        #self.display.EraseAll()      
+        self.display.SetModeShaded()
+        self.display.EraseAll()      
 
         self.display.set_bg_gradient_color(255, 255, 255, 255, 255, 255)
         
@@ -953,8 +1003,11 @@ class MainController(QtGui.QMainWindow):
             
         self.display.EraseAll()
         self.ui.mytabWidget.setCurrentIndex(1)
+        self.connectivity =  self.create3DColWebBeamWeb()
+        final_model = self.create2Dcad(self.connectivity.get_models())
+        self.display2DModel(final_model,"Front")
         
-        self.display2DModel(self.fuse_model, "Front")
+        
     
     def call_Topview(self):
         
@@ -967,7 +1020,8 @@ class MainController(QtGui.QMainWindow):
         self.display.EraseAll()
         self.ui.mytabWidget.setCurrentIndex(1)
         
-        self.display2DModel(self.fuse_model, "Top")
+        final_model = self.create2Dcad()
+        self.display2DModel(final_model, "Top")
         
     def call_Sideview(self):
         
@@ -978,7 +1032,8 @@ class MainController(QtGui.QMainWindow):
         self.ui.chkBxFinplate.setChecked(QtCore.Qt.Unchecked)
         
         self.ui.mytabWidget.setCurrentIndex(1)
-        self.display2DModel(self.fuse_model, "Right")
+        final_model = self.create2Dcad()
+        self.display2DModel(final_model, "Right")
         
     def closeEvent(self, event):
         '''

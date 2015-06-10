@@ -142,33 +142,36 @@ def finConn(uiObj):
     min_plate_height = round(min_plate_height,3)
     
     # Height input and check
-    if web_plate_l == 0:
-        web_plate_l = min_plate_height +10; 
-          
-    if web_plate_l > max_plate_height :
-        logger.error(": Height of plate is more than the clear depth of the beam")
-        logger.warning(": Maximum plate height allowed is %2.2f mm " % (max_plate_height))
-        #print "Error: Height of plate is more than the clear depth of the beam"
-        #print" Maximum plate height allowed is " + str(max_plate_height) + " mm"
-        web_plate_l = max_plate_height ; 
-          
-    elif min_plate_height > max_plate_height:
-        logger.error(": Height of plate is more than the clear depth of the beam")
-        logger.warning(": Maximum plate height allowed is %2.2f mm " % (max_plate_height))
-        
-        #print "Error: Height of plate is more than the clear depth of the beam"
-        #print" Maximum plate height allowed is " + str(max_plate_height) + " mm"
-        web_plate_l = max_plate_height;
-        
-    elif min_plate_height > web_plate_l:
-        
-        logger.error(": Plate height provided is less than the minimum required ")
-        logger.warning(": Minimum plate height required is  %2.2f mm " % (min_plate_height))
-        
-        # print "\nERROR: Chosen plate height is not sufficient" + "\n Minimum required height = " + str(min_plate_height) + " mm";
-        # print "\nSuggestion: Re-design with a different plate height or thickness"    
-        web_plate_l = min_plate_height 
-    
+             
+    if web_plate_l != 0:
+        if web_plate_l > max_plate_height :
+            logger.error(": Height of plate is more than the clear depth of the beam")
+            logger.warning(": Maximum plate height allowed is %2.2f mm " % (max_plate_height))
+            #print "Error: Height of plate is more than the clear depth of the beam"
+            #print" Maximum plate height allowed is " + str(max_plate_height) + " mm"
+            web_plate_l = max_plate_height ; 
+              
+        elif min_plate_height > max_plate_height:
+            logger.error(": Height of plate is more than the clear depth of the beam")
+            logger.warning(": Maximum plate height allowed is %2.2f mm " % (max_plate_height))
+            
+            #print "Error: Height of plate is more than the clear depth of the beam"
+            #print" Maximum plate height allowed is " + str(max_plate_height) + " mm"
+            web_plate_l = max_plate_height;
+            
+        elif min_plate_height > web_plate_l:
+            
+            logger.error(": Plate height provided is less than the minimum required ")
+            logger.warning(": Minimum plate height required is  %2.2f mm " % (min_plate_height))
+            
+            # print "\nERROR: Chosen plate height is not sufficient" + "\n Minimum required height = " + str(min_plate_height) + " mm";
+            # print "\nSuggestion: Re-design with a different plate height or thickness"    
+            web_plate_l = min_plate_height 
+    else:
+        if min_plate_height < max_plate_height:
+            web_plate_l = min_plate_height +10
+        elif min_plate_height >= max_plate_height:
+            web_plate_l = (max_plate_height-10)//10*10 ;
         
     
     ########################################################################
@@ -322,14 +325,17 @@ def finConn(uiObj):
     if bolt_line == 2:
         web_plate_l_req2 = (bolts_one_line-1) * min_pitch + 2 * min_edge_dist;
     
-    if web_plate_l == 0 or web_plate_l == min_plate_height or web_plate_l == max_plate_height:
-        web_plate_l_req = max(web_plate_l_req1, web_plate_l_req2, web_plate_l);
-    elif web_plate_l > min_plate_height or web_plate_l < max_plate_height:
-        web_plate_l_req = max(web_plate_l_req1, web_plate_l_req2, min_plate_height);
+        if web_plate_l == 0 or web_plate_l == min_plate_height or web_plate_l == max_plate_height:
+            web_plate_l_req = max(web_plate_l_req1, web_plate_l_req2, web_plate_l);
+        elif web_plate_l > min_plate_height or web_plate_l < max_plate_height:
+            web_plate_l_req = max(web_plate_l_req1, web_plate_l_req2, min_plate_height);
     
-    if web_plate_l < web_plate_l_req:
-        logger.error(": Plate height provided is less than the minimum required")
-        
+    if web_plate_l != min_plate_height +10 or web_plate_l != (max_plate_height-10)//10*10 :
+        pass
+    else:
+        if web_plate_l < web_plate_l_req:
+            logger.error(": Plate height provided is less than the minimum required")
+            
     if web_plate_w < web_plate_w_req: 
            
         logger.error(": Plate width provided is less than the minimum required")
@@ -373,6 +379,7 @@ def finConn(uiObj):
     # End of calculation
     outputObj = {}
     outputObj['Bolt'] ={}
+    outputObj['Bolt']['status'] = True
     outputObj['Bolt']['shearcapacity'] = bolt_shear_capacity
     outputObj['Bolt']['bearingcapacity'] = bolt_bearing_capacity
     outputObj['Bolt']['boltcapacity'] = bolt_capacity
@@ -399,14 +406,29 @@ def finConn(uiObj):
     outputObj['Plate']['width'] = web_plate_w
     #return outputObj
     
-    if web_plate_l == min_plate_height or web_plate_l == max_plate_height or web_plate_l < web_plate_l_req or web_plate_w < web_plate_w_req:
-        for k in outputObj.keys():
-            for key in outputObj[k].keys():
-                outputObj[k][key] = ""
-    elif moment_capacity < moment_demand:
-        for k in outputObj.keys():
-            for key in outputObj[k].keys():
-                outputObj[k][key] = ""
+    if web_plate_l == min_plate_height+10 or web_plate_l == (max_plate_height-10)//10*10:
+        if bolt_line==2:
+            if pitch < min_pitch:
+                for k in outputObj.keys():
+                    for key in outputObj[k].keys():
+                        outputObj[k][key] = ""
+        else:
+            return outputObj
+    else:
+        if web_plate_l == min_plate_height or web_plate_l == max_plate_height or web_plate_l < web_plate_l_req or web_plate_w < web_plate_w_req:
+            for k in outputObj.keys():
+                for key in outputObj[k].keys():
+                    outputObj[k][key] = ""
+        elif moment_capacity < moment_demand:
+            for k in outputObj.keys():
+                for key in outputObj[k].keys():
+                    outputObj[k][key] = ""
+        elif bolt_line==2:
+            if pitch < min_pitch:
+                for k in outputObj.keys():
+                    for key in outputObj[k].keys():
+                        outputObj[k][key] = ""
+                
 # if web_plate_l == min_plate_height or web_plate_l == max_plate_height or web_plate_l < web_plate_l_req or web_plate_w < web_plate_w_req:
 #     outputObj = {}
 #     
@@ -416,7 +438,6 @@ def finConn(uiObj):
   
     return outputObj
     
-
 
 
 
