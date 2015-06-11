@@ -18,7 +18,7 @@ Created on 21-Aug-2014
 @author: deepa
 '''
 import sys
-from OCC import VERSION
+from OCC import VERSION, BRepTools, StlAPI
 #from PyQt4 import QtGui,QtCore
 from ui_finPlate import Ui_MainWindow
 from model import *
@@ -27,7 +27,6 @@ from finplate_calc1 import finConn
 import yaml
 import pickle
 import logging 
-#from exampleSimpleGUI import init_display
 from OCC.BRepAlgoAPI import BRepAlgoAPI_Fuse
 from OCC._Quantity import Quantity_NOC_RED,Quantity_NOC_BLUE1,Quantity_NOC_SADDLEBROWN
 from ISection import ISection
@@ -45,6 +44,10 @@ from colFlangeBeamWebConnectivity import ColFlangeBeamWeb
 from OCC import IGESControl
 from filletweld import FilletWeld
 from ModelUtils import *
+from OCC.STEPControl import STEPControl_Writer, STEPControl_AsIs
+from OCC.Interface import Interface_Static_SetCVal
+from OCC.IFSelect import IFSelect_RetDone
+from OCC.StlAPI import StlAPI_Writer
 
 
 class MainController(QtGui.QMainWindow):
@@ -64,7 +67,7 @@ class MainController(QtGui.QMainWindow):
         
         self.ui.comboConnLoc.currentIndexChanged[str].connect(self.setimage_connection)
         
-        self.disableViewButtons()
+        #self.disableViewButtons()
         
         self.ui.btnInput.clicked.connect(lambda: self.dockbtn_clicked(self.ui.inputDock))
         self.ui.btnOutput.clicked.connect(lambda: self.dockbtn_clicked(self.ui.outputDock))
@@ -73,7 +76,6 @@ class MainController(QtGui.QMainWindow):
         self.ui.btn_top.clicked.connect(self.call_Topview)
         self.ui.btn_side.clicked.connect(self.call_Sideview)
         
-        #self.ui.btn3D.clicked.connect(self.call_3DModel)
         self.ui.btn3D.clicked.connect(lambda:self.call_3DModel(True))
         self.ui.chkBxBeam.clicked.connect(self.call_3DBeam)
         self.ui.chkBxCol.clicked.connect(self.call_3DColumn)
@@ -99,6 +101,17 @@ class MainController(QtGui.QMainWindow):
         maxfyVal = 450
         self.ui.txtFy.editingFinished.connect(lambda: self.check_range(self.ui.txtFy,self.ui.lbl_fy, minfyVal, maxfyVal))
        
+        ##### MenuBar #####
+        self.ui.actionQuit_fin_plate_design.setShortcut('Ctrl+Q')
+        self.ui.actionQuit_fin_plate_design.setStatusTip('Exit application')
+        self.ui.actionQuit_fin_plate_design.triggered.connect(QtGui.qApp.quit)
+        
+        self.ui.actionCreate_design_report.triggered.connect(self.save_design)
+        self.ui.actionSave_log_messages.triggered.connect(self.save_log)
+        self.ui.actionEnlarge_font_size.triggered.connect(self.showFontDialogue)
+        self.ui.actionZoom_in.triggered.connect(self.callZoomin)
+        
+        
         self.ui.combo_Beam.addItems(get_beamcombolist())
         self.ui.comboColSec.addItems(get_columncombolist())
         self.ui.combo_Beam.currentIndexChanged[str].connect(self.populatePlateThickCombo)
@@ -124,6 +137,8 @@ class MainController(QtGui.QMainWindow):
         #self.ui.btnSvgSave.clicked.connect(lambda:self.saveTopng(self.display))
         
         self.connectivity = None
+        self.fuse_model = None
+        
         #self.colWebBeamWeb =  self.create3DColWebBeamWeb()
         # my_box = BRepPrimAPI_MakeBox(gp_Pnt(20,0,0),10., 20., 30.).Shape()
         # my_cylendar = BRepPrimAPI_MakeCylinder(10,30).Shape()
@@ -133,6 +148,15 @@ class MainController(QtGui.QMainWindow):
         #self.fuse_model = self.create2Dcad()
         #self.fuse_model = my_sphere 
         
+    def showFontDialogue(self):
+        font, ok = QtGui.QFontDialog.getFont()
+        if ok:
+            self.ui.inputDock.setFont(font)
+            self.ui.outputDock.setFont(font)
+            self.ui.textEdit.setFont(font)
+        
+    def callZoomin(self):
+        self.display.DynamicZoom()
         
     def disableViewButtons(self):
         '''
@@ -162,13 +186,9 @@ class MainController(QtGui.QMainWindow):
         
     def populatePlateThickCombo(self):
         dictbeamdata = self.fetchBeamPara()
-#         beam_sec = self.ui.combo_Beam.currentText()
-#         dictbeamdata  = get_beamdata(beam_sec)
         beam_tw = float(dictbeamdata[QString("tw")])
-        #comboPlateItems = [str(self.ui.comboPlateThick_2.itemText(i)) for i in range(self.ui.comboPlateThick_2.count())]
         plateThickness = [6,8,10,12,14,16,18,20]
         newlist = []
-        #comboPlateThickItenewlist = []
         for ele in plateThickness[:]:
             item = int(ele)
             if item >= beam_tw:
@@ -653,49 +673,14 @@ class MainController(QtGui.QMainWindow):
             osdagDisplayShape(self.display, self.connectivity.weldModelLeft, color = 'red', update = True)
             osdagDisplayShape(self.display, self.connectivity.weldModelRight, color = 'red', update = True)
             osdagDisplayShape(self.display,self.connectivity.plateModel,color = 'blue', update = True)
-            self.display.DisplayShape(self.connectivity.nutBoltArray.getnutboltModels(), color = Quantity_NOC_SADDLEBROWN, update=True)
+            self.display.DisplayShape(self.connectivity.nutBoltArray.getModels(), color = Quantity_NOC_SADDLEBROWN, update=True)
         elif component == "Model":
             osdagDisplayShape(self.display, self.connectivity.columnModel, update=True)
             osdagDisplayShape(self.display, self.connectivity.beamModel, material = Graphic3d_NOT_2D_ALUMINUM, update=True)
             osdagDisplayShape(self.display, self.connectivity.weldModelLeft, color = 'red', update = True)
             osdagDisplayShape(self.display, self.connectivity.weldModelRight, color = 'red', update = True)
             osdagDisplayShape(self.display,self.connectivity.plateModel,color = 'blue', update = True)
-            self.display.DisplayShape(self.connectivity.nutBoltArray.getnutboltModels(), color = Quantity_NOC_SADDLEBROWN, update=True)
-            
-        
-    def display3Dmodelold(self,cadlist,component):
-        self.display.EraseAll()
-        self.display.SetModeShaded()
-        #self.display,_ = self.init_display(backend_str="pyqt4")
-        self.display.set_bg_gradient_color(23,1,32,23,1,32)
-        
-        if component == "Column":
-            
-            osdagDisplayShape(self.display, cadlist[0], update=True)
-        elif component == "Beam":
-            self.display.EraseAll()
-            osdagDisplayShape(self.display, cadlist[1],material = Graphic3d_NOT_2D_ALUMINUM, update=True)
-        elif component == "Finplate" :
-            display.EraseAll()
-            osdagDisplayShape(self.display,cadlist[2],color = 'red', update = True)
-            osdagDisplayShape(self.display, cadlist[3], color = 'red', update = True)
-            osdagDisplayShape(self.display, cadlist[4], color = 'blue', update = True)
-            self.display.DisplayShape(cadlist[5:8],color = Quantity_NOC_SADDLEBROWN, update=True)
-            self.display.DisplayShape(cadlist[8:11],color = Quantity_NOC_SADDLEBROWN, update = True)
-        elif  component == "Model":
-            self.display.EraseAll()
-            #osdagDisplayShape(self.display, cadlist[0], update=True)
-            osdagDisplayShape(self.display, cadlist[1],material = Graphic3d_NOT_2D_ALUMINUM, update=True)
-            #osdagDisplayShape(self.display,cadlist[2],color = 'red', update = True)
-            #osdagDisplayShape(self.display,cadlist[3],color = 'red', update = True)
-            osdagDisplayShape(self.display, cadlist[4], color = 'blue', update = True)
-            self.display.DisplayShape(cadlist[5:8],color = Quantity_NOC_SADDLEBROWN, update=True)
-            self.display.DisplayShape(cadlist[8:11],color = Quantity_NOC_SADDLEBROWN, update = True)
-            #osdagDisplayShape(self.display, cadlist[11], update = True)
-        else:
-            pass
-             
-        start_display()
+            self.display.DisplayShape(self.connectivity.nutBoltArray.getModels(), color = Quantity_NOC_SADDLEBROWN, update=True)
         
     def fetchBeamPara(self):
         beam_sec = self.ui.combo_Beam.currentText()
@@ -744,7 +729,6 @@ class MainController(QtGui.QMainWindow):
         #column = ISection(B = 83, T = 14.1, D = 250, t = 11, R1 = 12, R2 = 3.2, alpha = 98, length = 1000)
         column = ISection(B = column_B, T = column_T, D = column_D,
                            t = column_tw, R1 = column_R1, R2 = column_R2, alpha = column_alpha, length = 1000)
-        # Outputs from finPlateCalc1
         #### WELD,PLATE,BOLT AND NUT PARAMETERS #####
         
         fillet_length = resultObj['Plate']['height']
@@ -797,32 +781,6 @@ class MainController(QtGui.QMainWindow):
         colflangeconn =  ColFlangeBeamWeb(column,beam,weld,plate,boltRadius,nutRadius)
         return colflangeconn.create_3dmodel()
      
-    def call_3DModelduplicate(self):
-        self.display.EraseAll()
-        uiObj = self.getuser_inputs()
-        resultObj = finConn(uiObj)
-        for k in resultObj.keys():
-            for key in resultObj[k].keys():
-                if (resultObj[k][key] != ""):
-                    if self.ui.btn3D.isEnabled():
-                        self.ui.chkBxBeam.setChecked(QtCore.Qt.Unchecked)
-                        self.ui.chkBxCol.setChecked(QtCore.Qt.Unchecked)
-                        self.ui.chkBxFinplate.setChecked(QtCore.Qt.Unchecked)
-                        self.ui.mytabWidget.setCurrentIndex(0)
-                        
-                        if self.ui.comboConnLoc.currentText()== "Column web-Beam web":
-                            connectivity =  self.colWebBeamWeb
-                        else:
-                            self.ui.mytabWidget.setCurrentIndex(0)
-                            connectivity =  self.createColFlangeBeamWeb()
-            
-                        self.display3Dmodel(connectivity.get_models(), "Model")
-                        plateOrigin = connectivity.plate.secOrigin
-                        gpPntplateOrigin=  getGpPt(plateOrigin)
-                        my_sphere = BRepPrimAPI_MakeSphere(gpPntplateOrigin,2).Shape()
-                        #self.display.DisplayShape(my_sphere,update=True)
-                else:
-                    self.display.DisplayMessage(gp_Pnt(1000,0,400),"Sorry, can not create 3D model",height = 25.0)
     
     def call_3DModel(self,flag): 
         
@@ -836,9 +794,11 @@ class MainController(QtGui.QMainWindow):
             if self.ui.comboConnLoc.currentText()== "Column web-Beam web":
                 #self.create3DColWebBeamWeb()
                 self.connectivity =  self.create3DColWebBeamWeb()
+                self.fuse_model = None
             else:
                 self.ui.mytabWidget.setCurrentIndex(0)
                 self.connectivity =  self.createColFlangeBeamWeb()
+                self.fuse_model = None
 
             self.display3Dmodel("Model")
             #plateOrigin = self.connectivity.plate.secOrigin
@@ -908,11 +868,12 @@ class MainController(QtGui.QMainWindow):
         self.call_3DModel(status)
         
         
-    def create2Dcad(self,cadlist):
+    def create2Dcad(self,connectivity):
        
-        #cadlist =  self.connectivity.get_models()
-
+        cadlist =  self.connectivity.get_models()
+        print len(cadlist)
         final_model = cadlist[0]
+        #model = cadlist[1]
         for model in cadlist[1:]:
             final_model = BRepAlgoAPI_Fuse(model,final_model).Shape()
         return final_model           
@@ -920,14 +881,43 @@ class MainController(QtGui.QMainWindow):
     
     # Export to IGES
     def save3DtoIGES(self):
+        if self.connectivity == None:
+            self.connectivity =  self.create3DColWebBeamWeb()
+        if self.fuse_model == None:
+            self.fuse_model = self.create2Dcad(self.connectivity)
+        shape = self.fuse_model
         
-        shape = self.create2Dcad()
-        i  = IGESControl.IGESControl_Controller()
-        i.Init()
-        iges_writer = IGESControl.IGESControl_Writer()
-        iges_writer.AddShape(shape)
-        iges_writer.Write('/home/deepa/Pictures/osdag.iges')
-    
+        files_types = "IGS (*.igs);;STEP (*.stp);;STL (*.stl);;BREP(*.brep)"
+        fileName  = QtGui.QFileDialog.getSaveFileName(self, 'Export', "/home/Cadfiles/untitled.igs", files_types )
+        fName = str(fileName)
+        file_extension = fName.split(".")[-1]
+        
+        if file_extension == 'igs':
+            IGESControl.IGESControl_Controller().Init()
+            iges_writer = IGESControl.IGESControl_Writer()
+            iges_writer.AddShape(shape)
+            iges_writer.Write(fName)
+            
+        elif file_extension == 'brep':
+            
+            BRepTools.breptools.Write(shape, fName)
+            
+        elif file_extension == 'stp':
+            # initialize the STEP exporter
+            step_writer = STEPControl_Writer()
+            Interface_Static_SetCVal("write.step.schema", "AP203")
+            
+            # transfer shapes and write file
+            step_writer.Transfer(shape, STEPControl_AsIs)
+            status = step_writer.Write(fName)
+            
+            assert(status == IFSelect_RetDone)
+            
+        else:
+            stl_writer = StlAPI_Writer()
+            stl_writer.SetASCIIMode(True)
+            stl_writer.Write(shape,fName)
+
     def display2DModelOriginal(self, final_model, viewName):
         
         self.display,_ = self.init_display()
@@ -1003,9 +993,13 @@ class MainController(QtGui.QMainWindow):
             
         self.display.EraseAll()
         self.ui.mytabWidget.setCurrentIndex(1)
-        self.connectivity =  self.create3DColWebBeamWeb()
-        final_model = self.create2Dcad(self.connectivity.get_models())
-        self.display2DModel(final_model,"Front")
+        #Sself.connectivity =  self.create3DColWebBeamWeb()
+        #memberlist =  self.connectivity.get_models()
+        if self.connectivity == None:
+            self.connectivity =  self.create3DColWebBeamWeb()
+        if self.fuse_model == None:
+            self.fuse_model = self.create2Dcad(self.connectivity)
+        self.display2DModel( self.fuse_model,"Front")
         
         
     

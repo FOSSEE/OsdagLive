@@ -1,0 +1,3 @@
+Thu, 11 Jun 2015 21:09:27 INFO : Overall finplate connection design is safe 
+Thu, 11 Jun 2015 21:09:27 INFO : Overall finplate connection design is safe 
+Thu, 11 Jun 2015 21:09:40 INFO : Overall finplate connection design is safe 

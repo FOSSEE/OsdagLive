@@ -30,7 +30,7 @@ class NutBoltArray():
         #self.calculatePositions()
         
         self.models = []
-                
+        
     def initialiseNutBolts(self):
         b = self.bolt
         n = self.nut
@@ -83,11 +83,11 @@ class NutBoltArray():
             
         dbg = self.dbgSphere(self.origin)
         self.models.append(dbg)
-        
+            
     def dbgSphere(self, pt):
         return BRepPrimAPI_MakeSphere(getGpPt(pt), 0.1).Shape()
         
-    def getnutboltModels(self): 
+    def getModels(self): 
         return self.models   
         
         

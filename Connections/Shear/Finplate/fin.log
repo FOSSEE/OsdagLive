@@ -1,1 +1,13 @@
 <link rel="stylesheet" type="text/css" href="log.css"/>
+
+    <div  class="LOG INFO">
+        <span class="DATE">Thu, 11 Jun 2015 23:54:20</span>
+        <span class="LEVEL">INFO</span>
+        <span class="MSG">: Overall finplate connection design is safe</span>
+    </div>
+
+    <div  class="LOG INFO">
+        <span class="DATE">Thu, 11 Jun 2015 23:54:20</span>
+        <span class="LEVEL">INFO</span>
+        <span class="MSG">: Overall finplate connection design is safe</span>
+    </div>

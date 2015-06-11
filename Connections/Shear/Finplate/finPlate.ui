@@ -590,7 +590,6 @@
     </property>
     <addaction name="actionEnlarge_font_size"/>
     <addaction name="separator"/>
-    <addaction name="actionReduce_font_size"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -4169,7 +4168,7 @@
   </action>
   <action name="actionEnlarge_font_size">
    <property name="text">
-    <string>Enlarge font size</string>
+    <string>Font</string>
    </property>
   </action>
   <action name="actionReduce_font_size">

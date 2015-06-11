@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'finPlate.ui'
 #
-# Created: Sat Jun  6 12:28:08 2015
+# Created: Thu Jun 11 17:13:02 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1450,7 +1450,6 @@ class Ui_MainWindow(object):
         self.menuEdit.addAction(self.actionPaste)
         self.menuView.addAction(self.actionEnlarge_font_size)
         self.menuView.addSeparator()
-        self.menuView.addAction(self.actionReduce_font_size)
         self.menuHelp.addAction(self.actionAbout_Osdag)
         self.menuGraphics.addAction(self.actionZoom_in)
         self.menuGraphics.addSeparator()
@@ -1673,7 +1672,7 @@ class Ui_MainWindow(object):
         self.actionView_2D_on_YZ.setText(_translate("MainWindow", "View 2D on YZ", None))
         self.actionView_2D_on_ZX.setText(_translate("MainWindow", "View 2D on ZX", None))
         self.actionModel.setText(_translate("MainWindow", "Model", None))
-        self.actionEnlarge_font_size.setText(_translate("MainWindow", "Enlarge font size", None))
+        self.actionEnlarge_font_size.setText(_translate("MainWindow", "Font", None))
         self.actionReduce_font_size.setText(_translate("MainWindow", "Reduce font size", None))
         self.actionSave_3D_model_as.setText(_translate("MainWindow", "Save 3D model as", None))
         self.actionSave_current_2D_image_as.setText(_translate("MainWindow", "Save 2D image as", None))
