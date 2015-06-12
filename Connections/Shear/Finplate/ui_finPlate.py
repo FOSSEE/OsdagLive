@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'finPlate.ui'
 #
-# Created: Thu Jun 11 17:13:02 2015
+# Created: Fri Jun 12 17:55:33 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1484,7 +1484,7 @@ class Ui_MainWindow(object):
         self.btnZmOut.setText(_translate("MainWindow", "...", None))
         self.btnZmIn.setToolTip(_translate("MainWindow", "Zoom Out", None))
         self.btnZmIn.setText(_translate("MainWindow", "...", None))
-        self.btnSvgSave.setToolTip(_translate("MainWindow", "Save Image", None))
+        self.btnSvgSave.setToolTip(_translate("MainWindow", "Save 3D Images", None))
         self.btnSvgSave.setText(_translate("MainWindow", "...", None))
         self.btnTotatAcw.setToolTip(_translate("MainWindow", "Rotate Left", None))
         self.btnTotatAcw.setText(_translate("MainWindow", "...", None))

@@ -56,5 +56,5 @@ S'HSFG'
 p26
 sS'diameter(mm)'
 p27
-I20
+I12
 ss.

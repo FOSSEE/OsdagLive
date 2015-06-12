@@ -110,6 +110,8 @@ class MainController(QtGui.QMainWindow):
         self.ui.actionSave_log_messages.triggered.connect(self.save_log)
         self.ui.actionEnlarge_font_size.triggered.connect(self.showFontDialogue)
         self.ui.actionZoom_in.triggered.connect(self.callZoomin)
+        self.ui.actionSave_3D_model_as.triggered.connect(self.save3DcadImages)
+        self.ui.actionSave_current_2D_image_as.triggered.connect(self.save2DcadImages)
         
         
         self.ui.combo_Beam.addItems(get_beamcombolist())
@@ -133,7 +135,7 @@ class MainController(QtGui.QMainWindow):
         # Initialising the qtviewer
         self.display,_ = self.init_display(backend_str="pyqt4")
         
-        self.ui.btnSvgSave.clicked.connect(self.save3DtoIGES)
+        self.ui.btnSvgSave.clicked.connect(self.save3DcadImages)
         #self.ui.btnSvgSave.clicked.connect(lambda:self.saveTopng(self.display))
         
         self.connectivity = None
@@ -157,7 +159,18 @@ class MainController(QtGui.QMainWindow):
         
     def callZoomin(self):
         self.display.DynamicZoom()
+    
+    def save2DcadImages(self):
+        files_types = "PNG (*.png);;JPG (*.jpg);;GIF (*.gif)"
+        fileName  = QtGui.QFileDialog.getSaveFileName(self, 'Export', "/home/deepa/Cadfiles/untitled.png", files_types )
+        fName = str(fileName)
+        file_extension = fName.split(".")[-1]
         
+        if file_extension == 'png' or file_extension == 'jpg' or file_extension == 'gif':
+            self.display.ExportToImage(fName)
+        QtGui.QMessageBox.about(self,'Information',"File saved")
+            
+    
     def disableViewButtons(self):
         '''
         Disables the all buttons in toolbar
@@ -199,8 +212,7 @@ class MainController(QtGui.QMainWindow):
             self.ui.comboPlateThick_2.addItem(str(i))
         self.ui.comboPlateThick_2.setCurrentIndex(0)
            
-    def saveTopng(self,display):
-        display.ExportToImage('/home/Pictures/cad.png')
+    
     
     def retrieve_prevstate(self):
         uiObj = self.get_prevstate()
@@ -370,6 +382,7 @@ class MainController(QtGui.QMainWindow):
         '''(file open for writing)-> boolean
         '''
         fname = QtCore.QFile(fileName)
+        
         if not fname.open(QtCore.QFile.WriteOnly | QtCore.QFile.Text):
             QtGui.QMessageBox.warning(self, "Application",
                     "Cannot write file %s:\n%s." % (fileName, fname.errorString()))
@@ -381,8 +394,9 @@ class MainController(QtGui.QMainWindow):
         QtGui.QApplication.restoreOverrideCursor()
 
         #self.setCurrentFile(fileName);
+        
         QtGui.QMessageBox.about(self,'Information',"File saved")
-        return True
+       
     
     
     def save_yaml(self,outObj,uiObj):
@@ -451,6 +465,9 @@ class MainController(QtGui.QMainWindow):
         self.ui.txtResltShr.clear()
         self.ui.txtWeldStrng.clear()
         self.ui.textEdit.clear()
+        
+        #------ Erase Display
+        self.display.EraseAll()
         
     def dockbtn_clicked(self,widget):
         
@@ -871,16 +888,14 @@ class MainController(QtGui.QMainWindow):
     def create2Dcad(self,connectivity):
        
         cadlist =  self.connectivity.get_models()
-        print len(cadlist)
         final_model = cadlist[0]
         #model = cadlist[1]
         for model in cadlist[1:]:
             final_model = BRepAlgoAPI_Fuse(model,final_model).Shape()
         return final_model           
          
-    
-    # Export to IGES
-    def save3DtoIGES(self):
+    # Export to IGS,STEP,STL,BREP
+    def save3DcadImages(self):
         if self.connectivity == None:
             self.connectivity =  self.create3DColWebBeamWeb()
         if self.fuse_model == None:
@@ -888,7 +903,8 @@ class MainController(QtGui.QMainWindow):
         shape = self.fuse_model
         
         files_types = "IGS (*.igs);;STEP (*.stp);;STL (*.stl);;BREP(*.brep)"
-        fileName  = QtGui.QFileDialog.getSaveFileName(self, 'Export', "/home/Cadfiles/untitled.igs", files_types )
+        fileName  = QtGui.QFileDialog.getSaveFileName(self, 'Export', "/home/deepa/Cadfiles/untitled.igs", files_types )
+        
         fName = str(fileName)
         file_extension = fName.split(".")[-1]
         
@@ -917,11 +933,13 @@ class MainController(QtGui.QMainWindow):
             stl_writer = StlAPI_Writer()
             stl_writer.SetASCIIMode(True)
             stl_writer.Write(shape,fName)
+            
+        QtGui.QMessageBox.about(self,'Information',"File saved")
+        
 
     def display2DModelOriginal(self, final_model, viewName):
         
         self.display,_ = self.init_display()
-        self.display.ResetView()
         self.display.EraseAll()      
         #self.display.SetModeWireFrame()
         
@@ -987,6 +1005,7 @@ class MainController(QtGui.QMainWindow):
         
         '''Displays front view of 2Dmodel
         '''
+        self.ui.btnSvgSave.setEnabled(False)
         self.ui.chkBxBeam.setChecked(QtCore.Qt.Unchecked)
         self.ui.chkBxCol.setChecked(QtCore.Qt.Unchecked)
         self.ui.chkBxFinplate.setChecked(QtCore.Qt.Unchecked)
@@ -1001,12 +1020,11 @@ class MainController(QtGui.QMainWindow):
             self.fuse_model = self.create2Dcad(self.connectivity)
         self.display2DModel( self.fuse_model,"Front")
         
-        
-    
     def call_Topview(self):
         
         '''Displays Top view of 2Dmodel
         '''
+        self.ui.btnSvgSave.setEnabled(False)
         self.ui.chkBxBeam.setChecked(QtCore.Qt.Unchecked)
         self.ui.chkBxCol.setChecked(QtCore.Qt.Unchecked)
         self.ui.chkBxFinplate.setChecked(QtCore.Qt.Unchecked)
@@ -1014,20 +1032,29 @@ class MainController(QtGui.QMainWindow):
         self.display.EraseAll()
         self.ui.mytabWidget.setCurrentIndex(1)
         
-        final_model = self.create2Dcad()
-        self.display2DModel(final_model, "Top")
+        if self.connectivity == None:
+            self.connectivity =  self.create3DColWebBeamWeb()
+        if self.fuse_model == None:
+            self.fuse_model = self.create2Dcad(self.connectivity)
+        self.display2DModel( self.fuse_model,"Top")
+        
         
     def call_Sideview(self):
         
         '''Displays Side view of the 2Dmodel'
         '''
+        self.ui.btnSvgSave.setEnabled(False)
         self.ui.chkBxBeam.setChecked(QtCore.Qt.Unchecked)
         self.ui.chkBxCol.setChecked(QtCore.Qt.Unchecked)
         self.ui.chkBxFinplate.setChecked(QtCore.Qt.Unchecked)
         
         self.ui.mytabWidget.setCurrentIndex(1)
-        final_model = self.create2Dcad()
-        self.display2DModel(final_model, "Right")
+        
+        if self.connectivity == None:
+            self.connectivity =  self.create3DColWebBeamWeb()
+        if self.fuse_model == None:
+            self.fuse_model = self.create2Dcad(self.connectivity)
+        self.display2DModel( self.fuse_model,"Right")
         
     def closeEvent(self, event):
         '''

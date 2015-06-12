@@ -153,17 +153,17 @@ def finConn(uiObj):
               
         elif min_plate_height > max_plate_height:
             logger.error(": Minimum required plate height is more than the clear depth of the beam")
-            logger.warning(": Minimum plate height required is %2.2f mm " % (min_plate_height))
+            logger.warning(": Plate height required should be more than  %2.2f mm " % (min_plate_height))
             logger.warning(": Maximum plate height allowed is %2.2f mm " % (max_plate_height))
             logger.info(": Increase the plate thickness")
             #print "Error: Height of plate is more than the clear depth of the beam"
             #print" Maximum plate height allowed is " + str(max_plate_height) + " mm"
             web_plate_l = max_plate_height;
             
-        elif min_plate_height > web_plate_l:
+        elif min_plate_height >= web_plate_l:
             
             logger.error(": Plate height provided is less than the minimum required ")
-            logger.warning(": Minimum plate height required is  %2.2f mm " % (min_plate_height))
+            logger.warning(": Plate height required should be more than  %2.2f mm " % (min_plate_height))
             
             # print "\nERROR: Chosen plate height is not sufficient" + "\n Minimum required height = " + str(min_plate_height) + " mm";
             # print "\nSuggestion: Re-design with a different plate height or thickness"    
@@ -282,18 +282,24 @@ def finConn(uiObj):
     # Design of plate:
     
     # Width input (optional) and validation
-    if bolt_line == 1:
-            web_plate_w_req = 2 * min_edge_dist 
-    if bolt_line == 2:
-            web_plate_w_req = gauge + 2 * min_edge_dist 
+    if web_plate_w != 0:
+        if bolt_line == 1:
+                web_plate_w_req = 2 * min_edge_dist 
+                end_dist = web_plate_w/2
+        if bolt_line == 2:
+                web_plate_w_req = gauge + 2 * min_edge_dist 
+                end_dist = (web_plate_w - gauge)/2
             
     if web_plate_w == 0:   
         if bolt_line == 1:
             web_plate_w_req = 2 * min_edge_dist;
             web_plate_w = web_plate_w_req
+            end_dist = web_plate_w /2
         if bolt_line == 2:
             web_plate_w_req = gauge + 2 * min_edge_dist;
             web_plate_w = web_plate_w_req;
+            end_dist = (web_plate_w - gauge)/2
+
             
     # if web_plate_w < web_plate_w_req:
     #     web_plate_w = web_plate_w_req;
@@ -376,6 +382,7 @@ def finConn(uiObj):
         pass
     else:
         logger.error(": Weld thickness is not sufficient")
+        logger.warning(": Minimum weld thickness is required is %2.2f mm " % (weld_t_req))
     
     # End of calculation
     outputObj = {}
@@ -389,9 +396,9 @@ def finConn(uiObj):
     outputObj['Bolt']['numofrow'] = bolts_one_line
     outputObj['Bolt']['numofcol'] = bolt_line
     outputObj['Bolt']['pitch'] = pitch
-    outputObj['Bolt']['enddist'] = min_edge_dist
-    outputObj['Bolt']['edge'] = min_edge_dist
-    outputObj['Bolt']['gauge'] = gauge
+    outputObj['Bolt']['enddist'] = float(end_dist)
+    outputObj['Bolt']['edge'] = float(min_edge_dist)
+    outputObj['Bolt']['gauge'] = float(gauge)
      
     outputObj['Weld'] = {}
     outputObj['Weld']['thickness'] = weld_t_req
@@ -410,31 +417,35 @@ def finConn(uiObj):
     #return outputObj
     
     if web_plate_l == (min_plate_height+10) or web_plate_l == ((max_plate_height-10)//10*10):
+        if bolt_line==1:
+            if web_plate_l == min_plate_height or web_plate_l == max_plate_height or web_plate_l < web_plate_l_req or web_plate_w < web_plate_w_req or weld_t_req > weld_t:
+                for k in outputObj.keys():
+                    for key in outputObj[k].keys():
+                        outputObj[k][key] = ""
+            elif moment_capacity < moment_demand:
+                for k in outputObj.keys():
+                    for key in outputObj[k].keys():
+                        outputObj[k][key] = ""
+        
         if bolt_line==2:
             if pitch < min_pitch:
                 for k in outputObj.keys():
                     for key in outputObj[k].keys():
                         outputObj[k][key] = ""
-        else:
-            return outputObj
-        
-    elif web_plate_l == (min_plate_height+10) or web_plate_l == ((max_plate_height-10)//10*10):
-        if web_plate_l == min_plate_height or web_plate_l == max_plate_height or web_plate_l < web_plate_l_req or web_plate_w < web_plate_w_req:
-            for k in outputObj.keys():
-                for key in outputObj[k].keys():
-                    outputObj[k][key] = ""
-        elif moment_capacity < moment_demand:
-            for k in outputObj.keys():
-                for key in outputObj[k].keys():
-                    outputObj[k][key] = ""
-        elif bolt_line==2:
-            if pitch < min_pitch:
+            elif web_plate_l == min_plate_height or web_plate_l == max_plate_height or web_plate_l < web_plate_l_req or web_plate_w < web_plate_w_req or weld_t_req > weld_t:
                 for k in outputObj.keys():
                     for key in outputObj[k].keys():
                         outputObj[k][key] = ""
-    
+            elif moment_capacity < moment_demand:
+                for k in outputObj.keys():
+                    for key in outputObj[k].keys():
+                        outputObj[k][key] = ""
+        else:
+            
+            pass
+        
     else:
-        if web_plate_l == min_plate_height or web_plate_l == max_plate_height or web_plate_l < web_plate_l_req or web_plate_w < web_plate_w_req:
+        if web_plate_l == min_plate_height or web_plate_l == max_plate_height or web_plate_l < web_plate_l_req or web_plate_w < web_plate_w_req or weld_t_req > weld_t:
             for k in outputObj.keys():
                 for key in outputObj[k].keys():
                     outputObj[k][key] = ""
@@ -448,10 +459,6 @@ def finConn(uiObj):
                     for key in outputObj[k].keys():
                         outputObj[k][key] = ""
                         
-# if web_plate_l == min_plate_height or web_plate_l == max_plate_height or web_plate_l < web_plate_l_req or web_plate_w < web_plate_w_req:
-#     outputObj = {}
-#     
-# elif moment_capacity < moment_demand:
 #     outputObj = {}
     if  outputObj['Bolt']['status'] == True:
         
