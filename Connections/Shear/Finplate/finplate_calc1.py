@@ -462,9 +462,12 @@ def finConn(uiObj):
 #     outputObj = {}
     if  outputObj['Bolt']['status'] == True:
         
-        logger.info(": Overall finplate connection design is safe")
+        logger.info(": Overall finplate connection design is safe \n")
+        logger.info(" :===========================================================")
+        
     else:
-        logger.error(": Design is not safe")
+        logger.error(": Design is not safe \n ")
+        logger.info(" :===========================================================")
     
     return outputObj
     
