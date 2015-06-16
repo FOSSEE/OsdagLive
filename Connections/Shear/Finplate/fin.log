@@ -1,31 +1,52 @@
-<link rel="stylesheet" type="text/css" href="log.css"/>
+<link rel="stylesheet" type="text/css" href="./Connections/Shear/Finplate/log.css"/>
 
-    <div  class="LOG INFO">
-        <span class="DATE">Fri, 12 Jun 2015 18:51:34</span>
-        <span class="LEVEL">INFO</span>
-        <span class="MSG">: Overall finplate connection design is safe</span>
+    <div  class="LOG ERROR">
+        <span class="DATE">Wed, 17 Jun 2015 00:15:22</span>
+        <span class="LEVEL">ERROR</span>
+        <span class="MSG">: Plate height provided is less than the minimum required </span>
+    </div>
+
+    <div  class="LOG WARNING">
+        <span class="DATE">Wed, 17 Jun 2015 00:15:22</span>
+        <span class="LEVEL">WARNING</span>
+        <span class="MSG">: Plate height required should be more than  240.00 mm </span>
+    </div>
+
+    <div  class="LOG ERROR">
+        <span class="DATE">Wed, 17 Jun 2015 00:15:22</span>
+        <span class="LEVEL">ERROR</span>
+        <span class="MSG">: Design is not safe 
+ </span>
     </div>
 
     <div  class="LOG INFO">
-        <span class="DATE">Fri, 12 Jun 2015 18:51:34</span>
+        <span class="DATE">Wed, 17 Jun 2015 00:15:22</span>
         <span class="LEVEL">INFO</span>
-        <span class="MSG">: Overall finplate connection design is safe</span>
+        <span class="MSG"> :===========================================================</span>
     </div>
 
     <div  class="LOG INFO">
-        <span class="DATE">Fri, 12 Jun 2015 18:54:45</span>
+        <span class="DATE">Wed, 17 Jun 2015 00:15:27</span>
         <span class="LEVEL">INFO</span>
-        <span class="MSG">: Overall finplate connection design is safe</span>
+        <span class="MSG">: Overall finplate connection design is safe 
+</span>
     </div>
 
     <div  class="LOG INFO">
-        <span class="DATE">Fri, 12 Jun 2015 18:56:23</span>
+        <span class="DATE">Wed, 17 Jun 2015 00:15:27</span>
         <span class="LEVEL">INFO</span>
-        <span class="MSG">: Overall finplate connection design is safe</span>
+        <span class="MSG"> :===========================================================</span>
     </div>
 
     <div  class="LOG INFO">
-        <span class="DATE">Fri, 12 Jun 2015 18:56:23</span>
+        <span class="DATE">Wed, 17 Jun 2015 00:15:27</span>
         <span class="LEVEL">INFO</span>
-        <span class="MSG">: Overall finplate connection design is safe</span>
+        <span class="MSG">: Overall finplate connection design is safe 
+</span>
+    </div>
+
+    <div  class="LOG INFO">
+        <span class="DATE">Wed, 17 Jun 2015 00:15:27</span>
+        <span class="LEVEL">INFO</span>
+        <span class="MSG"> :===========================================================</span>
     </div>

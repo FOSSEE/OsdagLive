@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'osdagpage.ui'
 #
-# Created: Tue Jun 16 17:27:55 2015
+# Created: Tue Jun 16 21:38:35 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -151,34 +151,34 @@ class Ui_MainWindow(object):
         self.myTabWidget.setObjectName(_fromUtf8("myTabWidget"))
         self.tab = QtGui.QWidget()
         self.tab.setObjectName(_fromUtf8("tab"))
-        self.radioButton = QtGui.QRadioButton(self.tab)
-        self.radioButton.setGeometry(QtCore.QRect(50, 110, 137, 27))
+        self.cleatRdBtn = QtGui.QRadioButton(self.tab)
+        self.cleatRdBtn.setGeometry(QtCore.QRect(50, 110, 137, 27))
         font = QtGui.QFont()
         font.setPointSize(11)
-        self.radioButton.setFont(font)
-        self.radioButton.setStyleSheet(_fromUtf8(""))
-        self.radioButton.setObjectName(_fromUtf8("radioButton"))
-        self.radioButton_2 = QtGui.QRadioButton(self.tab)
-        self.radioButton_2.setGeometry(QtCore.QRect(50, 150, 137, 27))
+        self.cleatRdBtn.setFont(font)
+        self.cleatRdBtn.setStyleSheet(_fromUtf8(""))
+        self.cleatRdBtn.setObjectName(_fromUtf8("cleatRdBtn"))
+        self.endPlateRdBtn = QtGui.QRadioButton(self.tab)
+        self.endPlateRdBtn.setGeometry(QtCore.QRect(50, 150, 137, 27))
         font = QtGui.QFont()
         font.setPointSize(11)
-        self.radioButton_2.setFont(font)
-        self.radioButton_2.setObjectName(_fromUtf8("radioButton_2"))
-        self.radioButton_3 = QtGui.QRadioButton(self.tab)
-        self.radioButton_3.setGeometry(QtCore.QRect(50, 190, 137, 27))
+        self.endPlateRdBtn.setFont(font)
+        self.endPlateRdBtn.setObjectName(_fromUtf8("endPlateRdBtn"))
+        self.finPlateRdBtn = QtGui.QRadioButton(self.tab)
+        self.finPlateRdBtn.setGeometry(QtCore.QRect(50, 190, 137, 27))
         font = QtGui.QFont()
         font.setPointSize(11)
-        self.radioButton_3.setFont(font)
-        self.radioButton_3.setObjectName(_fromUtf8("radioButton_3"))
-        self.pushButton_3 = QtGui.QPushButton(self.tab)
-        self.pushButton_3.setGeometry(QtCore.QRect(430, 400, 186, 32))
+        self.finPlateRdBtn.setFont(font)
+        self.finPlateRdBtn.setObjectName(_fromUtf8("finPlateRdBtn"))
+        self.shearBtnStart = QtGui.QPushButton(self.tab)
+        self.shearBtnStart.setGeometry(QtCore.QRect(430, 400, 186, 32))
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setBold(True)
         font.setItalic(False)
         font.setWeight(75)
-        self.pushButton_3.setFont(font)
-        self.pushButton_3.setStyleSheet(_fromUtf8("QPushButton {\n"
+        self.shearBtnStart.setFont(font)
+        self.shearBtnStart.setStyleSheet(_fromUtf8("QPushButton {\n"
 "     color:#00ff00;\n"
 " background-color:#5930ac;\n"
 "    border-style: outset;\n"
@@ -189,13 +189,13 @@ class Ui_MainWindow(object):
 "QPushButton:pressed { background-color: #000000 }\n"
 "   \n"
 ""))
-        self.pushButton_3.setObjectName(_fromUtf8("pushButton_3"))
-        self.radioButton_4 = QtGui.QRadioButton(self.tab)
-        self.radioButton_4.setGeometry(QtCore.QRect(50, 230, 137, 27))
+        self.shearBtnStart.setObjectName(_fromUtf8("shearBtnStart"))
+        self.seatedRdBtn = QtGui.QRadioButton(self.tab)
+        self.seatedRdBtn.setGeometry(QtCore.QRect(50, 230, 137, 27))
         font = QtGui.QFont()
         font.setPointSize(11)
-        self.radioButton_4.setFont(font)
-        self.radioButton_4.setObjectName(_fromUtf8("radioButton_4"))
+        self.seatedRdBtn.setFont(font)
+        self.seatedRdBtn.setObjectName(_fromUtf8("seatedRdBtn"))
         self.myTabWidget.addTab(self.tab, _fromUtf8(""))
         self.tab_2 = QtGui.QWidget()
         self.tab_2.setObjectName(_fromUtf8("tab_2"))
@@ -226,7 +226,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         self.myStackedWidget.setCurrentIndex(1)
-        self.myTabWidget.setCurrentIndex(1)
+        self.myTabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -252,11 +252,11 @@ class Ui_MainWindow(object):
         self.myListWidget.setSortingEnabled(__sortingEnabled)
         self.pushButton_2.setText(_translate("MainWindow", "Help", None))
         self.pushButton.setText(_translate("MainWindow", "Open File", None))
-        self.radioButton.setText(_translate("MainWindow", "Cleat", None))
-        self.radioButton_2.setText(_translate("MainWindow", "End Plate", None))
-        self.radioButton_3.setText(_translate("MainWindow", "Fin Plate", None))
-        self.pushButton_3.setText(_translate("MainWindow", "Start", None))
-        self.radioButton_4.setText(_translate("MainWindow", "Seated", None))
+        self.cleatRdBtn.setText(_translate("MainWindow", "Cleat", None))
+        self.endPlateRdBtn.setText(_translate("MainWindow", "End Plate", None))
+        self.finPlateRdBtn.setText(_translate("MainWindow", "Fin Plate", None))
+        self.shearBtnStart.setText(_translate("MainWindow", "Start", None))
+        self.seatedRdBtn.setText(_translate("MainWindow", "Seated", None))
         self.myTabWidget.setTabText(self.myTabWidget.indexOf(self.tab), _translate("MainWindow", "Shear Connection", None))
         self.myTabWidget.setTabText(self.myTabWidget.indexOf(self.tab_2), _translate("MainWindow", "Moment", None))
         self.label_4.setText(_translate("MainWindow", "Comming soon!", None))

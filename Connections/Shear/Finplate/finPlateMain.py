@@ -4,7 +4,7 @@ comment
 
 @author: deepa
 '''
-from PyQt4.QtCore import QString
+from PyQt4.QtCore import QString, pyqtSignal
 from PyQt4.QtGui import QMessageBox, QScrollArea
 from OCC.TopoDS import topods, TopoDS_Shape
 from OCC.BRepPrimAPI import BRepPrimAPI_MakeBox, BRepPrimAPI_MakeCylinder,\
@@ -52,6 +52,8 @@ from OCC.StlAPI import StlAPI_Writer
 
 
 class MainController(QtGui.QMainWindow):
+    
+    closed = pyqtSignal()
     
     def __init__(self):
         QtGui.QMainWindow.__init__(self)
@@ -594,7 +596,7 @@ class MainController(QtGui.QMainWindow):
         This method displaying Design messages(log messages)to textedit widget.
         '''
         
-        afile = QtCore.QFile('fin.log')
+        afile = QtCore.QFile('./Connections/Shear/Finplate/fin.log')
         
         if not afile.open(QtCore.QIODevice.ReadOnly):#ReadOnly
             QtGui.QMessageBox.information(None, 'info', afile.errorString())
@@ -1076,6 +1078,7 @@ class MainController(QtGui.QMainWindow):
             "Are you sure to quit?", QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
 
         if reply == QtGui.QMessageBox.Yes:
+            self.closed.emit()
             event.accept()
         else:
             event.ignore() 
@@ -1087,7 +1090,7 @@ def set_osdaglogger():
     logger.setLevel(logging.DEBUG)
  
     # create the logging file handler
-    fh = logging.FileHandler("fin.log", mode="a")
+    fh = logging.FileHandler("./Connections/Shear/Finplate/fin.log", mode="a")
     
     #,datefmt='%a, %d %b %Y %H:%M:%S'
     #formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -1104,11 +1107,30 @@ def set_osdaglogger():
     # add handler to logger object
     logger.addHandler(fh)
     
+def launchFinPlateController(osdagMainWindow):
+    set_osdaglogger()
+    rawLogger = logging.getLogger("raw")
+    rawLogger.setLevel(logging.INFO)
+    fh = logging.FileHandler("./Connections/Shear/Finplate/fin.log", mode="w")
+    formatter = logging.Formatter('''%(message)s''')
+    fh.setFormatter(formatter)
+    rawLogger.addHandler(fh)
+    rawLogger.info('''<link rel="stylesheet" type="text/css" href="./Connections/Shear/Finplate/log.css"/>''')
+     
+    #app = QtGui.QApplication(sys.argv)
+    window = MainController()
+    osdagMainWindow.hide()
+     
+    window.show()
+    window.closed.connect(osdagMainWindow.show)
+     
+    #sys.exit(app.exec_())
     
     
 
 if __name__ == '__main__':
-    
+    #launchFinPlateController(None)
+      
     # linking css to log file to display colour logs.
     set_osdaglogger()
     rawLogger = logging.getLogger("raw")
@@ -1118,8 +1140,7 @@ if __name__ == '__main__':
     fh.setFormatter(formatter)
     rawLogger.addHandler(fh)
     rawLogger.info('''<link rel="stylesheet" type="text/css" href="log.css"/>''')
-    
-    
+      
     app = QtGui.QApplication(sys.argv)
     window = MainController()
     window.show()

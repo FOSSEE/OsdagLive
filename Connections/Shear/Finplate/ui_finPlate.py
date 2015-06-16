@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'finPlate.ui'
 #
-# Created: Fri Jun 12 17:55:33 2015
+# Created: Wed Jun 17 00:13:58 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -213,6 +213,8 @@ class Ui_MainWindow(object):
         self.textEdit = QtGui.QTextEdit(self.splitter)
         self.textEdit.setMinimumSize(QtCore.QSize(0, 125))
         self.textEdit.setMaximumSize(QtCore.QSize(16777215, 16777215))
+        self.textEdit.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+        self.textEdit.setOverwriteMode(True)
         self.textEdit.setObjectName(_fromUtf8("textEdit"))
         self.verticalLayout_2.addWidget(self.splitter)
         MainWindow.setCentralWidget(self.centralwidget)

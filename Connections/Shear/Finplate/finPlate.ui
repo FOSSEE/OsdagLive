@@ -542,6 +542,12 @@
          <height>16777215</height>
         </size>
        </property>
+       <property name="verticalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOn</enum>
+       </property>
+       <property name="overwriteMode">
+        <bool>true</bool>
+       </property>
       </widget>
      </widget>
     </item>

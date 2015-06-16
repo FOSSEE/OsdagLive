@@ -275,13 +275,13 @@ QPushButton:pressed { background-color: #000000 }</string>
              <enum>QTabWidget::Rounded</enum>
             </property>
             <property name="currentIndex">
-             <number>1</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="tab">
              <attribute name="title">
               <string>Shear Connection</string>
              </attribute>
-             <widget class="QRadioButton" name="radioButton">
+             <widget class="QRadioButton" name="cleatRdBtn">
               <property name="geometry">
                <rect>
                 <x>50</x>
@@ -302,7 +302,7 @@ QPushButton:pressed { background-color: #000000 }</string>
                <string>Cleat</string>
               </property>
              </widget>
-             <widget class="QRadioButton" name="radioButton_2">
+             <widget class="QRadioButton" name="endPlateRdBtn">
               <property name="geometry">
                <rect>
                 <x>50</x>
@@ -320,7 +320,7 @@ QPushButton:pressed { background-color: #000000 }</string>
                <string>End Plate</string>
               </property>
              </widget>
-             <widget class="QRadioButton" name="radioButton_3">
+             <widget class="QRadioButton" name="finPlateRdBtn">
               <property name="geometry">
                <rect>
                 <x>50</x>
@@ -338,7 +338,7 @@ QPushButton:pressed { background-color: #000000 }</string>
                <string>Fin Plate</string>
               </property>
              </widget>
-             <widget class="QPushButton" name="pushButton_3">
+             <widget class="QPushButton" name="shearBtnStart">
               <property name="geometry">
                <rect>
                 <x>430</x>
@@ -372,7 +372,7 @@ QPushButton:pressed { background-color: #000000 }
                <string>Start</string>
               </property>
              </widget>
-             <widget class="QRadioButton" name="radioButton_4">
+             <widget class="QRadioButton" name="seatedRdBtn">
               <property name="geometry">
                <rect>
                 <x>50</x>

@@ -1,3 +1,43 @@
-Thu, 11 Jun 2015 21:09:27 INFO : Overall finplate connection design is safe 
-Thu, 11 Jun 2015 21:09:27 INFO : Overall finplate connection design is safe 
-Thu, 11 Jun 2015 21:09:40 INFO : Overall finplate connection design is safe 
+Fri, 12 Jun 2015 13:51:17 INFO : Overall finplate connection design is safe 
+Fri, 12 Jun 2015 13:51:17 INFO : Overall finplate connection design is safe 
+Fri, 12 Jun 2015 13:54:07 INFO : Overall finplate connection design is safe 
+Fri, 12 Jun 2015 13:54:07 INFO : Overall finplate connection design is safe 
+Fri, 12 Jun 2015 13:56:12 INFO : Overall finplate connection design is safe 
+Fri, 12 Jun 2015 13:56:26 ERROR : Plate width provided is less than the minimum required 
+Fri, 12 Jun 2015 13:56:26 WARNING : Minimum plate width required is 60.00 mm 
+Fri, 12 Jun 2015 13:56:26 ERROR : Design is not safe 
+Fri, 12 Jun 2015 13:56:51 INFO : Overall finplate connection design is safe 
+Fri, 12 Jun 2015 13:56:51 INFO : Overall finplate connection design is safe 
+Fri, 12 Jun 2015 13:57:24 INFO : Overall finplate connection design is safe 
+Fri, 12 Jun 2015 14:00:30 INFO : Overall finplate connection design is safe 
+Fri, 12 Jun 2015 14:00:30 INFO : Overall finplate connection design is safe 
+Fri, 12 Jun 2015 14:01:04 INFO : Overall finplate connection design is safe 
+Fri, 12 Jun 2015 14:01:04 INFO : Overall finplate connection design is safe 
+Fri, 12 Jun 2015 14:01:23 ERROR : Plate height provided is less than the minimum required 
+Fri, 12 Jun 2015 14:01:23 WARNING : Plate height required should be more than 240.00 mm 
+Fri, 12 Jun 2015 14:01:23 ERROR : Plate width provided is less than the minimum required 
+Fri, 12 Jun 2015 14:01:23 WARNING : Minimum plate width required is 100.00 mm 
+Fri, 12 Jun 2015 14:01:23 ERROR : Design is not safe 
+Fri, 12 Jun 2015 14:02:15 ERROR : Height of plate is more than the clear depth of the beam 
+Fri, 12 Jun 2015 14:02:15 WARNING : Maximum plate height allowed is 328.00 mm 
+Fri, 12 Jun 2015 14:02:15 ERROR : Plate width provided is less than the minimum required 
+Fri, 12 Jun 2015 14:02:15 WARNING : Minimum plate width required is 100.00 mm 
+Fri, 12 Jun 2015 14:02:15 ERROR : Design is not safe 
+Fri, 12 Jun 2015 14:03:34 ERROR : Design is not safe 
+Fri, 12 Jun 2015 14:04:57 ERROR : Design is not safe 
+Fri, 12 Jun 2015 14:06:13 ERROR : Minimum required plate height is more than the clear depth of the beam 
+Fri, 12 Jun 2015 14:06:13 WARNING : Plate height required should be more than 410.00 mm 
+Fri, 12 Jun 2015 14:06:13 WARNING : Maximum plate height allowed is 328.00 mm 
+Fri, 12 Jun 2015 14:06:13 INFO : Increase the plate thickness 
+Fri, 12 Jun 2015 14:06:13 ERROR : Design is not safe 
+Fri, 12 Jun 2015 14:06:25 INFO : Overall finplate connection design is safe 
+Fri, 12 Jun 2015 14:06:25 INFO : Overall finplate connection design is safe 
+Fri, 12 Jun 2015 14:09:10 ERROR : Bolt strength is insufficient to carry the shear force 
+Fri, 12 Jun 2015 14:09:10 WARNING : Increase bolt diameter and/or bolt grade 
+Fri, 12 Jun 2015 14:09:10 ERROR : Design is not safe 
+Fri, 12 Jun 2015 14:09:58 ERROR : Bolt strength is insufficient to carry the shear force 
+Fri, 12 Jun 2015 14:09:58 WARNING : Increase bolt diameter and/or bolt grade 
+Fri, 12 Jun 2015 14:09:58 ERROR : Design is not safe 
+Fri, 12 Jun 2015 14:10:55 ERROR : Bolt strength is insufficient to carry the shear force 
+Fri, 12 Jun 2015 14:10:55 WARNING : Increase bolt diameter and/or bolt grade 
+Fri, 12 Jun 2015 14:10:55 ERROR : Design is not safe 
