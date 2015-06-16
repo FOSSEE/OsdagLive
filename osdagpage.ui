@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1019</width>
+    <height>674</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0" colspan="2">
+       <widget class="QListWidget" name="myListWidget">
+        <property name="minimumSize">
+         <size>
+          <width>300</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QListWidget::item {
+  color:#00ff00;
+ background-color:#5930ac;
+  }
+QListWidget{background-color:#83AC30;
+}
+ QListWidget:item:selected:active {
+                                     background: #000000;}</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Box</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <property name="lineWidth">
+         <number>5</number>
+        </property>
+        <property name="midLineWidth">
+         <number>2</number>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>48</width>
+          <height>48</height>
+         </size>
+        </property>
+        <property name="spacing">
+         <number>5</number>
+        </property>
+        <item>
+         <property name="text">
+          <string>Create :</string>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="flags">
+          <set>NoItemFlags</set>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Connections</string>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+           <weight>50</weight>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>../../Pictures/images (3).jpg</normaloff>../../Pictures/images (3).jpg</iconset>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Tesion Members</string>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>../../Pictures/images (3).jpg</normaloff>../../Pictures/images (3).jpg</iconset>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Compression Members</string>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>../../Pictures/images (3).jpg</normaloff>../../Pictures/images (3).jpg</iconset>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Flexural Members</string>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>../../Pictures/images (3).jpg</normaloff>../../Pictures/images (3).jpg</iconset>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Beam-Column</string>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>../../Pictures/images (3).jpg</normaloff>../../Pictures/images (3).jpg</iconset>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Plate Girders</string>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>../../Pictures/images (3).jpg</normaloff>../../Pictures/images (3).jpg</iconset>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Gantry Girders</string>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>../../Pictures/images (3).jpg</normaloff>../../Pictures/images (3).jpg</iconset>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QPushButton" name="pushButton_2">
+        <property name="styleSheet">
+         <string notr="true">QPushButton {background-color: #5930ac; color: #00ff00;}</string>
+        </property>
+        <property name="text">
+         <string>Help</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QPushButton" name="pushButton">
+        <property name="styleSheet">
+         <string notr="true">QPushButton {background-color: #5930ac; color: #00ff00;}
+QPushButton:pressed { background-color: #000000 }</string>
+        </property>
+        <property name="text">
+         <string>Open File</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QStackedWidget" name="myStackedWidget">
+        <property name="currentIndex">
+         <number>1</number>
+        </property>
+        <widget class="QWidget" name="osdagPage">
+         <widget class="QLabel" name="label">
+          <property name="geometry">
+           <rect>
+            <x>60</x>
+            <y>100</y>
+            <width>151</width>
+            <height>131</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="pixmap">
+           <pixmap>../../Pictures/cfd_logo.png</pixmap>
+          </property>
+          <property name="scaledContents">
+           <bool>true</bool>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_2">
+          <property name="geometry">
+           <rect>
+            <x>240</x>
+            <y>110</y>
+            <width>461</width>
+            <height>121</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="pixmap">
+           <pixmap>../../Pictures/banner12.png</pixmap>
+          </property>
+          <property name="scaledContents">
+           <bool>true</bool>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_3">
+          <property name="geometry">
+           <rect>
+            <x>740</x>
+            <y>540</y>
+            <width>84</width>
+            <height>81</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="pixmap">
+           <pixmap>../../Pictures/logo.png</pixmap>
+          </property>
+          <property name="scaledContents">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </widget>
+        <widget class="QWidget" name="connectionPage">
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="0" column="0">
+           <widget class="QTabWidget" name="myTabWidget">
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QTabBar::tab { height: 30px; width: 180px; }
+</string>
+            </property>
+            <property name="tabShape">
+             <enum>QTabWidget::Rounded</enum>
+            </property>
+            <property name="currentIndex">
+             <number>1</number>
+            </property>
+            <widget class="QWidget" name="tab">
+             <attribute name="title">
+              <string>Shear Connection</string>
+             </attribute>
+             <widget class="QRadioButton" name="radioButton">
+              <property name="geometry">
+               <rect>
+                <x>50</x>
+                <y>110</y>
+                <width>137</width>
+                <height>27</height>
+               </rect>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>11</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
+              <property name="text">
+               <string>Cleat</string>
+              </property>
+             </widget>
+             <widget class="QRadioButton" name="radioButton_2">
+              <property name="geometry">
+               <rect>
+                <x>50</x>
+                <y>150</y>
+                <width>137</width>
+                <height>27</height>
+               </rect>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>11</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>End Plate</string>
+              </property>
+             </widget>
+             <widget class="QRadioButton" name="radioButton_3">
+              <property name="geometry">
+               <rect>
+                <x>50</x>
+                <y>190</y>
+                <width>137</width>
+                <height>27</height>
+               </rect>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>11</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Fin Plate</string>
+              </property>
+             </widget>
+             <widget class="QPushButton" name="pushButton_3">
+              <property name="geometry">
+               <rect>
+                <x>430</x>
+                <y>400</y>
+                <width>186</width>
+                <height>32</height>
+               </rect>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>12</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton {
+     color:#00ff00;
+ background-color:#5930ac;
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: #00ff00;}
+
+QPushButton:pressed { background-color: #000000 }
+   
+</string>
+              </property>
+              <property name="text">
+               <string>Start</string>
+              </property>
+             </widget>
+             <widget class="QRadioButton" name="radioButton_4">
+              <property name="geometry">
+               <rect>
+                <x>50</x>
+                <y>230</y>
+                <width>137</width>
+                <height>27</height>
+               </rect>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>11</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Seated</string>
+              </property>
+             </widget>
+            </widget>
+            <widget class="QWidget" name="tab_2">
+             <attribute name="title">
+              <string>Moment</string>
+             </attribute>
+            </widget>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="tensionPage">
+         <widget class="QLabel" name="label_4">
+          <property name="geometry">
+           <rect>
+            <x>380</x>
+            <y>240</y>
+            <width>211</width>
+            <height>81</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>17</pointsize>
+            <weight>75</weight>
+            <italic>true</italic>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLabel{ color : #5930ac;}</string>
+          </property>
+          <property name="text">
+           <string>Comming soon!</string>
+          </property>
+          <property name="scaledContents">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </widget>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1019</width>
+     <height>30</height>
+    </rect>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
