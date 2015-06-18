@@ -379,8 +379,8 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset>
-         <normaloff>../../../../../Pictures/Z-X.png</normaloff>../../../../../Pictures/Z-X.png</iconset>
+        <iconset resource="ResourceFiles/icons.qrc">
+         <normaloff>:/newPrefix/images/Z-X.png</normaloff>:/newPrefix/images/Z-X.png</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -418,8 +418,8 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset>
-         <normaloff>../../../../../Pictures/X-Y.png</normaloff>../../../../../Pictures/X-Y.png</iconset>
+        <iconset resource="ResourceFiles/icons.qrc">
+         <normaloff>:/newPrefix/images/X-Y.png</normaloff>:/newPrefix/images/X-Y.png</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -457,8 +457,8 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset>
-         <normaloff>../../../../../Pictures/Z-Y.png</normaloff>../../../../../Pictures/Z-Y.png</iconset>
+        <iconset resource="ResourceFiles/icons.qrc">
+         <normaloff>:/newPrefix/images/Z-Y.png</normaloff>:/newPrefix/images/Z-Y.png</iconset>
        </property>
        <property name="iconSize">
         <size>

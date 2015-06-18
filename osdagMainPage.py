@@ -33,15 +33,18 @@ class OsdagMainWindow(QtGui.QMainWindow):
         
         if self.ui.finPlateRdBtn.isChecked():
             launchFinPlateController(self)
-            #QtGui.QMessageBox.about(self,"info","finplate clicked")
+            
         elif self.ui.cleatRdBtn.isChecked():
-            QtGui.QMessageBox.about(self,"info","cleat clicked")
+            QtGui.QMessageBox.about(self,"INFO","Cleat connection design is coming soon!")
+        
         elif self.ui.endPlateRdBtn.isChecked():
-            QtGui.QMessageBox.about(self,"info","endplateclicked")
+            QtGui.QMessageBox.about(self,"INFO","End plate connection design is coming soon!")
+        
         elif self.ui.seatedRdBtn.isChecked():
-            QtGui.QMessageBox.about(self,"info","seated clicked")
+            QtGui.QMessageBox.about(self,"INFO","Seated connection design is coming soon!")
+        
         else:
-            QtGui.QMessageBox.about(self,"info","Please select desire radio button")
+            QtGui.QMessageBox.about(self,"INFO","Please select appropriate connection")
             
         
     

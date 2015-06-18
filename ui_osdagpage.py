@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'osdagpage.ui'
 #
-# Created: Tue Jun 16 21:38:35 2015
+# Created: Wed Jun 17 15:52:50 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,7 +26,7 @@ except AttributeError:
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName(_fromUtf8("MainWindow"))
-        MainWindow.resize(1019, 674)
+        MainWindow.resize(1352, 761)
         self.centralwidget = QtGui.QWidget(MainWindow)
         self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
         self.verticalLayout = QtGui.QVBoxLayout(self.centralwidget)
@@ -56,7 +56,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         item.setFont(font)
-        item.setFlags(QtCore.Qt.NoItemFlags)
+        item.setFlags(QtCore.Qt.ItemIsDragEnabled|QtCore.Qt.ItemIsUserCheckable|QtCore.Qt.ItemIsEnabled)
         self.myListWidget.addItem(item)
         item = QtGui.QListWidgetItem()
         font = QtGui.QFont()
@@ -131,11 +131,19 @@ class Ui_MainWindow(object):
         self.label_2.setScaledContents(True)
         self.label_2.setObjectName(_fromUtf8("label_2"))
         self.label_3 = QtGui.QLabel(self.osdagPage)
-        self.label_3.setGeometry(QtCore.QRect(740, 540, 84, 81))
+        self.label_3.setGeometry(QtCore.QRect(670, 599, 91, 81))
         self.label_3.setText(_fromUtf8(""))
         self.label_3.setPixmap(QtGui.QPixmap(_fromUtf8("../../Pictures/logo.png")))
         self.label_3.setScaledContents(True)
         self.label_3.setObjectName(_fromUtf8("label_3"))
+        self.label_5 = QtGui.QLabel(self.osdagPage)
+        self.label_5.setGeometry(QtCore.QRect(770, 600, 201, 71))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_5.setFont(font)
+        self.label_5.setObjectName(_fromUtf8("label_5"))
         self.myStackedWidget.addWidget(self.osdagPage)
         self.connectionPage = QtGui.QWidget()
         self.connectionPage.setObjectName(_fromUtf8("connectionPage"))
@@ -145,7 +153,7 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setPointSize(12)
         self.myTabWidget.setFont(font)
-        self.myTabWidget.setStyleSheet(_fromUtf8("QTabBar::tab { height: 30px; width: 180px; }\n"
+        self.myTabWidget.setStyleSheet(_fromUtf8("QTabBar::tab { height: 30px; width: 200px; }\n"
 ""))
         self.myTabWidget.setTabShape(QtGui.QTabWidget.Rounded)
         self.myTabWidget.setObjectName(_fromUtf8("myTabWidget"))
@@ -216,11 +224,11 @@ class Ui_MainWindow(object):
         self.label_4.setScaledContents(False)
         self.label_4.setObjectName(_fromUtf8("label_4"))
         self.myStackedWidget.addWidget(self.tensionPage)
-        self.gridLayout.addWidget(self.myStackedWidget, 0, 2, 1, 1)
+        self.gridLayout.addWidget(self.myStackedWidget, 0, 2, 2, 1)
         self.verticalLayout.addLayout(self.gridLayout)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1019, 30))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1352, 30))
         self.menubar.setObjectName(_fromUtf8("menubar"))
         MainWindow.setMenuBar(self.menubar)
 
@@ -234,30 +242,32 @@ class Ui_MainWindow(object):
         __sortingEnabled = self.myListWidget.isSortingEnabled()
         self.myListWidget.setSortingEnabled(False)
         item = self.myListWidget.item(0)
-        item.setText(_translate("MainWindow", "Create :", None))
+        item.setText(_translate("MainWindow", " Design:", None))
         item = self.myListWidget.item(1)
-        item.setText(_translate("MainWindow", "Connections", None))
+        item.setText(_translate("MainWindow", "Connection", None))
         item = self.myListWidget.item(2)
-        item.setText(_translate("MainWindow", "Tesion Members", None))
+        item.setText(_translate("MainWindow", "Tension Member", None))
         item = self.myListWidget.item(3)
-        item.setText(_translate("MainWindow", "Compression Members", None))
+        item.setText(_translate("MainWindow", "Compression Member", None))
         item = self.myListWidget.item(4)
-        item.setText(_translate("MainWindow", "Flexural Members", None))
+        item.setText(_translate("MainWindow", "Flexural Member", None))
         item = self.myListWidget.item(5)
         item.setText(_translate("MainWindow", "Beam-Column", None))
         item = self.myListWidget.item(6)
-        item.setText(_translate("MainWindow", "Plate Girders", None))
+        item.setText(_translate("MainWindow", "Plate Girder", None))
         item = self.myListWidget.item(7)
-        item.setText(_translate("MainWindow", "Gantry Girders", None))
+        item.setText(_translate("MainWindow", "Gantry Girder", None))
         self.myListWidget.setSortingEnabled(__sortingEnabled)
         self.pushButton_2.setText(_translate("MainWindow", "Help", None))
         self.pushButton.setText(_translate("MainWindow", "Open File", None))
-        self.cleatRdBtn.setText(_translate("MainWindow", "Cleat", None))
+        self.label_5.setText(_translate("MainWindow", "Indian Institute of \n"
+"Technology Bombay", None))
+        self.cleatRdBtn.setText(_translate("MainWindow", "Cleat Angle", None))
         self.endPlateRdBtn.setText(_translate("MainWindow", "End Plate", None))
         self.finPlateRdBtn.setText(_translate("MainWindow", "Fin Plate", None))
         self.shearBtnStart.setText(_translate("MainWindow", "Start", None))
         self.seatedRdBtn.setText(_translate("MainWindow", "Seated", None))
         self.myTabWidget.setTabText(self.myTabWidget.indexOf(self.tab), _translate("MainWindow", "Shear Connection", None))
-        self.myTabWidget.setTabText(self.myTabWidget.indexOf(self.tab_2), _translate("MainWindow", "Moment", None))
-        self.label_4.setText(_translate("MainWindow", "Comming soon!", None))
+        self.myTabWidget.setTabText(self.myTabWidget.indexOf(self.tab_2), _translate("MainWindow", "Moment Connection", None))
+        self.label_4.setText(_translate("MainWindow", "Coming soon!", None))
 

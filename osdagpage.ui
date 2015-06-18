@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1019</width>
-    <height>674</height>
+    <width>1352</width>
+    <height>761</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Osdag</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -58,7 +58,7 @@ QListWidget{background-color:#83AC30;
         </property>
         <item>
          <property name="text">
-          <string>Create :</string>
+          <string> Design:</string>
          </property>
          <property name="font">
           <font>
@@ -68,12 +68,12 @@ QListWidget{background-color:#83AC30;
           </font>
          </property>
          <property name="flags">
-          <set>NoItemFlags</set>
+          <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>Connections</string>
+          <string>Connection</string>
          </property>
          <property name="font">
           <font>
@@ -89,7 +89,7 @@ QListWidget{background-color:#83AC30;
         </item>
         <item>
          <property name="text">
-          <string>Tesion Members</string>
+          <string>Tension Member</string>
          </property>
          <property name="font">
           <font>
@@ -103,7 +103,7 @@ QListWidget{background-color:#83AC30;
         </item>
         <item>
          <property name="text">
-          <string>Compression Members</string>
+          <string>Compression Member</string>
          </property>
          <property name="font">
           <font>
@@ -117,7 +117,7 @@ QListWidget{background-color:#83AC30;
         </item>
         <item>
          <property name="text">
-          <string>Flexural Members</string>
+          <string>Flexural Member</string>
          </property>
          <property name="font">
           <font>
@@ -145,7 +145,7 @@ QListWidget{background-color:#83AC30;
         </item>
         <item>
          <property name="text">
-          <string>Plate Girders</string>
+          <string>Plate Girder</string>
          </property>
          <property name="font">
           <font>
@@ -159,7 +159,7 @@ QListWidget{background-color:#83AC30;
         </item>
         <item>
          <property name="text">
-          <string>Gantry Girders</string>
+          <string>Gantry Girder</string>
          </property>
          <property name="font">
           <font>
@@ -194,7 +194,7 @@ QPushButton:pressed { background-color: #000000 }</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="2">
+      <item row="0" column="2" rowspan="2">
        <widget class="QStackedWidget" name="myStackedWidget">
         <property name="currentIndex">
          <number>1</number>
@@ -206,7 +206,7 @@ QPushButton:pressed { background-color: #000000 }</string>
             <x>60</x>
             <y>100</y>
             <width>151</width>
-            <height>131</height>
+            <height>151</height>
            </rect>
           </property>
           <property name="text">
@@ -223,8 +223,8 @@ QPushButton:pressed { background-color: #000000 }</string>
           <property name="geometry">
            <rect>
             <x>240</x>
-            <y>110</y>
-            <width>461</width>
+            <y>120</y>
+            <width>621</width>
             <height>121</height>
            </rect>
           </property>
@@ -241,10 +241,10 @@ QPushButton:pressed { background-color: #000000 }</string>
          <widget class="QLabel" name="label_3">
           <property name="geometry">
            <rect>
-            <x>740</x>
-            <y>540</y>
-            <width>84</width>
-            <height>81</height>
+            <x>670</x>
+            <y>579</y>
+            <width>91</width>
+            <height>91</height>
            </rect>
           </property>
           <property name="text">
@@ -255,6 +255,27 @@ QPushButton:pressed { background-color: #000000 }</string>
           </property>
           <property name="scaledContents">
            <bool>true</bool>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_5">
+          <property name="geometry">
+           <rect>
+            <x>770</x>
+            <y>590</y>
+            <width>201</width>
+            <height>71</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Indian Institute of 
+Technology Bombay</string>
           </property>
          </widget>
         </widget>
@@ -268,7 +289,7 @@ QPushButton:pressed { background-color: #000000 }</string>
              </font>
             </property>
             <property name="styleSheet">
-             <string notr="true">QTabBar::tab { height: 30px; width: 180px; }
+             <string notr="true">QTabBar::tab { height: 30px; width: 200px; }
 </string>
             </property>
             <property name="tabShape">
@@ -299,7 +320,7 @@ QPushButton:pressed { background-color: #000000 }</string>
                <string notr="true"/>
               </property>
               <property name="text">
-               <string>Cleat</string>
+               <string>Cleat Angle</string>
               </property>
              </widget>
              <widget class="QRadioButton" name="endPlateRdBtn">
@@ -393,7 +414,7 @@ QPushButton:pressed { background-color: #000000 }
             </widget>
             <widget class="QWidget" name="tab_2">
              <attribute name="title">
-              <string>Moment</string>
+              <string>Moment Connection</string>
              </attribute>
             </widget>
            </widget>
@@ -422,7 +443,7 @@ QPushButton:pressed { background-color: #000000 }
            <string notr="true">QLabel{ color : #5930ac;}</string>
           </property>
           <property name="text">
-           <string>Comming soon!</string>
+           <string>Coming soon!</string>
           </property>
           <property name="scaledContents">
            <bool>false</bool>
@@ -440,7 +461,7 @@ QPushButton:pressed { background-color: #000000 }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1019</width>
+     <width>1352</width>
      <height>30</height>
     </rect>
    </property>

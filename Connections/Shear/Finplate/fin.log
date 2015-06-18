@@ -1,52 +1,157 @@
 <link rel="stylesheet" type="text/css" href="./Connections/Shear/Finplate/log.css"/>
 
-    <div  class="LOG ERROR">
-        <span class="DATE">Wed, 17 Jun 2015 00:15:22</span>
-        <span class="LEVEL">ERROR</span>
-        <span class="MSG">: Plate height provided is less than the minimum required </span>
-    </div>
-
-    <div  class="LOG WARNING">
-        <span class="DATE">Wed, 17 Jun 2015 00:15:22</span>
-        <span class="LEVEL">WARNING</span>
-        <span class="MSG">: Plate height required should be more than  240.00 mm </span>
-    </div>
-
-    <div  class="LOG ERROR">
-        <span class="DATE">Wed, 17 Jun 2015 00:15:22</span>
-        <span class="LEVEL">ERROR</span>
-        <span class="MSG">: Design is not safe 
- </span>
-    </div>
-
     <div  class="LOG INFO">
-        <span class="DATE">Wed, 17 Jun 2015 00:15:22</span>
-        <span class="LEVEL">INFO</span>
-        <span class="MSG"> :===========================================================</span>
-    </div>
-
-    <div  class="LOG INFO">
-        <span class="DATE">Wed, 17 Jun 2015 00:15:27</span>
+        <span class="DATE">Thu, 18 Jun 2015 23:04:06</span>
         <span class="LEVEL">INFO</span>
         <span class="MSG">: Overall finplate connection design is safe 
 </span>
     </div>
 
     <div  class="LOG INFO">
-        <span class="DATE">Wed, 17 Jun 2015 00:15:27</span>
+        <span class="DATE">Thu, 18 Jun 2015 23:04:06</span>
         <span class="LEVEL">INFO</span>
         <span class="MSG"> :===========================================================</span>
     </div>
 
     <div  class="LOG INFO">
-        <span class="DATE">Wed, 17 Jun 2015 00:15:27</span>
+        <span class="DATE">Thu, 18 Jun 2015 23:04:06</span>
         <span class="LEVEL">INFO</span>
         <span class="MSG">: Overall finplate connection design is safe 
 </span>
     </div>
 
     <div  class="LOG INFO">
-        <span class="DATE">Wed, 17 Jun 2015 00:15:27</span>
+        <span class="DATE">Thu, 18 Jun 2015 23:04:06</span>
         <span class="LEVEL">INFO</span>
         <span class="MSG"> :===========================================================</span>
+    </div>
+
+    <div  class="LOG INFO">
+        <span class="DATE">Thu, 18 Jun 2015 23:06:38</span>
+        <span class="LEVEL">INFO</span>
+        <span class="MSG">: Overall finplate connection design is safe 
+</span>
+    </div>
+
+    <div  class="LOG INFO">
+        <span class="DATE">Thu, 18 Jun 2015 23:06:38</span>
+        <span class="LEVEL">INFO</span>
+        <span class="MSG"> :===========================================================</span>
+    </div>
+
+    <div  class="LOG INFO">
+        <span class="DATE">Thu, 18 Jun 2015 23:06:38</span>
+        <span class="LEVEL">INFO</span>
+        <span class="MSG">: Overall finplate connection design is safe 
+</span>
+    </div>
+
+    <div  class="LOG INFO">
+        <span class="DATE">Thu, 18 Jun 2015 23:06:38</span>
+        <span class="LEVEL">INFO</span>
+        <span class="MSG"> :===========================================================</span>
+    </div>
+
+    <div  class="LOG INFO">
+        <span class="DATE">Thu, 18 Jun 2015 23:08:59</span>
+        <span class="LEVEL">INFO</span>
+        <span class="MSG">: Overall finplate connection design is safe 
+</span>
+    </div>
+
+    <div  class="LOG INFO">
+        <span class="DATE">Thu, 18 Jun 2015 23:08:59</span>
+        <span class="LEVEL">INFO</span>
+        <span class="MSG"> :===========================================================</span>
+    </div>
+
+    <div  class="LOG INFO">
+        <span class="DATE">Thu, 18 Jun 2015 23:08:59</span>
+        <span class="LEVEL">INFO</span>
+        <span class="MSG">: Overall finplate connection design is safe 
+</span>
+    </div>
+
+    <div  class="LOG INFO">
+        <span class="DATE">Thu, 18 Jun 2015 23:08:59</span>
+        <span class="LEVEL">INFO</span>
+        <span class="MSG"> :===========================================================</span>
+    </div>
+
+    <div  class="LOG INFO">
+        <span class="DATE">Thu, 18 Jun 2015 23:12:03</span>
+        <span class="LEVEL">INFO</span>
+        <span class="MSG">: Overall finplate connection design is safe 
+</span>
+    </div>
+
+    <div  class="LOG DEBUG">
+        <span class="DATE">Thu, 18 Jun 2015 23:12:03</span>
+        <span class="LEVEL">DEBUG</span>
+        <span class="MSG"> :=====================End Of design========================</span>
+    </div>
+
+    <div  class="LOG INFO">
+        <span class="DATE">Thu, 18 Jun 2015 23:12:03</span>
+        <span class="LEVEL">INFO</span>
+        <span class="MSG">: Overall finplate connection design is safe 
+</span>
+    </div>
+
+    <div  class="LOG DEBUG">
+        <span class="DATE">Thu, 18 Jun 2015 23:12:03</span>
+        <span class="LEVEL">DEBUG</span>
+        <span class="MSG"> :=====================End Of design========================</span>
+    </div>
+
+    <div  class="LOG INFO">
+        <span class="DATE">Thu, 18 Jun 2015 23:13:23</span>
+        <span class="LEVEL">INFO</span>
+        <span class="MSG">: Overall finplate connection design is safe 
+</span>
+    </div>
+
+    <div  class="LOG DEBUG">
+        <span class="DATE">Thu, 18 Jun 2015 23:13:23</span>
+        <span class="LEVEL">DEBUG</span>
+        <span class="MSG"> :============End Of design================</span>
+    </div>
+
+    <div  class="LOG INFO">
+        <span class="DATE">Thu, 18 Jun 2015 23:13:23</span>
+        <span class="LEVEL">INFO</span>
+        <span class="MSG">: Overall finplate connection design is safe 
+</span>
+    </div>
+
+    <div  class="LOG DEBUG">
+        <span class="DATE">Thu, 18 Jun 2015 23:13:23</span>
+        <span class="LEVEL">DEBUG</span>
+        <span class="MSG"> :============End Of design================</span>
+    </div>
+
+    <div  class="LOG INFO">
+        <span class="DATE">Thu, 18 Jun 2015 23:14:15</span>
+        <span class="LEVEL">INFO</span>
+        <span class="MSG">: Overall finplate connection design is safe 
+</span>
+    </div>
+
+    <div  class="LOG DEBUG">
+        <span class="DATE">Thu, 18 Jun 2015 23:14:15</span>
+        <span class="LEVEL">DEBUG</span>
+        <span class="MSG"> :=========End Of design===========</span>
+    </div>
+
+    <div  class="LOG INFO">
+        <span class="DATE">Thu, 18 Jun 2015 23:14:15</span>
+        <span class="LEVEL">INFO</span>
+        <span class="MSG">: Overall finplate connection design is safe 
+</span>
+    </div>
+
+    <div  class="LOG DEBUG">
+        <span class="DATE">Thu, 18 Jun 2015 23:14:15</span>
+        <span class="LEVEL">DEBUG</span>
+        <span class="MSG"> :=========End Of design===========</span>
     </div>

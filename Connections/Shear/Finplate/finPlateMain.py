@@ -5,19 +5,10 @@ comment
 @author: deepa
 '''
 from PyQt4.QtCore import QString, pyqtSignal
-from PyQt4.QtGui import QMessageBox, QScrollArea
 from OCC.TopoDS import topods, TopoDS_Shape
-from OCC.BRepPrimAPI import BRepPrimAPI_MakeBox, BRepPrimAPI_MakeCylinder,\
-    BRepPrimAPI_MakeSphere
 from OCC.gp import gp_Pnt
 from nutBoltPlacement import NutBoltArray
 from PyQt4.Qt import QScrollBar
-#from Connections.Shear.Finplate.nutBoltPlacement import NutBoltArray
-'''
-Created on 21-Aug-2014
-
-@author: deepa
-'''
 import sys
 from OCC import VERSION, BRepTools, StlAPI
 #from PyQt4 import QtGui,QtCore
@@ -71,7 +62,7 @@ class MainController(QtGui.QMainWindow):
         
         self.ui.comboConnLoc.currentIndexChanged[str].connect(self.setimage_connection)
         
-        #self.disableViewButtons()
+        self.disableViewButtons()
         
         self.ui.btnInput.clicked.connect(lambda: self.dockbtn_clicked(self.ui.inputDock))
         self.ui.btnOutput.clicked.connect(lambda: self.dockbtn_clicked(self.ui.outputDock))
@@ -79,11 +70,6 @@ class MainController(QtGui.QMainWindow):
         self.ui.btn_front.clicked.connect(self.call_Frontview)
         self.ui.btn_top.clicked.connect(self.call_Topview)
         self.ui.btn_side.clicked.connect(self.call_Sideview)
-        
-        self.ui.textEdit.scrollToAnchor("safe")
-        self.ui.textEdit.ensureCursorVisible()
-        
-        
         
         self.ui.btn3D.clicked.connect(lambda:self.call_3DModel(True))
         self.ui.chkBxBeam.clicked.connect(self.call_3DBeam)
@@ -121,7 +107,9 @@ class MainController(QtGui.QMainWindow):
         self.ui.actionZoom_in.triggered.connect(self.callZoomin)
         self.ui.actionSave_3D_model_as.triggered.connect(self.save3DcadImages)
         self.ui.actionSave_current_2D_image_as.triggered.connect(self.save2DcadImages)
-        
+        self.ui.actionView_2D_on_ZX.triggered.connect(self.call_Frontview)
+        self.ui.actionView_2D_on_XY.triggered.connect(self.call_Topview)
+        self.ui.actionView_2D_on_YZ.triggered.connect(self.call_Sideview)
         
         self.ui.combo_Beam.addItems(get_beamcombolist())
         self.ui.comboColSec.addItems(get_columncombolist())
@@ -160,6 +148,7 @@ class MainController(QtGui.QMainWindow):
         #self.fuse_model = my_sphere 
         
     def showFontDialogue(self):
+        
         font, ok = QtGui.QFontDialog.getFont()
         if ok:
             self.ui.inputDock.setFont(font)
@@ -215,7 +204,6 @@ class MainController(QtGui.QMainWindow):
             item = int(ele)
             if item >= beam_tw:
                 newlist.append(str(item))
-        print newlist
         self.ui.comboPlateThick_2.clear()
         for i in newlist[:]:
             self.ui.comboPlateThick_2.addItem(str(i))
@@ -770,8 +758,6 @@ class MainController(QtGui.QMainWindow):
         nut_T = 12.0 # minimum nut thickness As per Indian Standard
         nut_Ht = 12.2 #
         
-        
-        
         #plate = Plate(L= 300,W =100, T = 10)
         plate = Plate(L= fillet_length,W =plate_width, T = plate_thick)
         
@@ -871,10 +857,7 @@ class MainController(QtGui.QMainWindow):
     def design_btnclicked(self):
         '''
         '''
-        # verticalScroll = QScrollBar(self.ui.textEdit.verticalScrollBar())
-        # verticalScroll.triggerAction(QScrollBar.SliderToMaximum)
         designLogger =  logging.getLogger("Designlogger.finPlateCalc")
-        self.ui.textEdit.scrollToAnchor("INFO")
         
         self.ui.outputDock.setFixedSize(310,710)
         self.enableViewButtons()

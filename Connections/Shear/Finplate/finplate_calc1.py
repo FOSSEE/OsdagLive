@@ -102,7 +102,6 @@ def finConn(uiObj):
 
     bolt_planes = 1 
     dictbeamdata  = get_beamdata(beam_sec)
-    print dictbeamdata
     beam_w_t = float(dictbeamdata[QString("tw")])
     beam_f_t = float(dictbeamdata[QString("T")])
     beam_d = float(dictbeamdata[QString("D")])
@@ -131,8 +130,6 @@ def finConn(uiObj):
         
         logger.error(": Chosen web plate thickness is not sufficient" )
         logger.warning(" : Minimum required thickness %2.2f mm" % (beam_w_t))
-#         print "ERROR: Chosen web plate thickness is not sufficient" + "\n Minimum required thickness = " + str(beam_w_t) + "mm";
-#         print "\n Suggestion: Re-design with a plate thickness more than the connecting beam web thickness"
     
     # Plate height check
     # Maximum/minimum plate height
@@ -147,8 +144,6 @@ def finConn(uiObj):
         if web_plate_l > max_plate_height :
             logger.error(": Height of plate is more than the clear depth of the beam")
             logger.warning(": Maximum plate height allowed is %2.2f mm " % (max_plate_height))
-            #print "Error: Height of plate is more than the clear depth of the beam"
-            #print" Maximum plate height allowed is " + str(max_plate_height) + " mm"
             web_plate_l = max_plate_height ; 
               
         elif min_plate_height > max_plate_height:
@@ -156,8 +151,6 @@ def finConn(uiObj):
             logger.warning(": Plate height required should be more than  %2.2f mm " % (min_plate_height))
             logger.warning(": Maximum plate height allowed is %2.2f mm " % (max_plate_height))
             logger.info(": Increase the plate thickness")
-            #print "Error: Height of plate is more than the clear depth of the beam"
-            #print" Maximum plate height allowed is " + str(max_plate_height) + " mm"
             web_plate_l = max_plate_height;
             
         elif min_plate_height >= web_plate_l:
@@ -165,8 +158,6 @@ def finConn(uiObj):
             logger.error(": Plate height provided is less than the minimum required ")
             logger.warning(": Plate height required should be more than  %2.2f mm " % (min_plate_height))
             
-            # print "\nERROR: Chosen plate height is not sufficient" + "\n Minimum required height = " + str(min_plate_height) + " mm";
-            # print "\nSuggestion: Re-design with a different plate height or thickness"    
             web_plate_l = min_plate_height 
     else:
         if min_plate_height < max_plate_height:
@@ -237,8 +228,6 @@ def finConn(uiObj):
     if pitch >= min_pitch:
         bolt_line =1;
         gauge = 0;
-    #     print " Number of bolt lines = " + str(bolt_line);
-    #     print " Pitch distance = " + str(pitch) + " mm" + "\n Gauge distance = " + str(gauge) + " mm";
         bolts_one_line = bolts_required;
         K = bolts_one_line / 2;
         M2=0;
@@ -307,7 +296,6 @@ def finConn(uiObj):
     # Moment capacity of web plate
     moment_capacity = 1.2 * (web_plate_fy/1.1) * (web_plate_t * web_plate_l * web_plate_l)/6 * 0.001;
     moment_capacity = round(moment_capacity * 0.001,3);
-    # print " Moment capacity = " + str(moment_capacity) + " Nm";
     
     if moment_capacity > moment_demand:
         pass
@@ -463,11 +451,11 @@ def finConn(uiObj):
     if  outputObj['Bolt']['status'] == True:
         
         logger.info(": Overall finplate connection design is safe \n")
-        logger.info(" :===========================================================")
+        logger.debug(" :=========End Of design===========")
         
     else:
         logger.error(": Design is not safe \n ")
-        logger.info(" :===========================================================")
+        logger.debug(" :=========End Of design===========")
     
     return outputObj
     

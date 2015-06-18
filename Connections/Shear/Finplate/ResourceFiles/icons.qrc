@@ -13,5 +13,8 @@
     <file>images/zoom_out_01.png</file>
     <file>images/logo.jpg</file>
     <file>images/beam.jpg</file>
+    <file>images/X-Y.png</file>
+    <file>images/Z-X.png</file>
+    <file>images/Z-Y.png</file>
   </qresource>
 </RCC>

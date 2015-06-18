@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'finPlate.ui'
 #
-# Created: Wed Jun 17 00:13:58 2015
+# Created: Wed Jun 17 13:03:56 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -151,7 +151,7 @@ class Ui_MainWindow(object):
         self.btn_front.setAcceptDrops(True)
         self.btn_front.setText(_fromUtf8(""))
         icon8 = QtGui.QIcon()
-        icon8.addPixmap(QtGui.QPixmap(_fromUtf8("../../../../../Pictures/Z-X.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon8.addPixmap(QtGui.QPixmap(_fromUtf8(":/newPrefix/images/Z-X.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.btn_front.setIcon(icon8)
         self.btn_front.setIconSize(QtCore.QSize(22, 22))
         self.btn_front.setCheckable(True)
@@ -166,7 +166,7 @@ class Ui_MainWindow(object):
         self.btn_top.setFocusPolicy(QtCore.Qt.NoFocus)
         self.btn_top.setText(_fromUtf8(""))
         icon9 = QtGui.QIcon()
-        icon9.addPixmap(QtGui.QPixmap(_fromUtf8("../../../../../Pictures/X-Y.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon9.addPixmap(QtGui.QPixmap(_fromUtf8(":/newPrefix/images/X-Y.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.btn_top.setIcon(icon9)
         self.btn_top.setIconSize(QtCore.QSize(22, 23))
         self.btn_top.setCheckable(True)
@@ -181,7 +181,7 @@ class Ui_MainWindow(object):
         self.btn_side.setFocusPolicy(QtCore.Qt.NoFocus)
         self.btn_side.setText(_fromUtf8(""))
         icon10 = QtGui.QIcon()
-        icon10.addPixmap(QtGui.QPixmap(_fromUtf8("../../../../../Pictures/Z-Y.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon10.addPixmap(QtGui.QPixmap(_fromUtf8(":/newPrefix/images/Z-Y.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.btn_side.setIcon(icon10)
         self.btn_side.setIconSize(QtCore.QSize(22, 22))
         self.btn_side.setCheckable(True)
