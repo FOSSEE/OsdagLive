@@ -411,7 +411,9 @@ class MainController(QtGui.QMainWindow):
         fileName = QtGui.QFileDialog.getSaveFileName(self,"Save File As","/home/deepa/SaveDesign","Text File (*.txt)")
         f = open(fileName,'w')
         yaml.dump(newDict,f,allow_unicode=True, default_flow_style=False)
-        return self.save_file(fileName+".txt")
+        
+        #return self.save_file(fileName+".txt")
+        QtGui.QMessageBox.about(self,'Information',"File saved")
 
         
     def resetbtn_clicked(self):
@@ -795,7 +797,7 @@ class MainController(QtGui.QMainWindow):
      
     
     def call_3DModel(self,flag): 
-        
+        self.ui.btnSvgSave.setEnabled(True)
         if self.ui.btn3D.isEnabled():
             self.ui.chkBxBeam.setChecked(QtCore.Qt.Unchecked)
             self.ui.chkBxCol.setChecked(QtCore.Qt.Unchecked)
@@ -1111,23 +1113,23 @@ def launchFinPlateController(osdagMainWindow):
     
     
 
-if __name__ == '__main__':
-    #launchFinPlateController(None)
-      
-    # linking css to log file to display colour logs.
-    set_osdaglogger()
-    rawLogger = logging.getLogger("raw")
-    rawLogger.setLevel(logging.INFO)
-    fh = logging.FileHandler("fin.log", mode="w")
-    formatter = logging.Formatter('''%(message)s''')
-    fh.setFormatter(formatter)
-    rawLogger.addHandler(fh)
-    rawLogger.info('''<link rel="stylesheet" type="text/css" href="log.css"/>''')
-      
-    app = QtGui.QApplication(sys.argv)
-    window = MainController()
-    window.show()
-    sys.exit(app.exec_())
+# if __name__ == '__main__':
+#     #launchFinPlateController(None)
+#       
+#     # linking css to log file to display colour logs.
+#     set_osdaglogger()
+#     rawLogger = logging.getLogger("raw")
+#     rawLogger.setLevel(logging.INFO)
+#     fh = logging.FileHandler("fin.log", mode="w")
+#     formatter = logging.Formatter('''%(message)s''')
+#     fh.setFormatter(formatter)
+#     rawLogger.addHandler(fh)
+#     rawLogger.info('''<link rel="stylesheet" type="text/css" href="log.css"/>''')
+#       
+#     app = QtGui.QApplication(sys.argv)
+#     window = MainController()
+#     window.show()
+#     sys.exit(app.exec_())
 
 
 

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'finPlate.ui'
 #
-# Created: Wed Jun 17 13:03:56 2015
+# Created: Sun Jun 21 21:16:15 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -219,7 +219,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.addWidget(self.splitter)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1335, 30))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1335, 28))
         self.menubar.setObjectName(_fromUtf8("menubar"))
         self.menuFile = QtGui.QMenu(self.menubar)
         self.menuFile.setObjectName(_fromUtf8("menuFile"))
@@ -269,7 +269,7 @@ class Ui_MainWindow(object):
         self.comboConnLoc = QtGui.QComboBox(self.dockWidgetContents)
         self.comboConnLoc.setGeometry(QtCore.QRect(150, 170, 161, 25))
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setPointSize(11)
         font.setBold(False)
         font.setWeight(50)
         self.comboConnLoc.setFont(font)
@@ -404,7 +404,7 @@ class Ui_MainWindow(object):
         self.comboDaimeter = QtGui.QComboBox(self.dockWidgetContents)
         self.comboDaimeter.setGeometry(QtCore.QRect(150, 330, 160, 27))
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setPointSize(11)
         font.setBold(False)
         font.setWeight(50)
         self.comboDaimeter.setFont(font)
@@ -464,7 +464,7 @@ class Ui_MainWindow(object):
         self.comboPlateThick_2 = QtGui.QComboBox(self.dockWidgetContents)
         self.comboPlateThick_2.setGeometry(QtCore.QRect(150, 450, 160, 25))
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setPointSize(11)
         font.setBold(False)
         font.setWeight(50)
         self.comboPlateThick_2.setFont(font)
@@ -1016,7 +1016,7 @@ class Ui_MainWindow(object):
         self.comboWldSize = QtGui.QComboBox(self.dockWidgetContents)
         self.comboWldSize.setGeometry(QtCore.QRect(150, 570, 160, 25))
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setPointSize(11)
         font.setBold(False)
         font.setWeight(50)
         self.comboWldSize.setFont(font)
