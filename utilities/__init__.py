@@ -18,7 +18,7 @@ def colorTheEdges(shp, display,color,width):
         Ex.Next()
         
 def setDefaultEdgeStyle(shp, display):
-    colorTheEdges(shp, display, Quantity_NOC_BLACK, 1.0)
+    colorTheEdges(shp, display, Quantity_NOC_BLACK, 1.5)
     #return shps
     
     
