@@ -79,25 +79,25 @@ def web_min_h(shear, fy, thk):
 
 def finConn(uiObj):
     global logger
-    beam_sec = uiObj['Member']['beamSection']
-    column_sec = uiObj['Member']['columSection']
-    connectivity = uiObj['Member']['connectivity']
-    beam_fu = uiObj['Member']['fu(MPa)']
-    beam_fy = uiObj['Member']['fy(MPa)']
+    beam_sec = uiObj['Member']['BeamSection']
+    column_sec = uiObj['Member']['ColumSection']
+    connectivity = uiObj['Member']['Connectivity']
+    beam_fu = uiObj['Member']['fu (MPa)']
+    beam_fy = uiObj['Member']['fy (MPa)']
               
-    shear_load = uiObj['Load']['shearForce(kN)']
+    shear_load = uiObj['Load']['ShearForce (kN)']
                   
-    bolt_dia = uiObj['Bolt']['diameter(mm)']
-    bolt_type  = uiObj["Bolt"]["type"]
-    bolt_grade = uiObj['Bolt']['grade']
+    bolt_dia = uiObj['Bolt']['Diameter (mm)']
+    bolt_type  = uiObj["Bolt"]["Type"]
+    bolt_grade = uiObj['Bolt']['Grade']
               
-    web_plate_t = uiObj['Plate']['thickness(mm)']
-    web_plate_w = uiObj['Plate']['width(mm)']
-    web_plate_l = uiObj['Plate']['height(mm)']
-    web_plate_fu = uiObj['Member']['fu(MPa)']
-    web_plate_fy = uiObj['Member']['fy(MPa)']
+    web_plate_t = uiObj['Plate']['Thickness (mm)']
+    web_plate_w = uiObj['Plate']['Width (mm)']
+    web_plate_l = uiObj['Plate']['Height (mm)']
+    web_plate_fu = uiObj['Member']['fu (MPa)']
+    web_plate_fy = uiObj['Member']['fy (MPa)']
               
-    weld_t = uiObj["Weld"]['size(mm)']
+    weld_t = uiObj["Weld"]['Size (mm)']
     weld_fu = 410
 
     bolt_planes = 1 

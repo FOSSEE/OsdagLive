@@ -215,22 +215,22 @@ class MainController(QtGui.QMainWindow):
         uiObj = self.get_prevstate()
         if(uiObj != None):
             
-            self.ui.combo_Beam.setCurrentIndex(self.ui.combo_Beam.findText(uiObj['Member']['beamSection']))
-            self.ui.comboColSec.setCurrentIndex(self.ui.comboColSec.findText(uiObj['Member']['columSection']))
+            self.ui.combo_Beam.setCurrentIndex(self.ui.combo_Beam.findText(uiObj['Member']['BeamSection']))
+            self.ui.comboColSec.setCurrentIndex(self.ui.comboColSec.findText(uiObj['Member']['ColumSection']))
             
-            self.ui.txtFu.setText(str(uiObj['Member']['fu(MPa)']))
-            self.ui.txtFy.setText(str(uiObj['Member']['fy(MPa)']))
+            self.ui.txtFu.setText(str(uiObj['Member']['fu (MPa)']))
+            self.ui.txtFy.setText(str(uiObj['Member']['fy (MPa)']))
            
-            self.ui.comboConnLoc.setCurrentIndex(self.ui.comboConnLoc.findText(str(uiObj['Member']['connectivity'])))
+            self.ui.comboConnLoc.setCurrentIndex(self.ui.comboConnLoc.findText(str(uiObj['Member']['Connectivity'])))
             
-            self.ui.txtShear.setText(str(uiObj['Load']['shearForce(kN)']))
+            self.ui.txtShear.setText(str(uiObj['Load']['ShearForce (kN)']))
             
-            self.ui.comboDaimeter.setCurrentIndex(self.ui.comboDaimeter.findText(str(uiObj['Bolt']['diameter(mm)'])))
-            comboTypeIndex = self.ui.comboType.findText(str(uiObj['Bolt']['type']))
+            self.ui.comboDaimeter.setCurrentIndex(self.ui.comboDaimeter.findText(str(uiObj['Bolt']['Diameter (mm)'])))
+            comboTypeIndex = self.ui.comboType.findText(str(uiObj['Bolt']['Type']))
             self.ui.comboType.setCurrentIndex(comboTypeIndex)
-            self.combotype_currentindexchanged(str(uiObj['Bolt']['type']))
+            self.combotype_currentindexchanged(str(uiObj['Bolt']['Type']))
             
-            prevValue = str(uiObj['Bolt']['grade'])
+            prevValue = str(uiObj['Bolt']['Grade'])
         
             comboGradeIndex = self.ui.comboGrade.findText(prevValue)
           
@@ -239,14 +239,14 @@ class MainController(QtGui.QMainWindow):
             #self.ui.comboDaimeter.currentText(str(uiObj['Bolt']['diameter(mm)']))
             #self.ui.comboType.currentText(str(uiObj['Bolt']['diameter(mm)']))
             #self.ui.comboGrade.currentText(str(uiObj['Bolt']['grade']))
-            selection = str(uiObj['Plate']['thickness(mm)'])
+            selection = str(uiObj['Plate']['Thickness (mm)'])
             selectionIndex = self.ui.comboPlateThick_2.findText(selection)
             self.ui.comboPlateThick_2.setCurrentIndex(selectionIndex)
             #self.ui.comboPlateThick_2.currentText(str(uiObj['Plate']['thickness(mm)']))
-            self.ui.txtPlateLen.setText(str(uiObj['Plate']['height(mm)']))
-            self.ui.txtPlateWidth.setText(str(uiObj['Plate']['width(mm)']))
+            self.ui.txtPlateLen.setText(str(uiObj['Plate']['Height (mm)']))
+            self.ui.txtPlateWidth.setText(str(uiObj['Plate']['Width (mm)']))
             
-            self.ui.comboWldSize.setCurrentIndex(self.ui.comboWldSize.findText(str(uiObj['Weld']['size(mm)'])))
+            self.ui.comboWldSize.setCurrentIndex(self.ui.comboWldSize.findText(str(uiObj['Weld']['Size (mm)'])))
             #self.ui.comboWldSize.currentText(str(uiObj['Weld']['size(mm)']))
         #else:
         #    self.btnreset_clicked() 
@@ -281,28 +281,28 @@ class MainController(QtGui.QMainWindow):
         '''
         uiObj = {}
         uiObj["Bolt"] = {}
-        uiObj["Bolt"]["diameter(mm)"] = self.ui.comboDaimeter.currentText().toInt()[0]
-        uiObj["Bolt"]["grade"] = float(self.ui.comboGrade.currentText())                                                                                                                                                                                                                                                              
-        uiObj["Bolt"]["type"] = str(self.ui.comboType.currentText())
+        uiObj["Bolt"]["Diameter (mm)"] = self.ui.comboDaimeter.currentText().toInt()[0]
+        uiObj["Bolt"]["Grade"] = float(self.ui.comboGrade.currentText())                                                                                                                                                                                                                                                              
+        uiObj["Bolt"]["Type"] = str(self.ui.comboType.currentText())
         
             
         uiObj["Weld"] = {}
-        uiObj["Weld"]['size(mm)'] = self.ui.comboWldSize.currentText().toInt()[0]
+        uiObj["Weld"]['Size (mm)'] = self.ui.comboWldSize.currentText().toInt()[0]
         
         uiObj['Member'] = {}
-        uiObj['Member']['beamSection'] = str(self.ui.combo_Beam.currentText())
-        uiObj['Member']['columSection'] = str(self.ui.comboColSec.currentText())
-        uiObj['Member']['connectivity'] = str(self.ui.comboConnLoc.currentText())
-        uiObj['Member']['fu(MPa)'] = self.ui.txtFu.text().toInt()[0]
-        uiObj['Member']['fy(MPa)'] = self.ui.txtFy.text().toInt()[0]
+        uiObj['Member']['BeamSection'] = str(self.ui.combo_Beam.currentText())
+        uiObj['Member']['ColumSection'] = str(self.ui.comboColSec.currentText())
+        uiObj['Member']['Connectivity'] = str(self.ui.comboConnLoc.currentText())
+        uiObj['Member']['fu (MPa)'] = self.ui.txtFu.text().toInt()[0]
+        uiObj['Member']['fy (MPa)'] = self.ui.txtFy.text().toInt()[0]
         
         uiObj['Plate'] = {}
-        uiObj['Plate']['thickness(mm)'] = self.ui.comboPlateThick_2.currentText().toInt()[0]
-        uiObj['Plate']['height(mm)'] = self.ui.txtPlateLen.text().toInt()[0] # changes the label length to height 
-        uiObj['Plate']['width(mm)'] = self.ui.txtPlateWidth.text().toInt()[0]
+        uiObj['Plate']['Thickness (mm)'] = self.ui.comboPlateThick_2.currentText().toInt()[0]
+        uiObj['Plate']['Height (mm)'] = self.ui.txtPlateLen.text().toInt()[0] # changes the label length to height 
+        uiObj['Plate']['Width (mm)'] = self.ui.txtPlateWidth.text().toInt()[0]
         
         uiObj['Load'] = {}
-        uiObj['Load']['shearForce(kN)'] = self.ui.txtShear.text().toInt()[0]
+        uiObj['Load']['ShearForce (kN)'] = self.ui.txtShear.text().toInt()[0]
         
         
         return uiObj    
@@ -340,25 +340,25 @@ class MainController(QtGui.QMainWindow):
         outObj = {}
         outObj['Plate'] ={}
         #outObj['Plate']["Thickness(mm)"] = float(self.ui.txtPlateThick.text())
-        outObj['Plate']["External Moment(kNm)"] = float(self.ui.txtExtMomnt.text())
-        outObj['Plate']["Moment Capacity(kNm)"] = float(self.ui.txtMomntCapacity.text())
+        outObj['Plate']["External Moment (kN-m)"] = float(self.ui.txtExtMomnt.text())
+        outObj['Plate']["Moment Capacity (kN-m)"] = float(self.ui.txtMomntCapacity.text())
         
         outObj['Weld'] ={}
         #outObj['Weld']["Weld Thickness(mm)"] = float(self.ui.txtWeldThick.text())
-        outObj['Weld']["Resultant Shear(kN/mm)"] = float(self.ui.txtResltShr.text())
-        outObj['Weld']["Weld Strength(kN/mm)"] = float(self.ui.txtWeldStrng.text())
+        outObj['Weld']["Resultant Shear (kN/mm)"] = float(self.ui.txtResltShr.text())
+        outObj['Weld']["Weld Strength (kN/mm)"] = float(self.ui.txtWeldStrng.text())
         
         outObj['Bolt'] = {}
-        outObj['Bolt']["Shear Capacity(kN)"] = float(self.ui.txtShrCapacity.text())
-        outObj['Bolt']["Bearing Capacity(kN)"] = float(self.ui.txtbearCapacity.text())
-        outObj['Bolt']["Capacity Of Bolt(kN)"] = float(self.ui.txtBoltCapacity.text())
+        outObj['Bolt']["Shear Capacity (kN)"] = float(self.ui.txtShrCapacity.text())
+        outObj['Bolt']["Bearing Capacity (kN)"] = float(self.ui.txtbearCapacity.text())
+        outObj['Bolt']["Capacity Of Bolt (kN)"] = float(self.ui.txtBoltCapacity.text())
         outObj['Bolt']["No Of Bolts"] = float(self.ui.txtNoBolts.text())
         outObj['Bolt']["No.Of Row"] = int(self.ui.txt_row.text())
         outObj['Bolt']["No.Of Column"] = int(self.ui.txt_col.text())
-        outObj['Bolt']["Pitch Distance(mm)"] = float(self.ui.txtPitch.text())
-        outObj['Bolt']["Guage Distance(mm)"] = float(self.ui.txtGuage.text())
-        outObj['Bolt']["End Distance(mm)"]= float(self.ui.txtEndDist.text())
-        outObj['Bolt']["Edge Distance(mm)"]= float(self.ui.txtEdgeDist.text())
+        outObj['Bolt']["Pitch Distance (mm)"] = float(self.ui.txtPitch.text())
+        outObj['Bolt']["Guage Distance (mm)"] = float(self.ui.txtGuage.text())
+        outObj['Bolt']["End Distance (mm)"]= float(self.ui.txtEndDist.text())
+        outObj['Bolt']["Edge Distance (mm)"]= float(self.ui.txtEdgeDist.text())
         
         return outObj
     
@@ -658,6 +658,7 @@ class MainController(QtGui.QMainWindow):
         display = self.ui.modelTab._display
         #display_2d = self.ui.model2dTab._display
         
+        
         # background gradient
         display.set_bg_gradient_color(23,1,32,23,1,32)
         #display_2d.set_bg_gradient_color(255,255,255,255,255,255)
@@ -679,6 +680,7 @@ class MainController(QtGui.QMainWindow):
     def display3Dmodel(self, component):
         self.display.EraseAll()
         self.display.SetModeShaded()
+        display.DisableAntiAliasing()
         self.display.set_bg_gradient_color(23,1,32,23,1,32)
         
         if component == "Column":
@@ -750,8 +752,8 @@ class MainController(QtGui.QMainWindow):
         fillet_length = resultObj['Plate']['height']
         fillet_thickness =  resultObj['Weld']['thickness']
         plate_width = resultObj['Plate']['width']
-        plate_thick = uiObj['Plate']['thickness(mm)']
-        bolt_dia = uiObj["Bolt"]["diameter(mm)"]
+        plate_thick = uiObj['Plate']['Thickness (mm)']
+        bolt_dia = uiObj["Bolt"]["Diameter (mm)"]
         bolt_r = bolt_dia/2
         bolt_R = bolt_r + 7
         nut_R = bolt_R
@@ -956,7 +958,6 @@ class MainController(QtGui.QMainWindow):
         
         #display, start_display, _, _ = self.simpleGUI()
         #self.display2d,_,_ = self.init_display(backend_str="pyqt4")
-        self.display.SetModeShaded()
         self.display.EraseAll()      
 
         self.display.set_bg_gradient_color(255, 255, 255, 255, 255, 255)

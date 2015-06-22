@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'finPlate.ui'
 #
-# Created: Sun Jun 21 21:16:15 2015
+# Created: Mon Jun 22 15:01:55 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1515,7 +1515,7 @@ class Ui_MainWindow(object):
         self.label.setText(_translate("MainWindow", "<html><head/><body><p>Connecting members</p></body></html>", None))
         self.label_4.setText(_translate("MainWindow", "<html><head/><body><p>Connectivity *</p></body></html>", None))
         self.lbl_fu.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-style:italic;\">f</span><span style=\" font-style:italic; vertical-align:sub;\">u </span>(MPa) * </p></body></html>", None))
-        self.lbl_fy.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-style:italic;\">f</span><span style=\" vertical-align:sub;\">y (</span>MPa) *</p></body></html>", None))
+        self.lbl_fy.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-style:italic;\">f</span><span style=\" vertical-align:sub;\">y </span>(MPa) *</p></body></html>", None))
         self.label_18.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; font-style:italic;\">Factored load</span></p></body></html>", None))
         self.lbl_shear.setText(_translate("MainWindow", "Shear force (kN) *", None))
         self.label_5.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; font-style:italic;\">Bolt</span></p></body></html>", None))
