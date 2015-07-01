@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'finPlate.ui'
 #
-# Created: Mon Jun 22 15:01:55 2015
+# Created: Wed Jun 24 15:15:09 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1070,7 +1070,7 @@ class Ui_MainWindow(object):
         self.txtNoBolts.setReadOnly(True)
         self.txtNoBolts.setObjectName(_fromUtf8("txtNoBolts"))
         self.t_7 = QtGui.QLabel(self.dockWidgetContents_2)
-        self.t_7.setGeometry(QtCore.QRect(0, 120, 130, 25))
+        self.t_7.setGeometry(QtCore.QRect(0, 120, 191, 25))
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setBold(False)
@@ -1506,12 +1506,12 @@ class Ui_MainWindow(object):
         self.menuHelp.setTitle(_translate("MainWindow", "Help", None))
         self.menuGraphics.setTitle(_translate("MainWindow", "Graphics", None))
         self.inputDock.setWindowTitle(_translate("MainWindow", "Input dock", None))
-        self.txtFy.setPlaceholderText(_translate("MainWindow", "000.000", None))
+        self.txtFy.setPlaceholderText(_translate("MainWindow", "000.0", None))
         self.label_3.setText(_translate("MainWindow", "<html><head/><body><p>Column section *</p></body></html>", None))
         self.comboConnLoc.setItemText(0, _translate("MainWindow", "Select Connectivity", None))
         self.comboConnLoc.setItemText(1, _translate("MainWindow", "Column flange-Beam web", None))
         self.comboConnLoc.setItemText(2, _translate("MainWindow", "Column web-Beam web", None))
-        self.txtFu.setPlaceholderText(_translate("MainWindow", "000.000", None))
+        self.txtFu.setPlaceholderText(_translate("MainWindow", "000.0", None))
         self.label.setText(_translate("MainWindow", "<html><head/><body><p>Connecting members</p></body></html>", None))
         self.label_4.setText(_translate("MainWindow", "<html><head/><body><p>Connectivity *</p></body></html>", None))
         self.lbl_fu.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-style:italic;\">f</span><span style=\" font-style:italic; vertical-align:sub;\">u </span>(MPa) * </p></body></html>", None))
@@ -1625,7 +1625,7 @@ class Ui_MainWindow(object):
         self.comboWldSize.setItemText(6, _translate("MainWindow", "12", None))
         self.label_9.setText(_translate("MainWindow", "Beam section *", None))
         self.outputDock.setWindowTitle(_translate("MainWindow", "Output dock", None))
-        self.t_7.setText(_translate("MainWindow", "No. of bolts", None))
+        self.t_7.setText(_translate("MainWindow", "No. of bolts required", None))
         self.label_152.setText(_translate("MainWindow", "Gauge (mm)", None))
         self.labl123_7.setText(_translate("MainWindow", "<html><head/><body><p>Capacity of bolt (kN)</p></body></html>", None))
         self.label_153.setText(_translate("MainWindow", "End distance (mm)", None))

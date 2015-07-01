@@ -199,8 +199,8 @@ class MainController(QtGui.QMainWindow):
         dictbeamdata = self.fetchBeamPara()
         beam_tw = float(dictbeamdata[QString("tw")])
         plateThickness = [6,8,10,12,14,16,18,20]
-        newlist = []
-        for ele in plateThickness[:]:
+        newlist = ['Select plate thickness']
+        for ele in plateThickness[1:]:
             item = int(ele)
             if item >= beam_tw:
                 newlist.append(str(item))
@@ -1114,23 +1114,23 @@ def launchFinPlateController(osdagMainWindow):
     
     
 
-# if __name__ == '__main__':
-#     #launchFinPlateController(None)
-#       
-#     # linking css to log file to display colour logs.
-#     set_osdaglogger()
-#     rawLogger = logging.getLogger("raw")
-#     rawLogger.setLevel(logging.INFO)
-#     fh = logging.FileHandler("fin.log", mode="w")
-#     formatter = logging.Formatter('''%(message)s''')
-#     fh.setFormatter(formatter)
-#     rawLogger.addHandler(fh)
-#     rawLogger.info('''<link rel="stylesheet" type="text/css" href="log.css"/>''')
-#       
-#     app = QtGui.QApplication(sys.argv)
-#     window = MainController()
-#     window.show()
-#     sys.exit(app.exec_())
+if __name__ == '__main__':
+    #launchFinPlateController(None)
+       
+    # linking css to log file to display colour logs.
+    set_osdaglogger()
+    rawLogger = logging.getLogger("raw")
+    rawLogger.setLevel(logging.INFO)
+    fh = logging.FileHandler("fin.log", mode="w")
+    formatter = logging.Formatter('''%(message)s''')
+    fh.setFormatter(formatter)
+    rawLogger.addHandler(fh)
+    rawLogger.info('''<link rel="stylesheet" type="text/css" href="log.css"/>''')
+       
+    app = QtGui.QApplication(sys.argv)
+    window = MainController()
+    window.show()
+    sys.exit(app.exec_())
 
 
 

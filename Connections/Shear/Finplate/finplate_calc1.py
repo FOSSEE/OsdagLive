@@ -398,8 +398,8 @@ def finConn(uiObj):
     outputObj['Plate']['minWidth'] = web_plate_w_req
     outputObj['Plate']['externalmoment'] = moment_demand
     outputObj['Plate']['momentcapacity'] = moment_capacity
-    outputObj['Plate']['height'] = web_plate_l
-    outputObj['Plate']['width'] = web_plate_w
+    outputObj['Plate']['height'] = float(web_plate_l)
+    outputObj['Plate']['width'] = float(web_plate_w)
     
     
     #return outputObj

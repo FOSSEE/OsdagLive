@@ -688,7 +688,7 @@
       </font>
      </property>
      <property name="placeholderText">
-      <string>000.000</string>
+      <string>000.0</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_3">
@@ -759,7 +759,7 @@
       </font>
      </property>
      <property name="placeholderText">
-      <string>000.000</string>
+      <string>000.0</string>
      </property>
     </widget>
     <widget class="QLabel" name="label">
@@ -3311,7 +3311,7 @@
       <rect>
        <x>0</x>
        <y>120</y>
-       <width>130</width>
+       <width>191</width>
        <height>25</height>
       </rect>
      </property>
@@ -3323,7 +3323,7 @@
       </font>
      </property>
      <property name="text">
-      <string>No. of bolts</string>
+      <string>No. of bolts required</string>
      </property>
     </widget>
     <widget class="QLineEdit" name="txtShrCapacity">
