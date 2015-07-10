@@ -6,8 +6,10 @@ Created on 29-Nov-2014
 import numpy
 from ModelUtils import *
 
+
+
 class Plate(object):
-    #
+    
     def __init__(self,L, W, T):        
         self.L = L
         self.W = W 

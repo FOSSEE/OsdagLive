@@ -8,12 +8,12 @@ import numpy
 from OCC.Graphic3d import Graphic3d_NOT_2D_ALUMINUM
 from bolt import Bolt
 from nut import Nut 
-
+from ModelUtils import *
 import copy
 from OCC.BRepPrimAPI import BRepPrimAPI_MakeSphere
 from OCC.gp import gp_Pnt
 from nutBoltPlacement import NutBoltArray
-#from Connections.Shear.Finplate.nutBoltPlacement import NutBoltArray
+
 
 class ColWebBeamWeb(object):
     
@@ -51,6 +51,8 @@ class ColWebBeamWeb(object):
         column_uDir = numpy.array([1.0, 0, 0])
         wDir1 = numpy.array([0.0, 0, 1.0])
         self.column.place(columnOrigin, column_uDir, wDir1)
+        
+        
         
     def createBeamGeometry(self):
         uDir = numpy.array([0, 1.0, 0])
