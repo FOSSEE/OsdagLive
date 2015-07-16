@@ -25,36 +25,36 @@ p11
 (dp12
 S'Width (mm)'
 p13
-I150
+I100
 sS'Height (mm)'
 p14
-I320
+I300
 sS'Thickness (mm)'
 p15
-I16
+I10
 ssS'Load'
 p16
 (dp17
 S'ShearForce (kN)'
 p18
-I240
+I140
 ssS'Weld'
 p19
 (dp20
 S'Size (mm)'
 p21
-I8
+I0
 ssS'Bolt'
 p22
 (dp23
 S'Grade'
 p24
-F4.8
+F8.8
 sS'Diameter (mm)'
 p25
-I16
+I20
 sS'Type'
 p26
-S'Black Bolt'
+S'HSFG'
 p27
 ss.

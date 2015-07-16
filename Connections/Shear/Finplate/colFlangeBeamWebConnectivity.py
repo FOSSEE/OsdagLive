@@ -4,6 +4,7 @@ Created on 11-May-2015
 @author: deepa
 '''
 from OCC.BRepPrimAPI import BRepPrimAPI_MakeSphere
+from OCC.BRepAlgoAPI import BRepAlgoAPI_Cut
 '''
 Created on 11-May-2015
 
@@ -108,7 +109,7 @@ class ColFlangeBeamWeb(object):
         pitchDir = -self.plate.vDir
         boltDir = self.plate.uDir
         self.nutBoltArray.place(nutboltArrayOrigin, gaugeDir, pitchDir, boltDir)
-        
+    
     def get_models(self):
         '''Returning 3D models
         '''
@@ -120,4 +121,18 @@ class ColFlangeBeamWeb(object):
     def get_nutboltmodels(self):
         
         return self.nutBoltArray.getModels()
-        #return self.nutBoltArray.getboltModels()  
+        #return self.nutBoltArray.getboltModels() 
+         
+    def get_beamModel(self):
+        nutBoltlist = self.nutBoltArray.getModels()
+        for nutBolt in nutBoltlist:
+            finalBeam = BRepAlgoAPI_Cut(self.beamModel,nutBolt).Shape()
+        return finalBeam
+        
+    
+    
+    
+    
+    
+    
+    

@@ -9,20 +9,15 @@ from OCC.TopoDS import topods, TopoDS_Shape
 from OCC.gp import gp_Pnt
 from nutBoltPlacement import NutBoltArray
 from PyQt4.Qt import QScrollBar
-import sys
-from OCC import VERSION, BRepTools, StlAPI
-#from PyQt4 import QtGui,QtCore
+from OCC import VERSION, BRepTools
 from ui_finPlate import Ui_MainWindow
 from model import *
-#from finPlateCalc import finConn
-from finplate_calc1 import finConn
+from finPlateCalc import finConn
 import yaml
 import pickle
-import logging 
-from OCC.BRepAlgoAPI import BRepAlgoAPI_Fuse
+from OCC.BRepAlgoAPI import BRepAlgoAPI_Fuse, BRepAlgoAPI_Cut
 from OCC._Quantity import Quantity_NOC_RED,Quantity_NOC_BLUE1,Quantity_NOC_SADDLEBROWN
 from ISection import ISection
-import numpy
 from OCC.Graphic3d import Graphic3d_NOT_2D_ALUMINUM
 from weld import  Weld
 from plate import Plate
@@ -35,7 +30,6 @@ from colWebBeamWebConnectivity import ColWebBeamWeb
 from colFlangeBeamWebConnectivity import ColFlangeBeamWeb
 from OCC import IGESControl
 from filletweld import FilletWeld
-from ModelUtils import *
 from OCC.STEPControl import STEPControl_Writer, STEPControl_AsIs
 from OCC.Interface import Interface_Static_SetCVal
 from OCC.IFSelect import IFSelect_RetDone
@@ -63,7 +57,7 @@ class MainController(QtGui.QMainWindow):
         self.ui.comboConnLoc.currentIndexChanged[str].connect(self.setimage_connection)
         
         self.disableViewButtons()
-        
+        #self.retrieve_prevstate()
         self.ui.btnInput.clicked.connect(lambda: self.dockbtn_clicked(self.ui.inputDock))
         self.ui.btnOutput.clicked.connect(lambda: self.dockbtn_clicked(self.ui.outputDock))
         
@@ -113,7 +107,11 @@ class MainController(QtGui.QMainWindow):
         
         self.ui.combo_Beam.addItems(get_beamcombolist())
         self.ui.comboColSec.addItems(get_columncombolist())
-        self.ui.combo_Beam.currentIndexChanged[str].connect(self.populatePlateThickCombo)
+        self.ui.combo_Beam.currentIndexChanged[str].connect(self.fillPlateThickCombo)
+        self.ui.comboColSec.currentIndexChanged[str].connect(self.populateWeldThickCombo)
+        self.ui.comboConnLoc.currentIndexChanged[str].connect(self.populateWeldThickCombo)
+        self.ui.comboPlateThick_2.currentIndexChanged[str].connect(self.populateWeldThickCombo)
+        
         
         self.ui.menuView.addAction(self.ui.inputDock.toggleViewAction())
         self.ui.menuView.addAction(self.ui.outputDock.toggleViewAction())
@@ -195,7 +193,9 @@ class MainController(QtGui.QMainWindow):
         self.ui.chkBxCol.setEnabled(True)
         self.ui.chkBxFinplate.setEnabled(True)
         
-    def populatePlateThickCombo(self):
+    def fillPlateThickCombo(self):
+        '''Populates the plate thickness on the basis of beam web thickness and plate thickness check
+        '''
         dictbeamdata = self.fetchBeamPara()
         beam_tw = float(dictbeamdata[QString("tw")])
         plateThickness = [6,8,10,12,14,16,18,20]
@@ -207,9 +207,44 @@ class MainController(QtGui.QMainWindow):
         self.ui.comboPlateThick_2.clear()
         for i in newlist[:]:
             self.ui.comboPlateThick_2.addItem(str(i))
-        self.ui.comboPlateThick_2.setCurrentIndex(0)
+        self.ui.comboPlateThick_2.setCurrentIndex(1)
            
-    
+    def populateWeldThickCombo(self):
+        '''
+        Returns the weld thickness on the basis column flange and plate thickness check
+        '''
+        newlist = ["Select weld thickness"]
+        weldlist = [3,4,5,6,8,10,12,16]
+        dictcoldata = self.fetchColumnPara()
+        column_tf = float(dictcoldata[QString("T")])
+        column_tw = float(dictcoldata[QString("tw")])
+        plate_thick  =  float(self.ui.comboPlateThick_2.currentText())
+        
+        if self.ui.comboConnLoc.currentText() == "Column flange-Beam web":
+            
+            thickerPart = column_tf > plate_thick and column_tf or plate_thick
+        
+        else:
+            thickerPart = column_tw > plate_thick and column_tw or plate_thick
+            
+        if thickerPart in range(0,11):
+            weld_index = weldlist.index(3)
+            newlist.extend(weldlist[weld_index:])
+        elif thickerPart in range (11,21):
+            weld_index = weldlist.index(5)
+            newlist.extend(weldlist[weld_index:])
+        elif thickerPart in range(21,33):
+            weld_index = weldlist.index(6)
+            newlist.extend(weldlist[weld_index: ])
+        else:
+            weld_index = weldlist.index(8)
+            newlist.extend(weldlist[weld_index: ])
+                
+        self.ui.comboWldSize.clear()
+        for element in newlist[:]:
+            self.ui.comboWldSize.addItem(str(element))
+        #self.ui.comboColSec.currentIndex(0)
+
     
     def retrieve_prevstate(self):
         uiObj = self.get_prevstate()
@@ -390,7 +425,7 @@ class MainController(QtGui.QMainWindow):
 
         #self.setCurrentFile(fileName);
         
-        QtGui.QMessageBox.about(self,'Information',"File saved")
+        #QtGui.QMessageBox.about(self,'Information',"File saved")
        
     
     
@@ -411,7 +446,7 @@ class MainController(QtGui.QMainWindow):
         yaml.dump(newDict,f,allow_unicode=True, default_flow_style=False)
         
         #return self.save_file(fileName+".txt")
-        QtGui.QMessageBox.about(self,'Information',"File saved")
+        #QtGui.QMessageBox.about(self,'Information',"File saved")
 
         
     def resetbtn_clicked(self):
@@ -683,11 +718,9 @@ class MainController(QtGui.QMainWindow):
         
         if component == "Column":
             osdagDisplayShape(self.display, self.connectivity.columnModel, update=True)
-            
-            my_sphere = BRepPrimAPI_MakeSphere(12).Shape()
-            self.display.DisplayShape(my_sphere,color = 'red',update = True)
         elif component == "Beam":
-            osdagDisplayShape(self.display, self.connectivity.beamModel, material = Graphic3d_NOT_2D_ALUMINUM, update=True)
+            osdagDisplayShape(self.display, self.connectivity.get_beamModel(), material = Graphic3d_NOT_2D_ALUMINUM, update=True)
+            #osdagDisplayShape(self.display, self.connectivity.beamModel, material = Graphic3d_NOT_2D_ALUMINUM, update=True)
         elif component == "Finplate" :
             osdagDisplayShape(self.display, self.connectivity.weldModelLeft, color = 'red', update = True)
             osdagDisplayShape(self.display, self.connectivity.weldModelRight, color = 'red', update = True)
@@ -862,7 +895,6 @@ class MainController(QtGui.QMainWindow):
         colflangeconn.create_3dmodel()
         return colflangeconn
         
-     
     
     def call_3DModel(self,flag): 
         self.ui.btnSvgSave.setEnabled(True)
@@ -883,18 +915,18 @@ class MainController(QtGui.QMainWindow):
                 self.fuse_model = None
 
             self.display3Dmodel("Model")
-            beamOrigin = self.connectivity.beam.secOrigin + self.connectivity.beam.t/2 * (-self.connectivity.beam.uDir)
-            gpBeamOrigin = getGpPt(beamOrigin)
-            my_sphere2 = BRepPrimAPI_MakeSphere(gpBeamOrigin,1).Shape()
-            self.display.DisplayShape(my_sphere2,color = 'red',update = True)
-            beamOrigin = self.connectivity.beam.secOrigin 
-            gpBeamOrigin = getGpPt(beamOrigin)
-            my_sphere2 = BRepPrimAPI_MakeSphere(gpBeamOrigin,1).Shape()
-            self.display.DisplayShape(my_sphere2,color = 'blue',update = True)
-            plateOrigin =  (self.connectivity.plate.secOrigin + self.connectivity.plate.T/2.0 *(self.connectivity.plate.uDir)+ self.connectivity.weldLeft.L/2.0 * (self.connectivity.plate.vDir) + self.connectivity.plate.T * (-self.connectivity.weldLeft.uDir))
-            gpPntplateOrigin=  getGpPt(plateOrigin)
-            my_sphere = BRepPrimAPI_MakeSphere(gpPntplateOrigin,2).Shape()
-            self.display.DisplayShape(my_sphere,update=True)
+            # beamOrigin = self.connectivity.beam.secOrigin + self.connectivity.beam.t/2 * (-self.connectivity.beam.uDir)
+            # gpBeamOrigin = getGpPt(beamOrigin)
+            # my_sphere2 = BRepPrimAPI_MakeSphere(gpBeamOrigin,1).Shape()
+            # self.display.DisplayShape(my_sphere2,color = 'red',update = True)
+            # beamOrigin = self.connectivity.beam.secOrigin 
+            # gpBeamOrigin = getGpPt(beamOrigin)
+            # my_sphere2 = BRepPrimAPI_MakeSphere(gpBeamOrigin,1).Shape()
+            # self.display.DisplayShape(my_sphere2,color = 'blue',update = True)
+            # plateOrigin =  (self.connectivity.plate.secOrigin + self.connectivity.plate.T/2.0 *(self.connectivity.plate.uDir)+ self.connectivity.weldLeft.L/2.0 * (self.connectivity.plate.vDir) + self.connectivity.plate.T * (-self.connectivity.weldLeft.uDir))
+            # gpPntplateOrigin=  getGpPt(plateOrigin)
+            # my_sphere = BRepPrimAPI_MakeSphere(gpPntplateOrigin,2).Shape()
+            # self.display.DisplayShape(my_sphere,update=True)
             
         else:
             self.display.EraseAll()

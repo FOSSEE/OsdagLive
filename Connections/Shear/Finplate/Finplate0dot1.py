@@ -16,7 +16,7 @@ from OCC import VERSION
 from ui_finPlate2 import Ui_MainWindow
 from model import *
 #from finPlateCalc import finConn
-from finplate_calc1 import finConn
+from Connections.Shear.Finplate.finPlateCalc1 import finConn
 import yaml
 import pickle
 import logging 

@@ -1,0 +1,2 @@
+Thu, 25 Jun 2015 15:17:05 INFO : Overall finplate connection design is safe 
+Thu, 25 Jun 2015 15:17:05 DEBUG :=========End Of design=========== 
