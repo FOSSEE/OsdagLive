@@ -18,7 +18,7 @@ p8
 I250
 sS'Connectivity'
 p9
-S'Column web-Beam web'
+S'Column flange-Beam web'
 p10
 ssS'Plate'
 p11

@@ -13,6 +13,7 @@ import copy
 from OCC.BRepPrimAPI import BRepPrimAPI_MakeSphere
 from OCC.gp import gp_Pnt
 from nutBoltPlacement import NutBoltArray
+from OCC.BRepAlgoAPI import BRepAlgoAPI_Cut
 
 
 class ColWebBeamWeb(object):
@@ -117,9 +118,14 @@ class ColWebBeamWeb(object):
         
                 
     def get_nutboltmodels(self):
-        
         return self.nutBoltArray.getModels()
         #return self.nutBoltArray.getboltModels()      
-                
+    
+    def get_beamModel(self):
+        finalBeam = self.beamModel
+        nutBoltlist = self.nutBoltArray.getModels()
+        for bolt in nutBoltlist[0:(len(nutBoltlist)//2)]:
+            finalBeam = BRepAlgoAPI_Cut(finalBeam,bolt).Shape()
+        return finalBeam
                 
                 

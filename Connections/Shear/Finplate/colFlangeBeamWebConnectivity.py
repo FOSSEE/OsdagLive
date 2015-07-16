@@ -124,9 +124,10 @@ class ColFlangeBeamWeb(object):
         #return self.nutBoltArray.getboltModels() 
          
     def get_beamModel(self):
+        finalBeam = self.beamModel
         nutBoltlist = self.nutBoltArray.getModels()
-        for nutBolt in nutBoltlist:
-            finalBeam = BRepAlgoAPI_Cut(self.beamModel,nutBolt).Shape()
+        for bolt in nutBoltlist[0:(len(nutBoltlist)//2)]:
+            finalBeam = BRepAlgoAPI_Cut(finalBeam,bolt).Shape()
         return finalBeam
         
     
