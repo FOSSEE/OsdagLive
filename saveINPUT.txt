@@ -4,7 +4,7 @@ p1
 (dp2
 S'ColumSection'
 p3
-S'ISMC 300'
+S'ISSC 150*'
 p4
 sS'fu (MPa)'
 p5
@@ -18,7 +18,7 @@ p8
 I250
 sS'Connectivity'
 p9
-S'Column flange-Beam web'
+S'Column web-Beam web'
 p10
 ssS'Plate'
 p11
@@ -31,7 +31,7 @@ p14
 I300
 sS'Thickness (mm)'
 p15
-I20
+I10
 ssS'Load'
 p16
 (dp17

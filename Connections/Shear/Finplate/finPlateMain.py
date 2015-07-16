@@ -8,14 +8,13 @@ from PyQt4.QtCore import QString, pyqtSignal
 from OCC.TopoDS import topods, TopoDS_Shape
 from OCC.gp import gp_Pnt
 from nutBoltPlacement import NutBoltArray
-from PyQt4.Qt import QScrollBar
 from OCC import VERSION, BRepTools
 from ui_finPlate import Ui_MainWindow
 from model import *
 from finPlateCalc import finConn
 import yaml
 import pickle
-from OCC.BRepAlgoAPI import BRepAlgoAPI_Fuse, BRepAlgoAPI_Cut
+from OCC.BRepAlgoAPI import BRepAlgoAPI_Fuse
 from OCC._Quantity import Quantity_NOC_RED,Quantity_NOC_BLUE1,Quantity_NOC_SADDLEBROWN
 from ISection import ISection
 from OCC.Graphic3d import Graphic3d_NOT_2D_ALUMINUM

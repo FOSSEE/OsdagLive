@@ -8237,3 +8237,661 @@
         <span class="LEVEL">DEBUG</span>
         <span class="MSG"> :=========End Of design===========</span>
     </div>
+
+    <div  class="LOG INFO">
+        <span class="DATE">Thu, 16 Jul 2015 17:07:11</span>
+        <span class="LEVEL">INFO</span>
+        <span class="MSG">: Overall finplate connection design is safe 
+</span>
+    </div>
+
+    <div  class="LOG DEBUG">
+        <span class="DATE">Thu, 16 Jul 2015 17:07:11</span>
+        <span class="LEVEL">DEBUG</span>
+        <span class="MSG"> :=========End Of design===========</span>
+    </div>
+
+    <div  class="LOG INFO">
+        <span class="DATE">Thu, 16 Jul 2015 17:07:11</span>
+        <span class="LEVEL">INFO</span>
+        <span class="MSG">: Overall finplate connection design is safe 
+</span>
+    </div>
+
+    <div  class="LOG DEBUG">
+        <span class="DATE">Thu, 16 Jul 2015 17:07:11</span>
+        <span class="LEVEL">DEBUG</span>
+        <span class="MSG"> :=========End Of design===========</span>
+    </div>
+
+    <div  class="LOG ERROR">
+        <span class="DATE">Thu, 16 Jul 2015 17:07:24</span>
+        <span class="LEVEL">ERROR</span>
+        <span class="MSG">: Weld thickness is not sufficient</span>
+    </div>
+
+    <div  class="LOG WARNING">
+        <span class="DATE">Thu, 16 Jul 2015 17:07:24</span>
+        <span class="LEVEL">WARNING</span>
+        <span class="MSG">: Minimum weld thickness is required is 6.00 mm </span>
+    </div>
+
+    <div  class="LOG ERROR">
+        <span class="DATE">Thu, 16 Jul 2015 17:07:24</span>
+        <span class="LEVEL">ERROR</span>
+        <span class="MSG">: Design is not safe 
+ </span>
+    </div>
+
+    <div  class="LOG DEBUG">
+        <span class="DATE">Thu, 16 Jul 2015 17:07:24</span>
+        <span class="LEVEL">DEBUG</span>
+        <span class="MSG"> :=========End Of design===========</span>
+    </div>
+
+    <div  class="LOG INFO">
+        <span class="DATE">Thu, 16 Jul 2015 17:07:30</span>
+        <span class="LEVEL">INFO</span>
+        <span class="MSG">: Overall finplate connection design is safe 
+</span>
+    </div>
+
+    <div  class="LOG DEBUG">
+        <span class="DATE">Thu, 16 Jul 2015 17:07:30</span>
+        <span class="LEVEL">DEBUG</span>
+        <span class="MSG"> :=========End Of design===========</span>
+    </div>
+
+    <div  class="LOG INFO">
+        <span class="DATE">Thu, 16 Jul 2015 17:07:30</span>
+        <span class="LEVEL">INFO</span>
+        <span class="MSG">: Overall finplate connection design is safe 
+</span>
+    </div>
+
+    <div  class="LOG DEBUG">
+        <span class="DATE">Thu, 16 Jul 2015 17:07:30</span>
+        <span class="LEVEL">DEBUG</span>
+        <span class="MSG"> :=========End Of design===========</span>
+    </div>
+
+    <div  class="LOG INFO">
+        <span class="DATE">Thu, 16 Jul 2015 17:07:46</span>
+        <span class="LEVEL">INFO</span>
+        <span class="MSG">: Overall finplate connection design is safe 
+</span>
+    </div>
+
+    <div  class="LOG DEBUG">
+        <span class="DATE">Thu, 16 Jul 2015 17:07:46</span>
+        <span class="LEVEL">DEBUG</span>
+        <span class="MSG"> :=========End Of design===========</span>
+    </div>
+
+    <div  class="LOG INFO">
+        <span class="DATE">Thu, 16 Jul 2015 17:07:47</span>
+        <span class="LEVEL">INFO</span>
+        <span class="MSG">: Overall finplate connection design is safe 
+</span>
+    </div>
+
+    <div  class="LOG DEBUG">
+        <span class="DATE">Thu, 16 Jul 2015 17:07:47</span>
+        <span class="LEVEL">DEBUG</span>
+        <span class="MSG"> :=========End Of design===========</span>
+    </div>
+
+    <div  class="LOG ERROR">
+        <span class="DATE">Thu, 16 Jul 2015 17:08:04</span>
+        <span class="LEVEL">ERROR</span>
+        <span class="MSG">: Weld thickness is not sufficient</span>
+    </div>
+
+    <div  class="LOG WARNING">
+        <span class="DATE">Thu, 16 Jul 2015 17:08:04</span>
+        <span class="LEVEL">WARNING</span>
+        <span class="MSG">: Minimum weld thickness is required is 5.00 mm </span>
+    </div>
+
+    <div  class="LOG ERROR">
+        <span class="DATE">Thu, 16 Jul 2015 17:08:04</span>
+        <span class="LEVEL">ERROR</span>
+        <span class="MSG">: Design is not safe 
+ </span>
+    </div>
+
+    <div  class="LOG DEBUG">
+        <span class="DATE">Thu, 16 Jul 2015 17:08:04</span>
+        <span class="LEVEL">DEBUG</span>
+        <span class="MSG"> :=========End Of design===========</span>
+    </div>
+
+    <div  class="LOG INFO">
+        <span class="DATE">Thu, 16 Jul 2015 17:08:12</span>
+        <span class="LEVEL">INFO</span>
+        <span class="MSG">: Overall finplate connection design is safe 
+</span>
+    </div>
+
+    <div  class="LOG DEBUG">
+        <span class="DATE">Thu, 16 Jul 2015 17:08:12</span>
+        <span class="LEVEL">DEBUG</span>
+        <span class="MSG"> :=========End Of design===========</span>
+    </div>
+
+    <div  class="LOG INFO">
+        <span class="DATE">Thu, 16 Jul 2015 17:08:12</span>
+        <span class="LEVEL">INFO</span>
+        <span class="MSG">: Overall finplate connection design is safe 
+</span>
+    </div>
+
+    <div  class="LOG DEBUG">
+        <span class="DATE">Thu, 16 Jul 2015 17:08:12</span>
+        <span class="LEVEL">DEBUG</span>
+        <span class="MSG"> :=========End Of design===========</span>
+    </div>
+
+    <div  class="LOG ERROR">
+        <span class="DATE">Thu, 16 Jul 2015 17:09:45</span>
+        <span class="LEVEL">ERROR</span>
+        <span class="MSG">: Height of plate is more than the clear depth of the beam</span>
+    </div>
+
+    <div  class="LOG WARNING">
+        <span class="DATE">Thu, 16 Jul 2015 17:09:45</span>
+        <span class="LEVEL">WARNING</span>
+        <span class="MSG">: Maximum plate height allowed is 46.00 mm </span>
+    </div>
+
+    <div  class="LOG ERROR">
+        <span class="DATE">Thu, 16 Jul 2015 17:09:45</span>
+        <span class="LEVEL">ERROR</span>
+        <span class="MSG">: Bolt strength is insufficient to carry the shear force</span>
+    </div>
+
+    <div  class="LOG WARNING">
+        <span class="DATE">Thu, 16 Jul 2015 17:09:45</span>
+        <span class="LEVEL">WARNING</span>
+        <span class="MSG">: Increase bolt diameter and/or bolt grade</span>
+    </div>
+
+    <div  class="LOG ERROR">
+        <span class="DATE">Thu, 16 Jul 2015 17:09:45</span>
+        <span class="LEVEL">ERROR</span>
+        <span class="MSG">: Plate width provided is less than the minimum required</span>
+    </div>
+
+    <div  class="LOG WARNING">
+        <span class="DATE">Thu, 16 Jul 2015 17:09:45</span>
+        <span class="LEVEL">WARNING</span>
+        <span class="MSG">: Minimum plate width required is 150.00 mm </span>
+    </div>
+
+    <div  class="LOG ERROR">
+        <span class="DATE">Thu, 16 Jul 2015 17:09:45</span>
+        <span class="LEVEL">ERROR</span>
+        <span class="MSG">: Weld thickness is not sufficient</span>
+    </div>
+
+    <div  class="LOG WARNING">
+        <span class="DATE">Thu, 16 Jul 2015 17:09:45</span>
+        <span class="LEVEL">WARNING</span>
+        <span class="MSG">: Minimum weld thickness is required is 15.00 mm </span>
+    </div>
+
+    <div  class="LOG ERROR">
+        <span class="DATE">Thu, 16 Jul 2015 17:09:45</span>
+        <span class="LEVEL">ERROR</span>
+        <span class="MSG">: Design is not safe 
+ </span>
+    </div>
+
+    <div  class="LOG DEBUG">
+        <span class="DATE">Thu, 16 Jul 2015 17:09:45</span>
+        <span class="LEVEL">DEBUG</span>
+        <span class="MSG"> :=========End Of design===========</span>
+    </div>
+
+    <div  class="LOG ERROR">
+        <span class="DATE">Thu, 16 Jul 2015 17:09:53</span>
+        <span class="LEVEL">ERROR</span>
+        <span class="MSG">: Height of plate is more than the clear depth of the beam</span>
+    </div>
+
+    <div  class="LOG WARNING">
+        <span class="DATE">Thu, 16 Jul 2015 17:09:53</span>
+        <span class="LEVEL">WARNING</span>
+        <span class="MSG">: Maximum plate height allowed is 46.00 mm </span>
+    </div>
+
+    <div  class="LOG ERROR">
+        <span class="DATE">Thu, 16 Jul 2015 17:09:53</span>
+        <span class="LEVEL">ERROR</span>
+        <span class="MSG">: Bolt strength is insufficient to carry the shear force</span>
+    </div>
+
+    <div  class="LOG WARNING">
+        <span class="DATE">Thu, 16 Jul 2015 17:09:53</span>
+        <span class="LEVEL">WARNING</span>
+        <span class="MSG">: Increase bolt diameter and/or bolt grade</span>
+    </div>
+
+    <div  class="LOG ERROR">
+        <span class="DATE">Thu, 16 Jul 2015 17:09:53</span>
+        <span class="LEVEL">ERROR</span>
+        <span class="MSG">: Plate width provided is less than the minimum required</span>
+    </div>
+
+    <div  class="LOG WARNING">
+        <span class="DATE">Thu, 16 Jul 2015 17:09:53</span>
+        <span class="LEVEL">WARNING</span>
+        <span class="MSG">: Minimum plate width required is 150.00 mm </span>
+    </div>
+
+    <div  class="LOG ERROR">
+        <span class="DATE">Thu, 16 Jul 2015 17:09:53</span>
+        <span class="LEVEL">ERROR</span>
+        <span class="MSG">: Weld thickness is not sufficient</span>
+    </div>
+
+    <div  class="LOG WARNING">
+        <span class="DATE">Thu, 16 Jul 2015 17:09:53</span>
+        <span class="LEVEL">WARNING</span>
+        <span class="MSG">: Minimum weld thickness is required is 15.00 mm </span>
+    </div>
+
+    <div  class="LOG ERROR">
+        <span class="DATE">Thu, 16 Jul 2015 17:09:53</span>
+        <span class="LEVEL">ERROR</span>
+        <span class="MSG">: Design is not safe 
+ </span>
+    </div>
+
+    <div  class="LOG DEBUG">
+        <span class="DATE">Thu, 16 Jul 2015 17:09:53</span>
+        <span class="LEVEL">DEBUG</span>
+        <span class="MSG"> :=========End Of design===========</span>
+    </div>
+
+    <div  class="LOG ERROR">
+        <span class="DATE">Thu, 16 Jul 2015 17:09:57</span>
+        <span class="LEVEL">ERROR</span>
+        <span class="MSG">: Height of plate is more than the clear depth of the beam</span>
+    </div>
+
+    <div  class="LOG WARNING">
+        <span class="DATE">Thu, 16 Jul 2015 17:09:57</span>
+        <span class="LEVEL">WARNING</span>
+        <span class="MSG">: Maximum plate height allowed is 46.00 mm </span>
+    </div>
+
+    <div  class="LOG ERROR">
+        <span class="DATE">Thu, 16 Jul 2015 17:09:57</span>
+        <span class="LEVEL">ERROR</span>
+        <span class="MSG">: Bolt strength is insufficient to carry the shear force</span>
+    </div>
+
+    <div  class="LOG WARNING">
+        <span class="DATE">Thu, 16 Jul 2015 17:09:57</span>
+        <span class="LEVEL">WARNING</span>
+        <span class="MSG">: Increase bolt diameter and/or bolt grade</span>
+    </div>
+
+    <div  class="LOG ERROR">
+        <span class="DATE">Thu, 16 Jul 2015 17:09:57</span>
+        <span class="LEVEL">ERROR</span>
+        <span class="MSG">: Plate width provided is less than the minimum required</span>
+    </div>
+
+    <div  class="LOG WARNING">
+        <span class="DATE">Thu, 16 Jul 2015 17:09:57</span>
+        <span class="LEVEL">WARNING</span>
+        <span class="MSG">: Minimum plate width required is 150.00 mm </span>
+    </div>
+
+    <div  class="LOG ERROR">
+        <span class="DATE">Thu, 16 Jul 2015 17:09:57</span>
+        <span class="LEVEL">ERROR</span>
+        <span class="MSG">: Weld thickness is not sufficient</span>
+    </div>
+
+    <div  class="LOG WARNING">
+        <span class="DATE">Thu, 16 Jul 2015 17:09:57</span>
+        <span class="LEVEL">WARNING</span>
+        <span class="MSG">: Minimum weld thickness is required is 15.00 mm </span>
+    </div>
+
+    <div  class="LOG ERROR">
+        <span class="DATE">Thu, 16 Jul 2015 17:09:57</span>
+        <span class="LEVEL">ERROR</span>
+        <span class="MSG">: Design is not safe 
+ </span>
+    </div>
+
+    <div  class="LOG DEBUG">
+        <span class="DATE">Thu, 16 Jul 2015 17:09:57</span>
+        <span class="LEVEL">DEBUG</span>
+        <span class="MSG"> :=========End Of design===========</span>
+    </div>
+
+    <div  class="LOG ERROR">
+        <span class="DATE">Thu, 16 Jul 2015 17:10:10</span>
+        <span class="LEVEL">ERROR</span>
+        <span class="MSG">: Height of plate is more than the clear depth of the beam</span>
+    </div>
+
+    <div  class="LOG WARNING">
+        <span class="DATE">Thu, 16 Jul 2015 17:10:10</span>
+        <span class="LEVEL">WARNING</span>
+        <span class="MSG">: Maximum plate height allowed is 46.00 mm </span>
+    </div>
+
+    <div  class="LOG ERROR">
+        <span class="DATE">Thu, 16 Jul 2015 17:10:10</span>
+        <span class="LEVEL">ERROR</span>
+        <span class="MSG">: Bolt strength is insufficient to carry the shear force</span>
+    </div>
+
+    <div  class="LOG WARNING">
+        <span class="DATE">Thu, 16 Jul 2015 17:10:10</span>
+        <span class="LEVEL">WARNING</span>
+        <span class="MSG">: Increase bolt diameter and/or bolt grade</span>
+    </div>
+
+    <div  class="LOG ERROR">
+        <span class="DATE">Thu, 16 Jul 2015 17:10:10</span>
+        <span class="LEVEL">ERROR</span>
+        <span class="MSG">: Plate width provided is less than the minimum required</span>
+    </div>
+
+    <div  class="LOG WARNING">
+        <span class="DATE">Thu, 16 Jul 2015 17:10:10</span>
+        <span class="LEVEL">WARNING</span>
+        <span class="MSG">: Minimum plate width required is 150.00 mm </span>
+    </div>
+
+    <div  class="LOG ERROR">
+        <span class="DATE">Thu, 16 Jul 2015 17:10:10</span>
+        <span class="LEVEL">ERROR</span>
+        <span class="MSG">: Weld thickness is not sufficient</span>
+    </div>
+
+    <div  class="LOG WARNING">
+        <span class="DATE">Thu, 16 Jul 2015 17:10:10</span>
+        <span class="LEVEL">WARNING</span>
+        <span class="MSG">: Minimum weld thickness is required is 12.00 mm </span>
+    </div>
+
+    <div  class="LOG ERROR">
+        <span class="DATE">Thu, 16 Jul 2015 17:10:10</span>
+        <span class="LEVEL">ERROR</span>
+        <span class="MSG">: Design is not safe 
+ </span>
+    </div>
+
+    <div  class="LOG DEBUG">
+        <span class="DATE">Thu, 16 Jul 2015 17:10:10</span>
+        <span class="LEVEL">DEBUG</span>
+        <span class="MSG"> :=========End Of design===========</span>
+    </div>
+
+    <div  class="LOG ERROR">
+        <span class="DATE">Thu, 16 Jul 2015 17:10:20</span>
+        <span class="LEVEL">ERROR</span>
+        <span class="MSG">: Height of plate is more than the clear depth of the beam</span>
+    </div>
+
+    <div  class="LOG WARNING">
+        <span class="DATE">Thu, 16 Jul 2015 17:10:20</span>
+        <span class="LEVEL">WARNING</span>
+        <span class="MSG">: Maximum plate height allowed is 46.00 mm </span>
+    </div>
+
+    <div  class="LOG ERROR">
+        <span class="DATE">Thu, 16 Jul 2015 17:10:20</span>
+        <span class="LEVEL">ERROR</span>
+        <span class="MSG">: Bolt strength is insufficient to carry the shear force</span>
+    </div>
+
+    <div  class="LOG WARNING">
+        <span class="DATE">Thu, 16 Jul 2015 17:10:20</span>
+        <span class="LEVEL">WARNING</span>
+        <span class="MSG">: Increase bolt diameter and/or bolt grade</span>
+    </div>
+
+    <div  class="LOG ERROR">
+        <span class="DATE">Thu, 16 Jul 2015 17:10:20</span>
+        <span class="LEVEL">ERROR</span>
+        <span class="MSG">: Plate width provided is less than the minimum required</span>
+    </div>
+
+    <div  class="LOG WARNING">
+        <span class="DATE">Thu, 16 Jul 2015 17:10:20</span>
+        <span class="LEVEL">WARNING</span>
+        <span class="MSG">: Minimum plate width required is 150.00 mm </span>
+    </div>
+
+    <div  class="LOG ERROR">
+        <span class="DATE">Thu, 16 Jul 2015 17:10:20</span>
+        <span class="LEVEL">ERROR</span>
+        <span class="MSG">: Weld thickness is not sufficient</span>
+    </div>
+
+    <div  class="LOG WARNING">
+        <span class="DATE">Thu, 16 Jul 2015 17:10:20</span>
+        <span class="LEVEL">WARNING</span>
+        <span class="MSG">: Minimum weld thickness is required is 25.00 mm </span>
+    </div>
+
+    <div  class="LOG ERROR">
+        <span class="DATE">Thu, 16 Jul 2015 17:10:20</span>
+        <span class="LEVEL">ERROR</span>
+        <span class="MSG">: Design is not safe 
+ </span>
+    </div>
+
+    <div  class="LOG DEBUG">
+        <span class="DATE">Thu, 16 Jul 2015 17:10:20</span>
+        <span class="LEVEL">DEBUG</span>
+        <span class="MSG"> :=========End Of design===========</span>
+    </div>
+
+    <div  class="LOG ERROR">
+        <span class="DATE">Thu, 16 Jul 2015 17:10:38</span>
+        <span class="LEVEL">ERROR</span>
+        <span class="MSG">: Height of plate is more than the clear depth of the beam</span>
+    </div>
+
+    <div  class="LOG WARNING">
+        <span class="DATE">Thu, 16 Jul 2015 17:10:38</span>
+        <span class="LEVEL">WARNING</span>
+        <span class="MSG">: Maximum plate height allowed is 46.00 mm </span>
+    </div>
+
+    <div  class="LOG ERROR">
+        <span class="DATE">Thu, 16 Jul 2015 17:10:38</span>
+        <span class="LEVEL">ERROR</span>
+        <span class="MSG">: Bolt strength is insufficient to carry the shear force</span>
+    </div>
+
+    <div  class="LOG WARNING">
+        <span class="DATE">Thu, 16 Jul 2015 17:10:38</span>
+        <span class="LEVEL">WARNING</span>
+        <span class="MSG">: Increase bolt diameter and/or bolt grade</span>
+    </div>
+
+    <div  class="LOG ERROR">
+        <span class="DATE">Thu, 16 Jul 2015 17:10:38</span>
+        <span class="LEVEL">ERROR</span>
+        <span class="MSG">: Plate width provided is less than the minimum required</span>
+    </div>
+
+    <div  class="LOG WARNING">
+        <span class="DATE">Thu, 16 Jul 2015 17:10:38</span>
+        <span class="LEVEL">WARNING</span>
+        <span class="MSG">: Minimum plate width required is 150.00 mm </span>
+    </div>
+
+    <div  class="LOG ERROR">
+        <span class="DATE">Thu, 16 Jul 2015 17:10:38</span>
+        <span class="LEVEL">ERROR</span>
+        <span class="MSG">: Weld thickness is not sufficient</span>
+    </div>
+
+    <div  class="LOG WARNING">
+        <span class="DATE">Thu, 16 Jul 2015 17:10:38</span>
+        <span class="LEVEL">WARNING</span>
+        <span class="MSG">: Minimum weld thickness is required is 25.00 mm </span>
+    </div>
+
+    <div  class="LOG ERROR">
+        <span class="DATE">Thu, 16 Jul 2015 17:10:38</span>
+        <span class="LEVEL">ERROR</span>
+        <span class="MSG">: Design is not safe 
+ </span>
+    </div>
+
+    <div  class="LOG DEBUG">
+        <span class="DATE">Thu, 16 Jul 2015 17:10:38</span>
+        <span class="LEVEL">DEBUG</span>
+        <span class="MSG"> :=========End Of design===========</span>
+    </div>
+
+    <div  class="LOG ERROR">
+        <span class="DATE">Thu, 16 Jul 2015 17:10:49</span>
+        <span class="LEVEL">ERROR</span>
+        <span class="MSG">: Height of plate is more than the clear depth of the beam</span>
+    </div>
+
+    <div  class="LOG WARNING">
+        <span class="DATE">Thu, 16 Jul 2015 17:10:49</span>
+        <span class="LEVEL">WARNING</span>
+        <span class="MSG">: Maximum plate height allowed is 94.00 mm </span>
+    </div>
+
+    <div  class="LOG ERROR">
+        <span class="DATE">Thu, 16 Jul 2015 17:10:49</span>
+        <span class="LEVEL">ERROR</span>
+        <span class="MSG">: Bolt strength is insufficient to carry the shear force</span>
+    </div>
+
+    <div  class="LOG WARNING">
+        <span class="DATE">Thu, 16 Jul 2015 17:10:49</span>
+        <span class="LEVEL">WARNING</span>
+        <span class="MSG">: Increase bolt diameter and/or bolt grade</span>
+    </div>
+
+    <div  class="LOG ERROR">
+        <span class="DATE">Thu, 16 Jul 2015 17:10:49</span>
+        <span class="LEVEL">ERROR</span>
+        <span class="MSG">: Plate width provided is less than the minimum required</span>
+    </div>
+
+    <div  class="LOG WARNING">
+        <span class="DATE">Thu, 16 Jul 2015 17:10:49</span>
+        <span class="LEVEL">WARNING</span>
+        <span class="MSG">: Minimum plate width required is 150.00 mm </span>
+    </div>
+
+    <div  class="LOG ERROR">
+        <span class="DATE">Thu, 16 Jul 2015 17:10:49</span>
+        <span class="LEVEL">ERROR</span>
+        <span class="MSG">: Weld thickness is not sufficient</span>
+    </div>
+
+    <div  class="LOG WARNING">
+        <span class="DATE">Thu, 16 Jul 2015 17:10:49</span>
+        <span class="LEVEL">WARNING</span>
+        <span class="MSG">: Minimum weld thickness is required is 6.00 mm </span>
+    </div>
+
+    <div  class="LOG ERROR">
+        <span class="DATE">Thu, 16 Jul 2015 17:10:49</span>
+        <span class="LEVEL">ERROR</span>
+        <span class="MSG">: Design is not safe 
+ </span>
+    </div>
+
+    <div  class="LOG DEBUG">
+        <span class="DATE">Thu, 16 Jul 2015 17:10:49</span>
+        <span class="LEVEL">DEBUG</span>
+        <span class="MSG"> :=========End Of design===========</span>
+    </div>
+
+    <div  class="LOG INFO">
+        <span class="DATE">Thu, 16 Jul 2015 17:11:13</span>
+        <span class="LEVEL">INFO</span>
+        <span class="MSG">: Overall finplate connection design is safe 
+</span>
+    </div>
+
+    <div  class="LOG DEBUG">
+        <span class="DATE">Thu, 16 Jul 2015 17:11:13</span>
+        <span class="LEVEL">DEBUG</span>
+        <span class="MSG"> :=========End Of design===========</span>
+    </div>
+
+    <div  class="LOG INFO">
+        <span class="DATE">Thu, 16 Jul 2015 17:11:13</span>
+        <span class="LEVEL">INFO</span>
+        <span class="MSG">: Overall finplate connection design is safe 
+</span>
+    </div>
+
+    <div  class="LOG DEBUG">
+        <span class="DATE">Thu, 16 Jul 2015 17:11:13</span>
+        <span class="LEVEL">DEBUG</span>
+        <span class="MSG"> :=========End Of design===========</span>
+    </div>
+
+    <div  class="LOG ERROR">
+        <span class="DATE">Thu, 16 Jul 2015 17:11:27</span>
+        <span class="LEVEL">ERROR</span>
+        <span class="MSG">: Weld thickness is not sufficient</span>
+    </div>
+
+    <div  class="LOG WARNING">
+        <span class="DATE">Thu, 16 Jul 2015 17:11:27</span>
+        <span class="LEVEL">WARNING</span>
+        <span class="MSG">: Minimum weld thickness is required is 6.00 mm </span>
+    </div>
+
+    <div  class="LOG ERROR">
+        <span class="DATE">Thu, 16 Jul 2015 17:11:27</span>
+        <span class="LEVEL">ERROR</span>
+        <span class="MSG">: Design is not safe 
+ </span>
+    </div>
+
+    <div  class="LOG DEBUG">
+        <span class="DATE">Thu, 16 Jul 2015 17:11:27</span>
+        <span class="LEVEL">DEBUG</span>
+        <span class="MSG"> :=========End Of design===========</span>
+    </div>
+
+    <div  class="LOG INFO">
+        <span class="DATE">Thu, 16 Jul 2015 17:11:31</span>
+        <span class="LEVEL">INFO</span>
+        <span class="MSG">: Overall finplate connection design is safe 
+</span>
+    </div>
+
+    <div  class="LOG DEBUG">
+        <span class="DATE">Thu, 16 Jul 2015 17:11:31</span>
+        <span class="LEVEL">DEBUG</span>
+        <span class="MSG"> :=========End Of design===========</span>
+    </div>
+
+    <div  class="LOG INFO">
+        <span class="DATE">Thu, 16 Jul 2015 17:11:31</span>
+        <span class="LEVEL">INFO</span>
+        <span class="MSG">: Overall finplate connection design is safe 
+</span>
+    </div>
+
+    <div  class="LOG DEBUG">
+        <span class="DATE">Thu, 16 Jul 2015 17:11:31</span>
+        <span class="LEVEL">DEBUG</span>
+        <span class="MSG"> :=========End Of design===========</span>
+    </div>
