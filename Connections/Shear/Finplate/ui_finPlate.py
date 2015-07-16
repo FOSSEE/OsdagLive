@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'finPlate.ui'
 #
-# Created: Thu Jul 16 11:52:39 2015
+# Created: Thu Jul 16 15:44:41 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1024,6 +1024,15 @@ class Ui_MainWindow(object):
         self.comboWldSize.setStyleSheet(_fromUtf8("QComboBox { combobox-popup: 0; }"))
         self.comboWldSize.setMaxVisibleItems(5)
         self.comboWldSize.setObjectName(_fromUtf8("comboWldSize"))
+        self.comboWldSize.addItem(_fromUtf8(""))
+        self.comboWldSize.addItem(_fromUtf8(""))
+        self.comboWldSize.addItem(_fromUtf8(""))
+        self.comboWldSize.addItem(_fromUtf8(""))
+        self.comboWldSize.addItem(_fromUtf8(""))
+        self.comboWldSize.addItem(_fromUtf8(""))
+        self.comboWldSize.addItem(_fromUtf8(""))
+        self.comboWldSize.addItem(_fromUtf8(""))
+        self.comboWldSize.addItem(_fromUtf8(""))
         self.lbl_connectivity = QtGui.QLabel(self.dockWidgetContents)
         self.lbl_connectivity.setGeometry(QtCore.QRect(180, 210, 60, 50))
         self.lbl_connectivity.setScaledContents(True)
@@ -1468,7 +1477,7 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         self.mytabWidget.setCurrentIndex(-1)
         self.comboPlateThick_2.setCurrentIndex(0)
-        self.comboWldSize.setCurrentIndex(-1)
+        self.comboWldSize.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -1609,6 +1618,15 @@ class Ui_MainWindow(object):
         self.btnDesign_4.setText(_translate("MainWindow", "Design", None))
         self.btn_Reset.setText(_translate("MainWindow", "Reset", None))
         self.btn_Design.setText(_translate("MainWindow", "Design", None))
+        self.comboWldSize.setItemText(0, _translate("MainWindow", "Select weld thickness", None))
+        self.comboWldSize.setItemText(1, _translate("MainWindow", "3", None))
+        self.comboWldSize.setItemText(2, _translate("MainWindow", "4", None))
+        self.comboWldSize.setItemText(3, _translate("MainWindow", "5", None))
+        self.comboWldSize.setItemText(4, _translate("MainWindow", "6", None))
+        self.comboWldSize.setItemText(5, _translate("MainWindow", "8", None))
+        self.comboWldSize.setItemText(6, _translate("MainWindow", "10", None))
+        self.comboWldSize.setItemText(7, _translate("MainWindow", "12", None))
+        self.comboWldSize.setItemText(8, _translate("MainWindow", "16", None))
         self.label_9.setText(_translate("MainWindow", "Beam section *", None))
         self.outputDock.setWindowTitle(_translate("MainWindow", "Output dock", None))
         self.t_7.setText(_translate("MainWindow", "No. of bolts required", None))

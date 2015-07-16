@@ -44,6 +44,10 @@ class MainController(QtGui.QMainWindow):
         QtGui.QMainWindow.__init__(self)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        
+        self.ui.combo_Beam.addItems(get_beamcombolist())
+        self.ui.comboColSec.addItems(get_columncombolist())
+        
         self.ui.inputDock.setFixedSize(310,710)
         
         self.gradeType ={'Please Select Type':'',
@@ -55,9 +59,7 @@ class MainController(QtGui.QMainWindow):
         
         
         self.ui.comboConnLoc.currentIndexChanged[str].connect(self.setimage_connection)
-        
-        self.disableViewButtons()
-        #self.retrieve_prevstate()
+        self.retrieve_prevstate()
         self.ui.btnInput.clicked.connect(lambda: self.dockbtn_clicked(self.ui.inputDock))
         self.ui.btnOutput.clicked.connect(lambda: self.dockbtn_clicked(self.ui.outputDock))
         
@@ -105,8 +107,8 @@ class MainController(QtGui.QMainWindow):
         self.ui.actionView_2D_on_XY.triggered.connect(self.call_Topview)
         self.ui.actionView_2D_on_YZ.triggered.connect(self.call_Sideview)
         
-        self.ui.combo_Beam.addItems(get_beamcombolist())
-        self.ui.comboColSec.addItems(get_columncombolist())
+        # self.ui.combo_Beam.addItems(get_beamcombolist())
+        # self.ui.comboColSec.addItems(get_columncombolist())
         self.ui.combo_Beam.currentIndexChanged[str].connect(self.fillPlateThickCombo)
         self.ui.comboColSec.currentIndexChanged[str].connect(self.populateWeldThickCombo)
         self.ui.comboConnLoc.currentIndexChanged[str].connect(self.populateWeldThickCombo)
@@ -121,7 +123,7 @@ class MainController(QtGui.QMainWindow):
         #self.ui.btn_Savelog.clicked.connect(self.save_log)
         
         # Saving and Restoring the finPlate window state.
-        self.retrieve_prevstate()
+        #self.retrieve_prevstate()
         
         self.ui.btn_Reset.clicked.connect(self.resetbtn_clicked)
         
@@ -135,7 +137,7 @@ class MainController(QtGui.QMainWindow):
         
         self.connectivity = None
         self.fuse_model = None
-        
+        self.disableViewButtons()
         #self.colWebBeamWeb =  self.create3DColWebBeamWeb()
         # my_box = BRepPrimAPI_MakeBox(gp_Pnt(20,0,0),10., 20., 30.).Shape()
         # my_cylendar = BRepPrimAPI_MakeCylinder(10,30).Shape()
@@ -243,7 +245,6 @@ class MainController(QtGui.QMainWindow):
         self.ui.comboWldSize.clear()
         for element in newlist[:]:
             self.ui.comboWldSize.addItem(str(element))
-        #self.ui.comboColSec.currentIndex(0)
 
     
     def retrieve_prevstate(self):
@@ -280,9 +281,6 @@ class MainController(QtGui.QMainWindow):
             self.ui.txtPlateWidth.setText(str(uiObj['Plate']['Width (mm)']))
             
             self.ui.comboWldSize.setCurrentIndex(self.ui.comboWldSize.findText(str(uiObj['Weld']['Size (mm)'])))
-            #self.ui.comboWldSize.currentText(str(uiObj['Weld']['size(mm)']))
-        #else:
-        #    self.btnreset_clicked() 
         
     def setimage_connection(self):
         '''
@@ -968,8 +966,6 @@ class MainController(QtGui.QMainWindow):
     def design_btnclicked(self):
         '''
         '''
-        designLogger =  logging.getLogger("Designlogger.finPlateCalc")
-        
         self.ui.outputDock.setFixedSize(310,710)
         self.enableViewButtons()
         
