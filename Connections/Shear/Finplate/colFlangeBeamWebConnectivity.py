@@ -116,7 +116,8 @@ class ColFlangeBeamWeb(object):
         #+ self.nutBoltArray.getnutboltModels()
         # return [self.columnModel,self.plateModel, self.weldModelLeft,self.weldModelRight,
         #         self.beamModel] + self.nutBoltArray.getModels()
-        return [self.columnModel,self.beamModel,self.plateModel,self.weldModelLeft,self.weldModelRight]
+        return [self.columnModel,self.beamModel,self.plateModel,self.weldModelLeft,
+                self.weldModelRight] + self.nutBoltArray.getModels()
              
     def get_nutboltmodels(self):
         

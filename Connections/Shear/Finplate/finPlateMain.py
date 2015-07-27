@@ -117,9 +117,7 @@ class MainController(QtGui.QMainWindow):
         self.ui.menuView.addAction(self.ui.inputDock.toggleViewAction())
         self.ui.menuView.addAction(self.ui.outputDock.toggleViewAction())
         self.ui.btn_CreateDesign.clicked.connect(self.save_design)#Saves the create design report
-        #self.ui.btn_Saveoutput.clicked.connect(self.save_design)
         self.ui.btn_SaveMessages.clicked.connect(self.save_log)
-        #self.ui.btn_Savelog.clicked.connect(self.save_log)
         
         # Saving and Restoring the finPlate window state.
         #self.retrieve_prevstate()
@@ -137,14 +135,6 @@ class MainController(QtGui.QMainWindow):
         self.connectivity = None
         self.fuse_model = None
         self.disableViewButtons()
-        #self.colWebBeamWeb =  self.create3DColWebBeamWeb()
-        # my_box = BRepPrimAPI_MakeBox(gp_Pnt(20,0,0),10., 20., 30.).Shape()
-        # my_cylendar = BRepPrimAPI_MakeCylinder(10,30).Shape()
-        # self.memberlist =  [my_box, my_cylendar, my_cylendar]
-        
-        #my_sphere = BRepPrimAPI_MakeSphere(5).Shape()
-        #self.fuse_model = self.create2Dcad()
-        #self.fuse_model = my_sphere 
         
     def showFontDialogue(self):
         
@@ -275,7 +265,6 @@ class MainController(QtGui.QMainWindow):
             selection = str(uiObj['Plate']['Thickness (mm)'])
             selectionIndex = self.ui.comboPlateThick_2.findText(selection)
             self.ui.comboPlateThick_2.setCurrentIndex(selectionIndex)
-            #self.ui.comboPlateThick_2.currentText(str(uiObj['Plate']['thickness(mm)']))
             self.ui.txtPlateLen.setText(str(uiObj['Plate']['Height (mm)']))
             self.ui.txtPlateWidth.setText(str(uiObj['Plate']['Width (mm)']))
             
@@ -712,7 +701,9 @@ class MainController(QtGui.QMainWindow):
         self.display.SetModeShaded()
         display.DisableAntiAliasing()
         self.display.set_bg_gradient_color(23,1,32,23,1,32)
-        
+        self.display.View_Front()
+        self.display.View_Iso()
+        self.display.FitAll()
         if component == "Column":
             osdagDisplayShape(self.display, self.connectivity.columnModel, update=True)
         elif component == "Beam":
@@ -902,7 +893,7 @@ class MainController(QtGui.QMainWindow):
             self.ui.mytabWidget.setCurrentIndex(0)
             
         if flag == True:
-            if self.ui.comboConnLoc.currentText()== "Column web-Beam web":
+            if self.ui.comboConnLoc.currentText()== "Column web-Beam web":    
                 #self.create3DColWebBeamWeb()
                 self.connectivity =  self.create3DColWebBeamWeb()
                 self.fuse_model = None
@@ -949,8 +940,6 @@ class MainController(QtGui.QMainWindow):
             self.ui.mytabWidget.setCurrentIndex(0)
         self.display3Dmodel( "Column")
         
-            
-            
     def call_3DFinplate(self):
         '''Displaying FinPlate in 3D
         '''
@@ -987,10 +976,10 @@ class MainController(QtGui.QMainWindow):
         
         
     def create2Dcad(self,connectivity):
-       
+        ''' Returns the fuse model of finplate
+        '''
         cadlist =  self.connectivity.get_models()
         final_model = cadlist[0]
-        #model = cadlist[1]
         for model in cadlist[1:]:
             final_model = BRepAlgoAPI_Fuse(model,final_model).Shape()
         return final_model           
@@ -1088,14 +1077,13 @@ class MainController(QtGui.QMainWindow):
         self.display.DisplayShape(final_model, update = False)
         
         if (viewName == "Front"):
-            #self.display.SetModeHLR()
             self.display.View_Front()
         elif (viewName == "Top"):
-            #self.display.SetModeHLR()
             self.display.View_Top()
         elif (viewName == "Right"):
-            #self.display.SetModeHLR()
             self.display.View_Right()
+        elif (viewName == "Left"):
+            self.display.View_Left()
         else:
             pass
             
@@ -1109,17 +1097,23 @@ class MainController(QtGui.QMainWindow):
         self.ui.chkBxBeam.setChecked(QtCore.Qt.Unchecked)
         self.ui.chkBxCol.setChecked(QtCore.Qt.Unchecked)
         self.ui.chkBxFinplate.setChecked(QtCore.Qt.Unchecked)
+        if self.ui.comboConnLoc.currentText()== "Column web-Beam web":
+            self.display.EraseAll()
+            self.ui.mytabWidget.setCurrentIndex(1)
+            if self.connectivity == None:
+                self.connectivity =  self.create3DColWebBeamWeb()
+            if self.fuse_model == None:
+                self.fuse_model = self.create2Dcad(self.connectivity)
+            self.display2DModel( self.fuse_model,"Front")
+        else:
+            self.display.EraseAll()
+            self.ui.mytabWidget.setCurrentIndex(0)
+            if self.connectivity == None:
+                self.connectivity =  self.create3DColFlangeBeamWeb()
+            if self.fuse_model == None:
+                self.fuse_model = self.create2Dcad(self.connectivity)
+            self.display2DModel( self.fuse_model,"Left")
             
-        self.display.EraseAll()
-        self.ui.mytabWidget.setCurrentIndex(1)
-        #Sself.connectivity =  self.create3DColWebBeamWeb()
-        #memberlist =  self.connectivity.get_models()
-        if self.connectivity == None:
-            self.connectivity =  self.create3DColWebBeamWeb()
-        if self.fuse_model == None:
-            self.fuse_model = self.create2Dcad(self.connectivity)
-        self.display2DModel( self.fuse_model,"Front")
-        
     def call_Topview(self):
         
         '''Displays Top view of 2Dmodel
@@ -1128,15 +1122,25 @@ class MainController(QtGui.QMainWindow):
         self.ui.chkBxBeam.setChecked(QtCore.Qt.Unchecked)
         self.ui.chkBxCol.setChecked(QtCore.Qt.Unchecked)
         self.ui.chkBxFinplate.setChecked(QtCore.Qt.Unchecked)
-            
-        self.display.EraseAll()
-        self.ui.mytabWidget.setCurrentIndex(1)
         
-        if self.connectivity == None:
-            self.connectivity =  self.create3DColWebBeamWeb()
-        if self.fuse_model == None:
-            self.fuse_model = self.create2Dcad(self.connectivity)
-        self.display2DModel( self.fuse_model,"Top")
+        if self.ui.comboConnLoc.currentText()== "Column web-Beam web":    
+            self.display.EraseAll()
+            self.ui.mytabWidget.setCurrentIndex(1)
+            
+            if self.connectivity == None:
+                self.connectivity =  self.create3DColWebBeamWeb()
+            if self.fuse_model == None:
+                self.fuse_model = self.create2Dcad(self.connectivity)
+            self.display2DModel( self.fuse_model,"Top")
+        else:
+            self.display.EraseAll()
+            self.ui.mytabWidget.setCurrentIndex(0)
+            
+            if self.connectivity == None:
+                self.connectivity =  self.create3DColFlangeBeamWeb()
+            if self.fuse_model == None:
+                self.fuse_model = self.create2Dcad(self.connectivity)
+            self.display2DModel( self.fuse_model,"Top")
         
         
     def call_Sideview(self):
@@ -1148,14 +1152,23 @@ class MainController(QtGui.QMainWindow):
         self.ui.chkBxCol.setChecked(QtCore.Qt.Unchecked)
         self.ui.chkBxFinplate.setChecked(QtCore.Qt.Unchecked)
         
-        self.ui.mytabWidget.setCurrentIndex(1)
-        
-        if self.connectivity == None:
-            self.connectivity =  self.create3DColWebBeamWeb()
-        if self.fuse_model == None:
-            self.fuse_model = self.create2Dcad(self.connectivity)
-        self.display2DModel( self.fuse_model,"Right")
-        
+        if self.ui.comboConnLoc.currentText()== "Column web-Beam web": 
+            self.ui.mytabWidget.setCurrentIndex(1)
+            
+            if self.connectivity == None:
+                self.connectivity =  self.create3DColWebBeamWeb()
+            if self.fuse_model == None:
+                self.fuse_model = self.create2Dcad(self.connectivity)
+            self.display2DModel( self.fuse_model,"Right")
+        else:
+            self.ui.mytabWidget.setCurrentIndex(0)
+            
+            if self.connectivity == None:
+                self.connectivity =  self.create3DColFlangeBeamWeb()
+            if self.fuse_model == None:
+                self.fuse_model = self.create2Dcad(self.connectivity)
+            self.display2DModel( self.fuse_model,"Front")
+            
     def closeEvent(self, event):
         '''
         Closing finPlate window.
