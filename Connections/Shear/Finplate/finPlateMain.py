@@ -33,7 +33,7 @@ from OCC.STEPControl import STEPControl_Writer, STEPControl_AsIs
 from OCC.Interface import Interface_Static_SetCVal
 from OCC.IFSelect import IFSelect_RetDone
 from OCC.StlAPI import StlAPI_Writer
-
+# Developed by deepa
 
 class MainController(QtGui.QMainWindow):
     
