@@ -8,7 +8,7 @@ from PyQt4.QtCore import QString, pyqtSignal
 from OCC.TopoDS import topods, TopoDS_Shape
 from OCC.gp import gp_Pnt
 from nutBoltPlacement import NutBoltArray
-from OCC import VERSION, BRepTools
+from OCC import VERSION, BRepTools, OSD
 from ui_finPlate import Ui_MainWindow
 from model import *
 from finPlateCalc import finConn
@@ -38,7 +38,6 @@ from OCC.StlAPI import StlAPI_Writer
 class MainController(QtGui.QMainWindow):
     
     closed = pyqtSignal()
-    
     def __init__(self):
         QtGui.QMainWindow.__init__(self)
         self.ui = Ui_MainWindow()
@@ -100,11 +99,13 @@ class MainController(QtGui.QMainWindow):
         self.ui.actionSave_log_messages.triggered.connect(self.save_log)
         self.ui.actionEnlarge_font_size.triggered.connect(self.showFontDialogue)
         self.ui.actionZoom_in.triggered.connect(self.callZoomin)
+        self.ui.actionZoom_out.triggered.connect(self.callZoomout)
         self.ui.actionSave_3D_model_as.triggered.connect(self.save3DcadImages)
         self.ui.actionSave_current_2D_image_as.triggered.connect(self.save2DcadImages)
         self.ui.actionView_2D_on_ZX.triggered.connect(self.call_Frontview)
         self.ui.actionView_2D_on_XY.triggered.connect(self.call_Topview)
         self.ui.actionView_2D_on_YZ.triggered.connect(self.call_Sideview)
+        self.ui.actionPan.triggered.connect(self.call_Pannig)
         
         # self.ui.combo_Beam.addItems(get_beamcombolist())
         # self.ui.comboColSec.addItems(get_columncombolist())
@@ -119,9 +120,13 @@ class MainController(QtGui.QMainWindow):
         self.ui.btn_CreateDesign.clicked.connect(self.save_design)#Saves the create design report
         self.ui.btn_SaveMessages.clicked.connect(self.save_log)
         
+        
         # Saving and Restoring the finPlate window state.
         #self.retrieve_prevstate()
         
+        self.ui.btnZmIn.clicked.connect(self.callZoomin)
+        self.ui.btnZmOut.clicked.connect(self.callZoomout)
+        self.ui.btnRotatCw.clicked.connect(self.callRotation)
         self.ui.btn_Reset.clicked.connect(self.resetbtn_clicked)
         
         self.ui.btn_Design.clicked.connect(self.design_btnclicked)
@@ -145,8 +150,17 @@ class MainController(QtGui.QMainWindow):
             self.ui.textEdit.setFont(font)
         
     def callZoomin(self):
-        self.display.DynamicZoom()
+        self.display.ZoomFactor(2)
+        
+    def callZoomout(self):
+        self.display.ZoomFactor(0.5)
+        
+    def callRotation(self):
+        self.display.Rotation(15,0)
+    def call_Pannig(self):
+        self.display.Pan(50,0)
     
+        
     def save2DcadImages(self):
         files_types = "PNG (*.png);;JPG (*.jpg);;GIF (*.gif)"
         fileName  = QtGui.QFileDialog.getSaveFileName(self, 'Export', "/home/deepa/Cadfiles/untitled.png", files_types )
@@ -598,7 +612,6 @@ class MainController(QtGui.QMainWindow):
         moment_capacity =  resultObj['Plate']['momentcapacity']
         self.ui.txtMomntCapacity.setText(str(moment_capacity))
     
-        
    
     def displaylog_totextedit(self):
         '''
@@ -713,14 +726,20 @@ class MainController(QtGui.QMainWindow):
             osdagDisplayShape(self.display, self.connectivity.weldModelLeft, color = 'red', update = True)
             osdagDisplayShape(self.display, self.connectivity.weldModelRight, color = 'red', update = True)
             osdagDisplayShape(self.display,self.connectivity.plateModel,color = 'blue', update = True)
-            self.display.DisplayShape(self.connectivity.nutBoltArray.getModels(), color = Quantity_NOC_SADDLEBROWN, update=True)
+            nutboltlist = self.connectivity.nutBoltArray.getModels()
+            for nutbolt in nutboltlist:
+                osdagDisplayShape(self.display,nutbolt,color = Quantity_NOC_SADDLEBROWN,update = True)
+            #self.display.DisplayShape(self.connectivity.nutBoltArray.getModels(), color = Quantity_NOC_SADDLEBROWN, update=True)
         elif component == "Model":
             osdagDisplayShape(self.display, self.connectivity.columnModel, update=True)
             osdagDisplayShape(self.display, self.connectivity.beamModel, material = Graphic3d_NOT_2D_ALUMINUM, update=True)
             osdagDisplayShape(self.display, self.connectivity.weldModelLeft, color = 'red', update = True)
             osdagDisplayShape(self.display, self.connectivity.weldModelRight, color = 'red', update = True)
             osdagDisplayShape(self.display,self.connectivity.plateModel,color = 'blue', update = True)
-            self.display.DisplayShape(self.connectivity.nutBoltArray.getModels(), color = Quantity_NOC_SADDLEBROWN, update=True)
+            nutboltlist = self.connectivity.nutBoltArray.getModels()
+            for nutbolt in nutboltlist:
+                osdagDisplayShape(self.display,nutbolt,color = Quantity_NOC_SADDLEBROWN,update = True)
+            #self.display.DisplayShape(self.connectivity.nutBoltArray.getModels(), color = Quantity_NOC_SADDLEBROWN, update=True)
         
     def fetchBeamPara(self):
         beam_sec = self.ui.combo_Beam.currentText()

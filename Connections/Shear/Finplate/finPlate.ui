@@ -676,7 +676,7 @@
      <property name="geometry">
       <rect>
        <x>150</x>
-       <y>140</y>
+       <y>220</y>
        <width>161</width>
        <height>25</height>
       </rect>
@@ -695,7 +695,7 @@
      <property name="geometry">
       <rect>
        <x>6</x>
-       <y>75</y>
+       <y>155</y>
        <width>151</width>
        <height>25</height>
       </rect>
@@ -715,7 +715,7 @@
      <property name="geometry">
       <rect>
        <x>150</x>
-       <y>170</y>
+       <y>40</y>
        <width>161</width>
        <height>25</height>
       </rect>
@@ -747,7 +747,7 @@
      <property name="geometry">
       <rect>
        <x>150</x>
-       <y>110</y>
+       <y>190</y>
        <width>161</width>
        <height>25</height>
       </rect>
@@ -823,7 +823,7 @@
      <property name="geometry">
       <rect>
        <x>6</x>
-       <y>170</y>
+       <y>40</y>
        <width>120</width>
        <height>25</height>
       </rect>
@@ -843,7 +843,7 @@
      <property name="geometry">
       <rect>
        <x>6</x>
-       <y>110</y>
+       <y>190</y>
        <width>120</width>
        <height>25</height>
       </rect>
@@ -863,7 +863,7 @@
      <property name="geometry">
       <rect>
        <x>150</x>
-       <y>75</y>
+       <y>155</y>
        <width>161</width>
        <height>25</height>
       </rect>
@@ -879,7 +879,7 @@
      <property name="geometry">
       <rect>
        <x>6</x>
-       <y>135</y>
+       <y>215</y>
        <width>120</width>
        <height>25</height>
       </rect>
@@ -3143,7 +3143,7 @@
      <property name="geometry">
       <rect>
        <x>150</x>
-       <y>45</y>
+       <y>125</y>
        <width>161</width>
        <height>25</height>
       </rect>
@@ -3233,7 +3233,7 @@
      <property name="geometry">
       <rect>
        <x>180</x>
-       <y>210</y>
+       <y>70</y>
        <width>60</width>
        <height>50</height>
       </rect>
@@ -3246,7 +3246,7 @@
      <property name="geometry">
       <rect>
        <x>6</x>
-       <y>45</y>
+       <y>125</y>
        <width>131</width>
        <height>22</height>
       </rect>
