@@ -4,7 +4,7 @@ p1
 (dp2
 S'ColumSection'
 p3
-S'ISSC 150*'
+S'ISSC 200'
 p4
 sS'fu (MPa)'
 p5
@@ -25,36 +25,36 @@ p11
 (dp12
 S'Width (mm)'
 p13
-I100
+I0
 sS'Height (mm)'
 p14
-I300
+I0
 sS'Thickness (mm)'
 p15
-I10
+I16
 ssS'Load'
 p16
 (dp17
 S'ShearForce (kN)'
 p18
-I140
+I240
 ssS'Weld'
 p19
 (dp20
 S'Size (mm)'
 p21
-I6
+I8
 ssS'Bolt'
 p22
 (dp23
 S'Grade'
 p24
-F8.8
+F4.8
 sS'Diameter (mm)'
 p25
-I20
+I16
 sS'Type'
 p26
-S'HSFG'
+S'Black Bolt'
 p27
 ss.

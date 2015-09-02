@@ -1,4 +1,9 @@
 '''
+Created on 05-Aug-2015
+
+@author: deepa
+'''
+'''
 Created on 07-May-2015
 comment
 
@@ -33,13 +38,18 @@ from OCC.STEPControl import STEPControl_Writer, STEPControl_AsIs
 from OCC.Interface import Interface_Static_SetCVal
 from OCC.IFSelect import IFSelect_RetDone
 from OCC.StlAPI import StlAPI_Writer
-from drawing_2D import Fin2DCreatorFront
-import svgwrite
 # Developed by deepa
 
 class MainController(QtGui.QMainWindow):
     
     closed = pyqtSignal()
+    
+
+    
+    
+    
+    
+    
     def __init__(self):
         QtGui.QMainWindow.__init__(self)
         self.ui = Ui_MainWindow()
@@ -1126,9 +1136,6 @@ class MainController(QtGui.QMainWindow):
             if self.fuse_model == None:
                 self.fuse_model = self.create2Dcad(self.connectivity)
             self.display2DModel( self.fuse_model,"Front")
-            
-            #self.mkAndSaveSvg(self.connectivity)
-            self.call2D_Drawing()
         else:
             self.display.EraseAll()
             self.ui.mytabWidget.setCurrentIndex(0)
@@ -1136,21 +1143,7 @@ class MainController(QtGui.QMainWindow):
                 self.connectivity =  self.create3DColFlangeBeamWeb()
             if self.fuse_model == None:
                 self.fuse_model = self.create2Dcad(self.connectivity)
-            self.display2DModel( self.fuse_model,"Left")        
-        
-    def mkAndSaveSvg(self, connectivity):
-        conXZ = ColWebBeamWebXZ(connectivity)
-        conXZDwg = conXZ.mkOSDAGDrawing2D('test.svg')
-        conXZDwg.saveSvg()   
-             
-    def call2D_Drawing(self):
-        uiObj = self.getuser_inputs()
-        resultObj = finConn(uiObj)
-        dictbeamdata  = self.fetchBeamPara()
-        dictcoldata = self.fetchColumnPara()
-        fin2DFront = Fin2DCreatorFront(uiObj,resultObj,dictbeamdata,dictcoldata)
-        fin2DFront.saveToSvg()
-        
+            self.display2DModel( self.fuse_model,"Left")
             
     def call_Topview(self):
         
@@ -1264,43 +1257,8 @@ def launchFinPlateController(osdagMainWindow):
     window.closed.connect(osdagMainWindow.show)
      
     #sys.exit(app.exec_())
-
-class ColWebBeamWebXZ():
     
-    def __init__(self, connectivity):
-        self.A = (0, 0)
-        self.B = (0, 80)
-        self.C = (20, 80)
-        self.D = (20, 0) 
-        self.E = (7, 80)
-        self.F = (13, 80)
-        self.G = (13, 0)
-        self.H = (7, 0)
-        
-    def mkOSDAGDrawing2D(self, fileName):
-        
-        dwg = OSDAGDrawing2D(fileName)
-        dwg.line()
-        dwg.add(dwg.line(self.A, self.B,stroke='blue', stroke_width =2.0, stroke_linecap='square'))
-        dwg.add(dwg.line(self.B, self.C, stroke='blue', stroke_width =2.0, stroke_linecap='square'))
-        dwg.add(dwg.line(self.C, self.D, stroke='blue', stroke_width =2.0, stroke_linecap='square'))
-        #dwg.add(dwg.line(self.D, self.E, stroke=svgwrite.rgb(0, 0, 255, '%')))
-        dwg.add(dwg.line(self.D, self.A, stroke='blue', stroke_width =2.0, stroke_linecap='square'))
-        dwg.add(dwg.line(self.E, self.H, stroke='red', stroke_width =1.2,stroke_linecap ='butt' ))
-        dwg.add(dwg.line(self.F, self.G, stroke='red', stroke_width =2.0, stroke_linecap='square'))
-        #dwg.add(dwg.text('Test', insert=(0, 0.2), fill='red'))
-        return dwg
-
     
-class OSDAGDrawing2D(svgwrite.Drawing):
-    
-    def __init__(self, fileName):
-        svgwrite.Drawing.__init__(self, fileName, profile = 'tiny')
-    
-    def saveSvg(self):
-        #dwg.add(dwg.line((0, 0), (10, 0), stroke=svgwrite.rgb(10, 10, 16, '%')))
-        #dwg.add(dwg.text('Test', insert=(0, 0.2), fill='red'))
-        self.save()
 
 if __name__ == '__main__':
     #launchFinPlateController(None)
