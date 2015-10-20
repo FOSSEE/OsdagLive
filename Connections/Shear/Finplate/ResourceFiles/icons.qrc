@@ -16,5 +16,7 @@
     <file>images/X-Y.png</file>
     <file>images/Z-X.png</file>
     <file>images/Z-Y.png</file>
+    <file>images/colF2.png</file>
+    <file>images/colW3.png</file>
   </qresource>
 </RCC>

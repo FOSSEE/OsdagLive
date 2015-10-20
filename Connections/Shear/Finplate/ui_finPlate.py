@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'finPlate.ui'
 #
-# Created: Tue Aug 11 16:24:42 2015
+# Created: Wed Sep 30 17:44:35 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -258,14 +258,14 @@ class Ui_MainWindow(object):
         font.setWeight(50)
         self.txtFy.setFont(font)
         self.txtFy.setObjectName(_fromUtf8("txtFy"))
-        self.label_3 = QtGui.QLabel(self.dockWidgetContents)
-        self.label_3.setGeometry(QtCore.QRect(6, 155, 151, 25))
+        self.lbl_ISsection = QtGui.QLabel(self.dockWidgetContents)
+        self.lbl_ISsection.setGeometry(QtCore.QRect(6, 155, 151, 25))
         font = QtGui.QFont()
         font.setPointSize(11)
         font.setBold(False)
         font.setWeight(50)
-        self.label_3.setFont(font)
-        self.label_3.setObjectName(_fromUtf8("label_3"))
+        self.lbl_ISsection.setFont(font)
+        self.lbl_ISsection.setObjectName(_fromUtf8("lbl_ISsection"))
         self.comboConnLoc = QtGui.QComboBox(self.dockWidgetContents)
         self.comboConnLoc.setGeometry(QtCore.QRect(150, 40, 161, 25))
         font = QtGui.QFont()
@@ -274,6 +274,7 @@ class Ui_MainWindow(object):
         font.setWeight(50)
         self.comboConnLoc.setFont(font)
         self.comboConnLoc.setObjectName(_fromUtf8("comboConnLoc"))
+        self.comboConnLoc.addItem(_fromUtf8(""))
         self.comboConnLoc.addItem(_fromUtf8(""))
         self.comboConnLoc.addItem(_fromUtf8(""))
         self.comboConnLoc.addItem(_fromUtf8(""))
@@ -1509,10 +1510,11 @@ class Ui_MainWindow(object):
         self.menuGraphics.setTitle(_translate("MainWindow", "Graphics", None))
         self.inputDock.setWindowTitle(_translate("MainWindow", "Input dock", None))
         self.txtFy.setPlaceholderText(_translate("MainWindow", "000.0", None))
-        self.label_3.setText(_translate("MainWindow", "<html><head/><body><p>Column section *</p></body></html>", None))
+        self.lbl_ISsection.setText(_translate("MainWindow", "<html><head/><body><p>Column section *</p></body></html>", None))
         self.comboConnLoc.setItemText(0, _translate("MainWindow", "Select Connectivity", None))
         self.comboConnLoc.setItemText(1, _translate("MainWindow", "Column flange-Beam web", None))
         self.comboConnLoc.setItemText(2, _translate("MainWindow", "Column web-Beam web", None))
+        self.comboConnLoc.setItemText(3, _translate("MainWindow", "Beam-Beam", None))
         self.txtFu.setPlaceholderText(_translate("MainWindow", "000.0", None))
         self.label.setText(_translate("MainWindow", "<html><head/><body><p>Connecting members</p></body></html>", None))
         self.label_4.setText(_translate("MainWindow", "<html><head/><body><p>Connectivity *</p></body></html>", None))

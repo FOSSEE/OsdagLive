@@ -45,6 +45,8 @@ class MainController(QtGui.QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         
+        self.ui.comboConnLoc.currentIndexChanged[str].connect(self.setimage_connection)
+        #self.ui.comboConnLoc.currentIndexChanged[str].connect(self.changeColtoBeamSection)
         self.ui.combo_Beam.addItems(get_beamcombolist())
         self.ui.comboColSec.addItems(get_columncombolist())
         
@@ -58,7 +60,7 @@ class MainController(QtGui.QMainWindow):
         self.ui.comboType.setCurrentIndex(0)
         
         
-        self.ui.comboConnLoc.currentIndexChanged[str].connect(self.setimage_connection)
+        
         self.retrieve_prevstate()
         self.ui.btnInput.clicked.connect(lambda: self.dockbtn_clicked(self.ui.inputDock))
         self.ui.btnOutput.clicked.connect(lambda: self.dockbtn_clicked(self.ui.outputDock))
@@ -143,6 +145,16 @@ class MainController(QtGui.QMainWindow):
         self.fuse_model = None
         self.disableViewButtons()
         
+    def changeColtoBeamSection(self):
+        if self.ui.comboConnLoc.currentText() == "Beam-Beam":
+            self.ui.lbl_ISsection.setText("Beam section")
+            self.ui.comboColSec.clear()
+            self.ui.comboColSec.addItems(get_beamcombolist())
+        else:
+            self.ui.lbl_ISsection.setText("Column section")
+            self.ui.comboColSec.clear()
+            self.ui.comboColSec.addItems(get_beamcombolist())
+        
     def showFontDialogue(self):
         
         font, ok = QtGui.QFontDialog.getFont()
@@ -152,7 +164,7 @@ class MainController(QtGui.QMainWindow):
             self.ui.textEdit.setFont(font)
         
     def callZoomin(self):
-        self.display.ZoomFactor(2)
+        self.display.ZoomFactor(1.5)
         
     def callZoomout(self):
         self.display.ZoomFactor(0.5)
@@ -294,15 +306,15 @@ class MainController(QtGui.QMainWindow):
         loc = self.ui.comboConnLoc.currentText()
         if loc == "Column flange-Beam web":
             
-            pixmap = QtGui.QPixmap(":/newPrefix/images/beam2.jpg")
-            pixmap.scaledToHeight(50)
-            pixmap.scaledToWidth(60)
+            pixmap = QtGui.QPixmap(":/newPrefix/images/colF2.png")
+            pixmap.scaledToHeight(600)
+            pixmap.scaledToWidth(55)
             self.ui.lbl_connectivity.setPixmap(pixmap)
             #self.ui.lbl_connectivity.show()
         elif(loc == "Column web-Beam web"):
-            picmap = QtGui.QPixmap(":/newPrefix/images/beam.jpg")
-            picmap.scaledToHeight(50)
-            picmap.scaledToWidth(60)
+            picmap = QtGui.QPixmap(":/newPrefix/images/colW3.png")
+            picmap.scaledToHeight(60)
+            picmap.scaledToWidth(55)
             self.ui.lbl_connectivity.setPixmap(picmap)
         else:
             self.ui.lbl_connectivity.hide()
@@ -695,7 +707,7 @@ class MainController(QtGui.QMainWindow):
         
         # background gradient
         display.set_bg_gradient_color(23,1,32,23,1,32)
-        #display_2d.set_bg_gradient_color(255,255,255,255,255,255)
+        #display.set_bg_gradient_color(255,255,255,255,255,255)
         # display black trihedron
         display.display_trihedron()
         display.View.SetProj(1, 1, 1)
@@ -716,6 +728,7 @@ class MainController(QtGui.QMainWindow):
         self.display.SetModeShaded()
         display.DisableAntiAliasing()
         self.display.set_bg_gradient_color(23,1,32,23,1,32)
+        #self.display.set_bg_gradient_color(186,195,201,255,255,255)
         self.display.View_Front()
         self.display.View_Iso()
         self.display.FitAll()
@@ -1003,7 +1016,10 @@ class MainController(QtGui.QMainWindow):
         final_model = cadlist[0]
         for model in cadlist[1:]:
             final_model = BRepAlgoAPI_Fuse(model,final_model).Shape()
-        return final_model           
+        return final_model 
+     
+    
+             
          
     # Export to IGS,STEP,STL,BREP
     def save3DcadImages(self):
@@ -1145,6 +1161,7 @@ class MainController(QtGui.QMainWindow):
              
     def call2D_Drawing(self):
         uiObj = self.getuser_inputs()
+        
         resultObj = finConn(uiObj)
         dictbeamdata  = self.fetchBeamPara()
         dictcoldata = self.fetchColumnPara()
