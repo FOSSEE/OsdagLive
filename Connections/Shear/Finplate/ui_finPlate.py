@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file 'finPlate.ui'
 #
-# Created: Wed Sep 30 17:44:35 2015
-#      by: PyQt4 UI code generator 4.10.4
+# Created by: PyQt4 UI code generator 4.11.4
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -219,7 +218,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.addWidget(self.splitter)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1332, 28))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1332, 25))
         self.menubar.setObjectName(_fromUtf8("menubar"))
         self.menuFile = QtGui.QMenu(self.menubar)
         self.menuFile.setObjectName(_fromUtf8("menuFile"))
@@ -258,14 +257,14 @@ class Ui_MainWindow(object):
         font.setWeight(50)
         self.txtFy.setFont(font)
         self.txtFy.setObjectName(_fromUtf8("txtFy"))
-        self.lbl_ISsection = QtGui.QLabel(self.dockWidgetContents)
-        self.lbl_ISsection.setGeometry(QtCore.QRect(6, 155, 151, 25))
+        self.label_3 = QtGui.QLabel(self.dockWidgetContents)
+        self.label_3.setGeometry(QtCore.QRect(6, 155, 151, 25))
         font = QtGui.QFont()
         font.setPointSize(11)
         font.setBold(False)
         font.setWeight(50)
-        self.lbl_ISsection.setFont(font)
-        self.lbl_ISsection.setObjectName(_fromUtf8("lbl_ISsection"))
+        self.label_3.setFont(font)
+        self.label_3.setObjectName(_fromUtf8("label_3"))
         self.comboConnLoc = QtGui.QComboBox(self.dockWidgetContents)
         self.comboConnLoc.setGeometry(QtCore.QRect(150, 40, 161, 25))
         font = QtGui.QFont()
@@ -1035,7 +1034,7 @@ class Ui_MainWindow(object):
         self.comboWldSize.addItem(_fromUtf8(""))
         self.comboWldSize.addItem(_fromUtf8(""))
         self.lbl_connectivity = QtGui.QLabel(self.dockWidgetContents)
-        self.lbl_connectivity.setGeometry(QtCore.QRect(180, 70, 60, 50))
+        self.lbl_connectivity.setGeometry(QtCore.QRect(190, 70, 81, 51))
         self.lbl_connectivity.setScaledContents(True)
         self.lbl_connectivity.setObjectName(_fromUtf8("lbl_connectivity"))
         self.label_9 = QtGui.QLabel(self.dockWidgetContents)
@@ -1510,7 +1509,7 @@ class Ui_MainWindow(object):
         self.menuGraphics.setTitle(_translate("MainWindow", "Graphics", None))
         self.inputDock.setWindowTitle(_translate("MainWindow", "Input dock", None))
         self.txtFy.setPlaceholderText(_translate("MainWindow", "000.0", None))
-        self.lbl_ISsection.setText(_translate("MainWindow", "<html><head/><body><p>Column section *</p></body></html>", None))
+        self.label_3.setText(_translate("MainWindow", "<html><head/><body><p>Column section *</p></body></html>", None))
         self.comboConnLoc.setItemText(0, _translate("MainWindow", "Select Connectivity", None))
         self.comboConnLoc.setItemText(1, _translate("MainWindow", "Column flange-Beam web", None))
         self.comboConnLoc.setItemText(2, _translate("MainWindow", "Column web-Beam web", None))
@@ -1689,3 +1688,13 @@ class Ui_MainWindow(object):
         self.actionQuit_fin_plate_design.setText(_translate("MainWindow", "Quit fin plate design", None))
 
 import icons_rc
+
+if __name__ == "__main__":
+    import sys
+    app = QtGui.QApplication(sys.argv)
+    MainWindow = QtGui.QMainWindow()
+    ui = Ui_MainWindow()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+    sys.exit(app.exec_())
+

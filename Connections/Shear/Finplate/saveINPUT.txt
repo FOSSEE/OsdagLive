@@ -2,59 +2,59 @@
 S'Member'
 p1
 (dp2
-S'columSection'
+S'ColumSection'
 p3
 S'ISSC 200'
 p4
-sS'fy(MPa)'
+sS'fu (MPa)'
 p5
-I250
-sS'fu(MPa)'
-p6
 I410
-sS'beamSection'
-p7
+sS'BeamSection'
+p6
 S'ISMB 400'
+p7
+sS'fy (MPa)'
 p8
-sS'connectivity'
+I250
+sS'Connectivity'
 p9
 S'Column web-Beam web'
 p10
 ssS'Plate'
 p11
 (dp12
-S'thickness(mm)'
+S'Width (mm)'
 p13
-I12
-sS'height(mm)'
+I0
+sS'Height (mm)'
 p14
-I300
-sS'width(mm)'
+I0
+sS'Thickness (mm)'
 p15
-I100
+I10
 ssS'Load'
 p16
 (dp17
-S'shearForce(kN)'
+S'ShearForce (kN)'
 p18
 I140
 ssS'Weld'
 p19
 (dp20
-S'size(mm)'
+S'Size (mm)'
 p21
 I6
 ssS'Bolt'
 p22
 (dp23
-S'grade'
+S'Grade'
 p24
 F8.8
-sS'type'
+sS'Diameter (mm)'
 p25
-S'HSFG'
-p26
-sS'diameter(mm)'
-p27
 I20
+sS'Type'
+p26
+S'HSFG'
+p27
 ss.

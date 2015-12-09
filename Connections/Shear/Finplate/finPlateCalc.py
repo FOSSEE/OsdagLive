@@ -211,24 +211,24 @@ def finConn(uiObj):
                             #clause 10.2.2 is800
     max_spacing = int(min(100 + 4 * t_thinner, 200));        #clause 10.2.3.3 is800
     
-    min_edge_dist = int(1.5 * (dia_hole)) + 10;    # 10 mm added than min. value
-    if min_edge_dist%10 != 0:
-        min_edge_dist = (min_edge_dist/10)*10 + 10;
+    min_end_dist = int(1.5 * (dia_hole)) + 10;    # 10 mm added than min. value
+    if min_end_dist%10 != 0:
+        min_end_dist = (min_end_dist/10)*10 + 10;
     else:
-        min_edge_dist = min_edge_dist;
+        min_end_dist = min_end_dist;
         
     max_edge_dist = int((12 * t_thinner * cmath.sqrt(250/beam_fy)).real)-1;
 
     # Determine single or double line of bolts
     
-    length_avail = (web_plate_l-2*min_edge_dist);
+    length_avail = (web_plate_l-2*min_end_dist);
     pitch = round(length_avail/(bolts_required-1),3);
     
     
     
     ## Calculation of moment demand
     
-    M1 = bolt_shear_capacity * (20+min_edge_dist/2);
+    M1 = bolt_shear_capacity * (20+min_end_dist/2);
     # Single line of bolts
     if pitch >= min_pitch:
         bolt_line =1;
@@ -252,7 +252,7 @@ def finConn(uiObj):
         
         pitch = round(length_avail/(bolts_one_line-1),3); 
         gauge = min_gauge;        
-        M1 = bolt_shear_capacity * (20+ min_edge_dist + gauge/2);
+        M1 = bolt_shear_capacity * (20+ min_end_dist + gauge/2);
         
         if pitch >= min_pitch:
             K = bolts_one_line / 2;
@@ -278,21 +278,25 @@ def finConn(uiObj):
     # Width input (optional) and validation
     if web_plate_w != 0:
         if bolt_line == 1:
-                web_plate_w_req = 2 * min_edge_dist 
-                end_dist = web_plate_w/2
+                web_plate_w_req = 2 * min_end_dist 
+                #end_dist = web_plate_w/2
+                edge_dist = web_plate_w/2
         if bolt_line == 2:
-                web_plate_w_req = gauge + 2 * min_edge_dist 
-                end_dist = (web_plate_w - gauge)/2
+                web_plate_w_req = gauge + 2 * min_end_dist 
+                #end_dist = (web_plate_w - gauge)/2
+                edge_dist = (web_plate_w - gauge)/2
             
     if web_plate_w == 0:   
         if bolt_line == 1:
-            web_plate_w_req = 2 * min_edge_dist;
+            web_plate_w_req = 2 * min_end_dist;
             web_plate_w = web_plate_w_req
-            end_dist = web_plate_w /2
+            #end_dist = web_plate_w /2
+            edge_dist = web_plate_w /2
         if bolt_line == 2:
-            web_plate_w_req = gauge + 2 * min_edge_dist;
+            web_plate_w_req = gauge + 2 * min_end_dist;
             web_plate_w = web_plate_w_req;
-            end_dist = (web_plate_w - gauge)/2
+            #end_dist = (web_plate_w - gauge)/2
+            edge_dist = (web_plate_w - gauge)/2
 
             
     # if web_plate_w < web_plate_w_req:
@@ -315,7 +319,7 @@ def finConn(uiObj):
     web_plate_l_req1 = math.sqrt((moment_demand*1000*6*1.1)/(1.2*beam_fy*web_plate_t));
     # Single line of bolts
     if bolt_line == 1:
-        web_plate_l_req2 = (bolts_required-1) * min_pitch + 2 * min_edge_dist;
+        web_plate_l_req2 = (bolts_required-1) * min_pitch + 2 * min_end_dist;
         if web_plate_l == 0 or web_plate_l == min_plate_height or web_plate_l == max_plate_height:
             web_plate_l_req = max(web_plate_l_req1, web_plate_l_req2, web_plate_l);
         else:
@@ -323,7 +327,7 @@ def finConn(uiObj):
 
     # Multi line of bolts
     if bolt_line == 2:
-        web_plate_l_req2 = (bolts_one_line-1) * min_pitch + 2 * min_edge_dist;
+        web_plate_l_req2 = (bolts_one_line-1) * min_pitch + 2 * min_end_dist;
     
         if web_plate_l == 0 or web_plate_l == min_plate_height or web_plate_l == max_plate_height:
             web_plate_l_req = max(web_plate_l_req1, web_plate_l_req2, web_plate_l);
@@ -389,8 +393,8 @@ def finConn(uiObj):
     outputObj['Bolt']['numofrow'] = bolts_one_line
     outputObj['Bolt']['numofcol'] = bolt_line
     outputObj['Bolt']['pitch'] = pitch
-    outputObj['Bolt']['enddist'] = float(end_dist)
-    outputObj['Bolt']['edge'] = float(min_edge_dist)
+    outputObj['Bolt']['edge']= float(edge_dist)
+    outputObj['Bolt']['enddist'] = float(min_end_dist)
     outputObj['Bolt']['gauge'] = float(gauge)
      
     outputObj['Weld'] = {}
