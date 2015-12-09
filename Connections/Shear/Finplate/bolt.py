@@ -4,19 +4,38 @@ Created on 29-Nov-2014
 @author: deepa
 '''
 import numpy
-from ModelUtils import *
+from ModelUtils import getGpPt,getGpDir,makeEdgesFromPoints,makeWireFromEdges,makePrismFromFace,makeFaceFromWire
 import math
 from OCC.BRepPrimAPI import BRepPrimAPI_MakeCylinder
-from OCC.BRepAlgo import BRepAlgo_BooleanOperations
-from OCC.gp import gp_Pnt, gp_Dir, gp_Pln, gp_Ax2
+from OCC.gp import  gp_Ax2
 from OCC.BRepAlgoAPI import  BRepAlgoAPI_Fuse
-from OCC.BRepFilletAPI import BRepFilletAPI_MakeFillet
-from OCC.TopAbs import TopAbs_EDGE
-from OCC.TopoDS import topods
-from OCC.TopExp import TopExp_Explorer
 
 class Bolt(object):
-    #
+    '''
+    
+        a3  X-------------------+  a2
+           X                   X|X
+          X                   X | X
+         X                   X  |  X
+        X                   X   |   X
+       X                   X    |    X
+      X                   X     |     X
+     X                   X 60   |      X
+a4  X                   XXXXXXXXXXXXXXXXX  a1
+     X                                 X
+      X                               X
+       XX                            X
+        X                           X
+         X                         X
+          X                       X
+           X                     X
+            X-------------------X
+                                   a6
+            a5
+
+    
+    '''
+    
     def __init__(self,R,T,H,r):        
         self.R = R
         self.H = H
@@ -33,7 +52,6 @@ class Bolt(object):
         self.a5 = None
         self.a6 = None
         self.points = []        
-        #self.computeParams()
     
     def place(self, origin, uDir, shaftDir):
         self.origin = origin
@@ -65,19 +83,10 @@ class Bolt(object):
         aFace = makeFaceFromWire(wire)
         extrudeDir = -self.T * self.shaftDir # extrudeDir is a numpy array
         boltHead =  makePrismFromFace(aFace, extrudeDir)
-        mkFillet = BRepFilletAPI_MakeFillet(boltHead)
-        anEdgeExplorer = TopExp_Explorer(boltHead, TopAbs_EDGE)
-        while anEdgeExplorer.More():
-            aEdge = topods.Edge(anEdgeExplorer.Current())
-            mkFillet.Add(self.T / 17. , aEdge)
-            anEdgeExplorer.Next()
-                
-        boltHead = mkFillet.Shape()
         cylOrigin = self.origin
-      
         boltCylinder = BRepPrimAPI_MakeCylinder(gp_Ax2(getGpPt(cylOrigin), getGpDir(self.shaftDir)), self.r, self.H).Shape()
+        
         whole_Bolt = BRepAlgoAPI_Fuse(boltHead,boltCylinder).Shape()
-        mkFillet = BRepFilletAPI_MakeFillet(whole_Bolt)
         
         return whole_Bolt
 

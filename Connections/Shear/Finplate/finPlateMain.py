@@ -8,14 +8,14 @@ from PyQt4.QtCore import QString, pyqtSignal
 from OCC.TopoDS import topods, TopoDS_Shape
 from OCC.gp import gp_Pnt
 from nutBoltPlacement import NutBoltArray
-from OCC import VERSION, BRepTools, OSD
+from OCC import VERSION, BRepTools
 from ui_finPlate import Ui_MainWindow
 from model import *
 from finPlateCalc import finConn
 import yaml
 import pickle
 from OCC.BRepAlgoAPI import BRepAlgoAPI_Fuse
-from OCC._Quantity import Quantity_NOC_RED,Quantity_NOC_BLUE1,Quantity_NOC_SADDLEBROWN
+from OCC.Quantity import Quantity_NOC_RED,Quantity_NOC_BLUE1,Quantity_NOC_SADDLEBROWN
 from ISection import ISection
 from OCC.Graphic3d import Graphic3d_NOT_2D_ALUMINUM
 from weld import  Weld
@@ -24,7 +24,7 @@ from bolt import Bolt
 from nut import Nut 
 import os.path
 from utilities import osdagDisplayShape
-from OCC.Display.pyqt4Display import qtViewer3d
+from OCC.Display.qtDisplay import qtViewer3d
 from colWebBeamWebConnectivity import ColWebBeamWeb
 from colFlangeBeamWebConnectivity import ColFlangeBeamWeb
 from OCC import IGESControl
@@ -33,8 +33,7 @@ from OCC.STEPControl import STEPControl_Writer, STEPControl_AsIs
 from OCC.Interface import Interface_Static_SetCVal
 from OCC.IFSelect import IFSelect_RetDone
 from OCC.StlAPI import StlAPI_Writer
-from drawing_2D import Fin2DCreatorFront
-import svgwrite
+from drawing_2D import FinCommonData
 # Developed by deepa
 
 class MainController(QtGui.QMainWindow):
@@ -45,8 +44,6 @@ class MainController(QtGui.QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         
-        self.ui.comboConnLoc.currentIndexChanged[str].connect(self.setimage_connection)
-        #self.ui.comboConnLoc.currentIndexChanged[str].connect(self.changeColtoBeamSection)
         self.ui.combo_Beam.addItems(get_beamcombolist())
         self.ui.comboColSec.addItems(get_columncombolist())
         
@@ -60,7 +57,7 @@ class MainController(QtGui.QMainWindow):
         self.ui.comboType.setCurrentIndex(0)
         
         
-        
+        self.ui.comboConnLoc.currentIndexChanged[str].connect(self.setimage_connection)
         self.retrieve_prevstate()
         self.ui.btnInput.clicked.connect(lambda: self.dockbtn_clicked(self.ui.inputDock))
         self.ui.btnOutput.clicked.connect(lambda: self.dockbtn_clicked(self.ui.outputDock))
@@ -145,16 +142,6 @@ class MainController(QtGui.QMainWindow):
         self.fuse_model = None
         self.disableViewButtons()
         
-    def changeColtoBeamSection(self):
-        if self.ui.comboConnLoc.currentText() == "Beam-Beam":
-            self.ui.lbl_ISsection.setText("Beam section")
-            self.ui.comboColSec.clear()
-            self.ui.comboColSec.addItems(get_beamcombolist())
-        else:
-            self.ui.lbl_ISsection.setText("Column section")
-            self.ui.comboColSec.clear()
-            self.ui.comboColSec.addItems(get_beamcombolist())
-        
     def showFontDialogue(self):
         
         font, ok = QtGui.QFontDialog.getFont()
@@ -164,10 +151,11 @@ class MainController(QtGui.QMainWindow):
             self.ui.textEdit.setFont(font)
         
     def callZoomin(self):
-        self.display.ZoomFactor(1.5)
+        self.display.ZoomFactor(2)
         
     def callZoomout(self):
         self.display.ZoomFactor(0.5)
+        
         
     def callRotation(self):
         self.display.Rotation(15,0)
@@ -213,6 +201,7 @@ class MainController(QtGui.QMainWindow):
         self.ui.chkBxFinplate.setEnabled(True)
         
     def fillPlateThickCombo(self):
+        
         '''Populates the plate thickness on the basis of beam web thickness and plate thickness check
         '''
         dictbeamdata = self.fetchBeamPara()
@@ -231,6 +220,8 @@ class MainController(QtGui.QMainWindow):
     def populateWeldThickCombo(self):
         '''
         Returns the weld thickness on the basis column flange and plate thickness check
+        ThickerPart between column Flange and plate thickness again get checked according to the IS 800 Table 21 (Name of the table :Minimum Size of First Rum or of a
+        Single Run Fillet Weld)
         '''
         newlist = ["Select weld thickness"]
         weldlist = [3,4,5,6,8,10,12,16]
@@ -305,23 +296,22 @@ class MainController(QtGui.QMainWindow):
         self.ui.lbl_connectivity.show()
         loc = self.ui.comboConnLoc.currentText()
         if loc == "Column flange-Beam web":
-            
             pixmap = QtGui.QPixmap(":/newPrefix/images/colF2.png")
-            pixmap.scaledToHeight(600)
-            pixmap.scaledToWidth(55)
+            pixmap.scaledToHeight(60)
+            pixmap.scaledToWidth(50)
             self.ui.lbl_connectivity.setPixmap(pixmap)
             #self.ui.lbl_connectivity.show()
         elif(loc == "Column web-Beam web"):
             picmap = QtGui.QPixmap(":/newPrefix/images/colW3.png")
             picmap.scaledToHeight(60)
-            picmap.scaledToWidth(55)
+            picmap.scaledToWidth(50)
             self.ui.lbl_connectivity.setPixmap(picmap)
         else:
             self.ui.lbl_connectivity.hide()
             
         
     def getuser_inputs(self):
-        '''(nothing) -> Dictionary
+        '''(none) -> Dictionary
         
         Returns the dictionary object with the user input fields for designing fin plate connection
         
@@ -411,6 +401,7 @@ class MainController(QtGui.QMainWindow):
     
     
     def save_design(self):
+        
         self.outdict = self.outputdict()
         self.inputdict = self.getuser_inputs()
         self.save_yaml(self.outdict,self.inputdict)
@@ -442,7 +433,7 @@ class MainController(QtGui.QMainWindow):
         #QtGui.QMessageBox.about(self,'Information',"File saved")
        
     
-    
+    ################
     def save_yaml(self,outObj,uiObj):
         '''(dictiionary,dictionary) -> NoneType
         Saving input and output to file in following format.
@@ -517,7 +508,7 @@ class MainController(QtGui.QMainWindow):
         
     def dockbtn_clicked(self,widget):
         
-        '''(QWidget) -> NoneType
+        '''(QWidget) -> None
         
         This method dock and undock widget(QdockWidget)
         '''
@@ -531,7 +522,7 @@ class MainController(QtGui.QMainWindow):
             
     def  combotype_currentindexchanged(self,index):
         
-        '''(Number) -> NoneType
+        '''(Number) -> None
         '''
         items = self.gradeType[str(index)]
 
@@ -545,7 +536,7 @@ class MainController(QtGui.QMainWindow):
         
     def check_range(self, widget,lblwidget, minVal, maxVal):
         
-        '''(QlineEdit,QLable,Number,Number)---> NoneType
+        '''(QlineEdit, QLable, Number, Number)---> None
         Validating F_u(ultimate Strength) and F_y (Yeild Strength) textfields
         '''
         textStr = widget.text()
@@ -632,7 +623,7 @@ class MainController(QtGui.QMainWindow):
         This method displaying Design messages(log messages)to textedit widget.
         '''
         
-        afile = QtCore.QFile('./Connections/Shear/Finplate/fin.log')
+        afile = QtCore.QFile('./fin.log')
         
         if not afile.open(QtCore.QIODevice.ReadOnly):#ReadOnly
             QtGui.QMessageBox.information(None, 'info', afile.errorString())
@@ -652,11 +643,11 @@ class MainController(QtGui.QMainWindow):
         since python comes with Tk included, but that PySide or PyQt4
         is much preferred
         """
-        try:
-            from PySide import QtCore, QtGui
-            return 'pyside'
-        except:
-            pass
+#         try:
+#             from PySide import QtCore, QtGui
+#             return 'pyside'
+#         except:
+#             pass
         try:
             from PyQt4 import QtCore, QtGui
             return 'pyqt4'
@@ -687,11 +678,8 @@ class MainController(QtGui.QMainWindow):
         if USED_BACKEND in ['pyqt4', 'pyside']:
             if USED_BACKEND == 'pyqt4':
                 from PyQt4 import QtCore, QtGui, QtOpenGL
-                from OCC.Display.pyqt4Display import qtViewer3d
-            elif USED_BACKEND == 'pyside':
-                from PySide import QtCore, QtGui, QtOpenGL
-                from OCC.Display.pysideDisplay import qtViewer3d
-    
+                from OCC.Display.qtDisplay import qtViewer3d
+            
         self.ui.modelTab = qtViewer3d(self)
         #self.ui.model2dTab = qtViewer3d(self)
         
@@ -707,7 +695,7 @@ class MainController(QtGui.QMainWindow):
         
         # background gradient
         display.set_bg_gradient_color(23,1,32,23,1,32)
-        #display.set_bg_gradient_color(255,255,255,255,255,255)
+        #display_2d.set_bg_gradient_color(255,255,255,255,255,255)
         # display black trihedron
         display.display_trihedron()
         display.View.SetProj(1, 1, 1)
@@ -725,10 +713,10 @@ class MainController(QtGui.QMainWindow):
     
     def display3Dmodel(self, component):
         self.display.EraseAll()
+        
         self.display.SetModeShaded()
         display.DisableAntiAliasing()
         self.display.set_bg_gradient_color(23,1,32,23,1,32)
-        #self.display.set_bg_gradient_color(186,195,201,255,255,255)
         self.display.View_Front()
         self.display.View_Iso()
         self.display.FitAll()
@@ -759,18 +747,89 @@ class MainController(QtGui.QMainWindow):
     def fetchBeamPara(self):
         beam_sec = self.ui.combo_Beam.currentText()
         dictbeamdata  = get_beamdata(beam_sec)
+        print dictbeamdata
         return dictbeamdata
     
     def fetchColumnPara(self):
         column_sec = self.ui.comboColSec.currentText()
         dictcoldata = get_columndata(column_sec)
+        print dictcoldata
         return dictcoldata
     
+    def boltHeadThick_Calculation(self,boltDia):
+        '''
+        This routine takes the bolt diameter and return bolt head thickness as per IS:3757(1989)
+       
+       bolt Head Dia
+        <-------->
+        __________
+        |        | | T = Thickness
+        |________| |
+           |  |
+           |  |
+           |  |
+        
+        '''
+        dict = {5:4, 6:5, 8:6, 10:7, 12:8, 16:10, 20:12.5, 22:14, 24:15, 27:17, 30:18.7, 36:22.5 }
+        return dict[boltDia]
+        
+        
+    def boltHeadDia_Calculation(self,boltDia):
+        '''
+        This routine takes the bolt diameter and return bolt head diameter as per IS:3757(1989)
+       
+       bolt Head Dia
+        <-------->
+        __________
+        |        |
+        |________|
+           |  |
+           |  |
+           |  |
+        
+        '''
+        dict = {5:7, 6:8, 8:10, 10:15, 12:20, 16:27, 20:34, 22:36, 24:41, 27:46, 30:50, 36:60 }
+        return dict[boltDia]
+    
+    def boltLength_Calculation(self,boltDia):
+        '''
+        This routine takes the bolt diameter and return bolt head diameter as per IS:3757(1985)
+       
+       bolt Head Dia
+        <-------->
+        __________  ______
+        |        |    |
+        |________|    | 
+           |  |       |
+           |  |       |
+           |  |       |
+           |  |       | 
+           |  |       |  l= length
+           |  |       |
+           |  |       |
+           |  |       |
+           |__|    ___|__ 
+        
+        '''
+        dict = {5:40, 6:40, 8:40, 10:40, 12:40, 16:50, 20:50, 22:50, 24:50, 27:60, 30:65, 36:75 }
+       
+        return dict[boltDia]
+    
+    def nutThick_Calculation(self,boltDia):
+        '''
+        Returns the thickness of the nut depending upon the nut diameter as per IS1363-3(2002)
+        '''
+        dict = {5:5, 6:5.65, 8:7.15, 10:8.75, 12:11.3, 16:15, 20:17.95, 22:19.0, 24:21.25, 27:23, 30:25.35, 36:30.65 }
+        
+        return dict[boltDia]
+          
     def create3DColWebBeamWeb(self):
         '''
         creating 3d cad model with column web beam web
+        
         '''
         uiObj = self.getuser_inputs()
+        print uiObj
         resultObj = finConn(uiObj)
         
         dictbeamdata  = self.fetchBeamPara()
@@ -811,12 +870,13 @@ class MainController(QtGui.QMainWindow):
         plate_thick = uiObj['Plate']['Thickness (mm)']
         bolt_dia = uiObj["Bolt"]["Diameter (mm)"]
         bolt_r = bolt_dia/2
-        bolt_R = bolt_r + 7
+        bolt_R = self.boltHeadDia_Calculation(bolt_dia) /2
         nut_R = bolt_R
-        bolt_T = 10.0 # minimum bolt thickness As per Indian Standard
-        bolt_Ht = 50.0 # minimum bolt length as per Indian Standard IS 3750(1985)
-        nut_T = 12.0 # minimum nut thickness As per Indian Standard
-        nut_Ht = 12.2 #
+        bolt_T = self.boltHeadThick_Calculation(bolt_dia) 
+        bolt_Ht = self.boltLength_Calculation(bolt_dia)
+        #bolt_Ht = 50.0 # minimum bolt length as per Indian Standard IS 3757(1989)
+        nut_T = self.nutThick_Calculation(bolt_dia)# bolt_dia = nut_dia
+        nut_Ht = 12.2 #150
         
         #plate = Plate(L= 300,W =100, T = 10)
         plate = Plate(L= fillet_length,W =plate_width, T = plate_thick)
@@ -890,11 +950,15 @@ class MainController(QtGui.QMainWindow):
         plate_thick = uiObj['Plate']['Thickness (mm)']
         bolt_dia = uiObj["Bolt"]["Diameter (mm)"]
         bolt_r = bolt_dia/2
-        bolt_R = bolt_r + 7
+        bolt_R = self.boltHeadDia_Calculation(bolt_dia) /2
+        #bolt_R = bolt_r + 7
         nut_R = bolt_R
-        bolt_T = 10.0 # minimum bolt thickness As per Indian Standard
-        bolt_Ht = 50.0 # minimum bolt length as per Indian Standard
-        nut_T = 12.0 # minimum nut thickness As per Indian Standard
+        bolt_T = self.boltHeadThick_Calculation(bolt_dia) 
+        #bolt_T = 10.0 # minimum bolt thickness As per Indian Standard
+        bolt_Ht = self.boltLength_Calculation(bolt_dia)
+        # bolt_Ht =100.0 # minimum bolt length as per Indian Standard
+        nut_T = self.nutThick_Calculation(bolt_dia)# bolt_dia = nut_dia
+        #nut_T = 12.0 # minimum nut thickness As per Indian Standard
         nut_Ht = 12.2 #
         
         #plate = Plate(L= 300,W =100, T = 10)
@@ -965,7 +1029,7 @@ class MainController(QtGui.QMainWindow):
         
         self.display3Dmodel("Beam")
             
-    def call_3DColumn(self):
+    def call_3DColumn(self):    
         '''
         '''
         if self.ui.chkBxCol.isChecked():
@@ -1008,6 +1072,7 @@ class MainController(QtGui.QMainWindow):
         status = resultObj['Bolt']['status']
         self.call_3DModel(status)
         
+        self.call2D_Drawing()
         
     def create2Dcad(self,connectivity):
         ''' Returns the fuse model of finplate
@@ -1143,8 +1208,7 @@ class MainController(QtGui.QMainWindow):
                 self.fuse_model = self.create2Dcad(self.connectivity)
             self.display2DModel( self.fuse_model,"Front")
             
-            #self.mkAndSaveSvg(self.connectivity)
-            self.call2D_Drawing()
+            
         else:
             self.display.EraseAll()
             self.ui.mytabWidget.setCurrentIndex(0)
@@ -1152,21 +1216,21 @@ class MainController(QtGui.QMainWindow):
                 self.connectivity =  self.create3DColFlangeBeamWeb()
             if self.fuse_model == None:
                 self.fuse_model = self.create2Dcad(self.connectivity)
-            self.display2DModel( self.fuse_model,"Left")        
-        
-    def mkAndSaveSvg(self, connectivity):
-        conXZ = ColWebBeamWebXZ(connectivity)
-        conXZDwg = conXZ.mkOSDAGDrawing2D('test.svg')
-        conXZDwg.saveSvg()   
+            self.display2DModel( self.fuse_model,"Left") 
+           
+    
              
     def call2D_Drawing(self):
+        ''' This routine saves the 2D SVG image as per the connectivity selected
+        SVG image created through svgwrite pacage which takes design INPUT and OUTPUT parameters from Finplate GUI.
+        '''
         uiObj = self.getuser_inputs()
         
         resultObj = finConn(uiObj)
         dictbeamdata  = self.fetchBeamPara()
         dictcoldata = self.fetchColumnPara()
-        fin2DFront = Fin2DCreatorFront(uiObj,resultObj,dictbeamdata,dictcoldata)
-        fin2DFront.saveToSvg()
+        finCommonObj = FinCommonData(uiObj,resultObj,dictbeamdata,dictcoldata)
+        finCommonObj.saveToSvg()
         
             
     def call_Topview(self):
@@ -1246,7 +1310,7 @@ def set_osdaglogger():
     logger.setLevel(logging.DEBUG)
  
     # create the logging file handler
-    fh = logging.FileHandler("./Connections/Shear/Finplate/fin.log", mode="a")
+    fh = logging.FileHandler("./fin.log", mode="a")
     
     #,datefmt='%a, %d %b %Y %H:%M:%S'
     #formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -1281,43 +1345,9 @@ def launchFinPlateController(osdagMainWindow):
     window.closed.connect(osdagMainWindow.show)
      
     #sys.exit(app.exec_())
-
-class ColWebBeamWebXZ():
     
-    def __init__(self, connectivity):
-        self.A = (0, 0)
-        self.B = (0, 80)
-        self.C = (20, 80)
-        self.D = (20, 0) 
-        self.E = (7, 80)
-        self.F = (13, 80)
-        self.G = (13, 0)
-        self.H = (7, 0)
-        
-    def mkOSDAGDrawing2D(self, fileName):
-        
-        dwg = OSDAGDrawing2D(fileName)
-        dwg.line()
-        dwg.add(dwg.line(self.A, self.B,stroke='blue', stroke_width =2.0, stroke_linecap='square'))
-        dwg.add(dwg.line(self.B, self.C, stroke='blue', stroke_width =2.0, stroke_linecap='square'))
-        dwg.add(dwg.line(self.C, self.D, stroke='blue', stroke_width =2.0, stroke_linecap='square'))
-        #dwg.add(dwg.line(self.D, self.E, stroke=svgwrite.rgb(0, 0, 255, '%')))
-        dwg.add(dwg.line(self.D, self.A, stroke='blue', stroke_width =2.0, stroke_linecap='square'))
-        dwg.add(dwg.line(self.E, self.H, stroke='red', stroke_width =1.2,stroke_linecap ='butt' ))
-        dwg.add(dwg.line(self.F, self.G, stroke='red', stroke_width =2.0, stroke_linecap='square'))
-        #dwg.add(dwg.text('Test', insert=(0, 0.2), fill='red'))
-        return dwg
 
     
-class OSDAGDrawing2D(svgwrite.Drawing):
-    
-    def __init__(self, fileName):
-        svgwrite.Drawing.__init__(self, fileName, profile = 'tiny')
-    
-    def saveSvg(self):
-        #dwg.add(dwg.line((0, 0), (10, 0), stroke=svgwrite.rgb(10, 10, 16, '%')))
-        #dwg.add(dwg.text('Test', insert=(0, 0.2), fill='red'))
-        self.save()
 
 if __name__ == '__main__':
     #launchFinPlateController(None)

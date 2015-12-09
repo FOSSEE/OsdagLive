@@ -7,10 +7,6 @@ import sys
 from PyQt4 import QtGui,QtCore
 from ui_osdagpage import Ui_MainWindow
 from Connections.Shear.Finplate.finPlateMain import launchFinPlateController
-#from finPlateMain import *
-
-#from finPlateMain import launchFinPlateController
-
 
 class OsdagMainWindow(QtGui.QMainWindow):
 

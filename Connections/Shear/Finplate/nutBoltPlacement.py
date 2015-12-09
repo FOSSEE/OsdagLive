@@ -3,14 +3,48 @@ Created on 07-Jun-2015
 
 @author: deepa
 '''
-import numpy
 from bolt import Bolt
 from nut import Nut
 from OCC.BRepPrimAPI import BRepPrimAPI_MakeSphere
 from ModelUtils import getGpPt
 
 class NutBoltArray():
+    
+    '''
+                                            gDir
+          +---------------------------->
+          |
+          |
+          |   P origin
+          |      +-------+---------------+
+          |      |       |               |
+pDir      |      |       | End distance  |
+          |      |       v               |
+          |      |       X       X       |
+          |      |                       |
+          |      |                       |
+          |      |                       |
+          v      |                       |
+                 |        Gauge distance |
+                 |       X-------X       |
+                 |       +               |
+                 |       |               |
+                 |       | Pitch         |
+                 |       |               |
+                 |       v               |
+                 |       X       X+----> +
+                 |               Edge distance
+                 |                       |
+                 |                       |
+                 |                       |
+                 +-----------------------+
+
+                Nut Bolt Placement
+
+    '''
+    
     def __init__(self,boltPlaceObj,nut,bolt,gap):
+        
         self.origin = None
         self.gaugeDir = None
         self.pitchDir = None
@@ -32,6 +66,9 @@ class NutBoltArray():
         self.models = []
         
     def initialiseNutBolts(self):
+        '''
+        Initializing the Nut and Bolt 
+        '''
         b = self.bolt
         n = self.nut
         for i in range(self.row * self.col):
@@ -39,6 +76,7 @@ class NutBoltArray():
             self.nuts.append(Nut(n.R, n.T,n.H, n.r1))
         
     def initBoltPlaceParams(self,boltPlaceObj):
+        
         self.pitch = boltPlaceObj['Bolt']['pitch']
         self.gauge = boltPlaceObj['Bolt']['gauge']
         #self.gauge = 30
@@ -46,22 +84,26 @@ class NutBoltArray():
         self.end = boltPlaceObj['Bolt']['enddist']
         self.row = boltPlaceObj['Bolt']['numofrow']
         self.col = boltPlaceObj['Bolt']['numofcol']
-        #self.row = 3
-        #self.col = 2
          
     def calculatePositions(self):
+        '''
+        Calculates the exact position for nuts and bolts.
+        '''
         self.positions = []
         for rw in  range(self.row):
             for col in range(self.col):
                 pos = self.origin 
-                pos = pos + self.end * self.gaugeDir
+                #pos = pos + self.end * self.gaugeDir
+                pos = pos + self.edge * self.gaugeDir
                 pos = pos + col * self.gauge * self.gaugeDir 
-                pos = pos + self.edge * self.pitchDir 
+                #pos = pos + self.edge * self.pitchDir 
+                pos = pos + self.end * self.pitchDir 
                 pos = pos + rw * self.pitch * self.pitchDir
                 
                 self.positions.append(pos)
     
     def place(self, origin, gaugeDir, pitchDir, boltDir):
+        
         self.origin = origin
         self.gaugeDir = gaugeDir
         self.pitchDir = pitchDir

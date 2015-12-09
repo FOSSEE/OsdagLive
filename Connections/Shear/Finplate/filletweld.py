@@ -6,7 +6,6 @@ Created on 27-May-2015
 import numpy
 from ModelUtils import *
 from OCC.BRepAlgoAPI import BRepAlgoAPI_Fuse
-
 class FilletWeld(object):
     
     def __init__(self,b,h,L):        
