@@ -216,6 +216,7 @@ class FinCommonData(object):
         
         
     def drawOrientedArrow(self, dwg, pt, theta, orientation, offset, textUp,textDown):
+    
         '''
         Drawing an arrow on given direction 
         
@@ -278,7 +279,7 @@ class FinCommonData(object):
         txtPtUp = None
         if(orientation == "NE"):
             txtPtUp = p2 + 0.1 * lengthB * (-labelVec) + txtOffset * offsetVec
-            txtPtDwn = p2 - 0.1 * lengthB * (labelVec) -  txtOffset * offsetVec
+            txtPtDwn = p2 - 0.1 * lengthB * (labelVec) -  (txtOffset + 28) * offsetVec
         elif(orientation == "NW"):
             txtPtUp = p3 + 0.1 * lengthB * labelVec + txtOffset * offsetVec
             txtPtDwn = p3 - 0.1 * lengthB * labelVec - txtOffset * offsetVec
@@ -297,10 +298,12 @@ class FinCommonData(object):
         dwg.add(dwg.text(textDown, insert=(txtPtDwn), fill='black',font_family = "sans-serif",font_size = 28))
     
     def saveToSvg(self):
-        ''' It returns the svg drawing depending upon connectivity
+        '''
+         It returns the svg drawing depending upon connectivity
         CFBW = Column Flange Beam Web
         CWBW = Column Web Beam Web
         BWBW = Beam Web Beam Web
+        
         '''
         fin2DFront = Fin2DCreatorFront(self)
         fin2DTop = Fin2DCreatorTop(self)
@@ -712,6 +715,10 @@ class Fin2DCreatorFront(object):
         textDown = ""
         self.dataObj.drawOrientedArrow(dwg, pltPt, theta, "SE", offset, textUp, textDown)
         
+        # 2D view name
+        ptx =  self.FC + (self.dataObj.col_L/4)* np.array([0,1])
+        dwg.add(dwg.text('Front view', insert=(ptx), fill='black',font_family = "sans-serif",font_size = 30))
+        
         dwg.save()
         print"########### Column Flange Beam Web Saved ############"
         
@@ -915,6 +922,10 @@ class Fin2DCreatorFront(object):
         
         self.dataObj.drawOrientedArrow(dwg, weldPt, theta, "NW", offset, textUp, textDown)
         
+        # 2D view name
+        ptx =  self.C + (self.dataObj.col_L/4)* np.array([0,1])
+        dwg.add(dwg.text('Front view', insert=(ptx), fill='black',font_family = "sans-serif",font_size = 30))
+        
         dwg.save()
         print"########### Column Web Beam Web Saved ############"
     
@@ -1100,7 +1111,10 @@ class Fin2DCreatorTop(object):
         ptC = self.FA4
         ptD = ptG2
         self.dataObj.drawFaintLine(ptC,ptD,dwg)
-         
+        
+        # 2D view name
+        ptx =  self.FG + (self.dataObj.col_B + 20)* np.array([0,1])
+        dwg.add(dwg.text('Top view', insert=(ptx), fill='black',font_family = "sans-serif",font_size = 30)) 
         dwg.save()
         print"$$$$$$$$$ Saved Column Flange Beam Web Top $$$$$$$$$$$$"
     
@@ -1204,6 +1218,10 @@ class Fin2DCreatorTop(object):
         ptC = self.A4
         ptD = ptC + (100) * np.array([0,1])
         self.dataObj.drawFaintLine(ptC,ptD,dwg)
+        
+        # 2D view name
+        ptx =  self.G + (self.dataObj.D_col + 30)* np.array([0,1])
+        dwg.add(dwg.text('Top view', insert=(ptx), fill='black',font_family = "sans-serif",font_size = 30)) 
         
         dwg.save()
         print"$$$$$$$$$ Saved Column Web Beam Web Top $$$$$$$$$$$"
@@ -1346,6 +1364,10 @@ class Fin2DCreatorSide(object):
         textDown = u"\u25C1"
         self.dataObj.drawOrientedArrow(dwg, weldPt, theta, "NE", offset, textUp, textDown)
         
+        # 2D view name
+        ptx =  self.H + (self.dataObj.col_L/4)* np.array([0,1])
+        dwg.add(dwg.text('Side view', insert=(ptx), fill='black',font_family = "sans-serif",font_size = 30)) 
+        
         dwg.save()
         print "********* Column Web Beam Web Side Saved ***********"
     
@@ -1426,6 +1448,11 @@ class Fin2DCreatorSide(object):
         textUp = "          z " + str(int(self.dataObj.weld_thick)) + " mm"
         textDown = u"\u25C1"
         self.dataObj.drawOrientedArrow(dwg, weldPt, theta, "NE", offset, textUp, textDown)
+        
+        # 2D view name
+        ptx =  self.FC + (self.dataObj.col_L/4)* np.array([0,1])
+        dwg.add(dwg.text('Side view', insert=(ptx), fill='black',font_family = "sans-serif",font_size = 30)) 
+        
         dwg.save()
         print "********** Column Flange Beam Web Side Saved  *************"
         
