@@ -35,6 +35,7 @@ from OCC.IFSelect import IFSelect_RetDone
 from OCC.StlAPI import StlAPI_Writer
 from drawing_2D import FinCommonData
 # Developed by deepa
+from reportGenerator import *
 
 class MainController(QtGui.QMainWindow):
     
@@ -405,6 +406,9 @@ class MainController(QtGui.QMainWindow):
         self.outdict = self.outputdict()
         self.inputdict = self.getuser_inputs()
         self.save_yaml(self.outdict,self.inputdict)
+        dictBeamData  = self.fetchBeamPara()
+        dictColData  = self.fetchColumnPara()
+        save_html(self.outdict, self.inputdict, dictBeamData, dictColData)
     
         #self.save(self.outdict,self.inputdict)
         
